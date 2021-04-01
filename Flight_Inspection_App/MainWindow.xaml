@@ -5,18 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Flight_Inspection_App" d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800"
+        Title="MainWindow" Height="450" Width="800">
+    <Window.Resources>
         
-        >
-    <DockPanel Margin="10">
-        <WrapPanel DockPanel.Dock="Top" Margin="0,0,0,10" Height="22" Width="140">
-            <Button x:Name="btnOpenFile" Click="btnOpenFile_Click" Content="Open Flight Data File" Width="137" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+    </Window.Resources>
+    
+    <Grid>
+        <StackPanel Orientation="Horizontal" Background="Aqua" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Button x:Name="Button_ShowFlight" Click="Button_Play" Content="Show flight on FlightGear" Height="30"/>
+            <Button x:Name="Button_OpenDataFile" Click="Button_OpenDataFile" Content="Open Flight Data File" Height="30"/>
+        </StackPanel>
 
-        </WrapPanel>
-        <Button Content="Show flight on&#xD;&#xA;FlightGear" Width="100" Height="51" Click="Button_Play"/>
-        <TextBox Name="textbox" Text="{Binding VM_Path, Mode=TwoWay}" TextWrapping="Wrap" Width="329" Height="39" RenderTransformOrigin="0.47,3.334"/>
-    </DockPanel>
+        <StackPanel Orientation="Vertical" Margin="0,19,0,363" Background="Aquamarine">
+            <Slider Width="570" Background="BlanchedAlmond"/>
+            <Separator Margin="3"/>
+            <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
+                <Button x:Name="Button_Backward" FontFamily="Segoe MDL2 Assets" Content="&#xEDD9;&#xEDD9;" HorizontalAlignment="Left"/>
+                <Separator Margin="3"/>
+                <Button x:Name="Button_Play" FontFamily="Segoe MDL2 Assets" Content="&#xF5B0;" HorizontalAlignment="Left"/>
+                <Separator Margin="3"/>
+                <Button x:Name="Button_Pause" FontFamily="Segoe MDL2 Assets" Content="&#xF8AE;" HorizontalAlignment="Left"/>
+                <Separator Margin="3"/>
+                <Button x:Name="Button_Stop" FontFamily="Segoe MDL2 Assets" Content="&#xE71A;" HorizontalAlignment="Left"/>
+                <Separator Margin="3"/>
+                <Button x:Name="Button_Forward" FontFamily="Segoe MDL2 Assets" Content="&#xEDDA;&#xEDDA;" HorizontalAlignment="Left"/>
+                <Separator Margin="10"/>
+                <TextBlock x:Name="Text_CurrnetTime" Background="Gold" Text="- current time -"/>
+                <Separator Margin="10"/>
+                <TextBlock x:Name="Text_PlaySpeed" Background="Goldenrod" Text="Play speed:    "/>
+                <Slider Background="Goldenrod" Minimum="0" Maximum="30" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Width="80" />
 
+            </StackPanel>
+           
+        </StackPanel>
+
+
+
+    </Grid>
 
 
 

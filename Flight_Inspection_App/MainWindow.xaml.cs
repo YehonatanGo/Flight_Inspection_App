@@ -21,15 +21,14 @@ namespace Flight_Inspection_App
             path = "";
         }
 
-        private void btnOpenFile_Click(object sender, RoutedEventArgs e)
+        private void Button_OpenDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             /*openFileDialog.Filter = "XML files (*.xml)|*.xml";*/
             /*openFileDialog.Filter = "CSV files (*.csv)|*.csv";*/
             if (openFileDialog.ShowDialog() == true)
             {
-                textbox.Text = openFileDialog.FileName;
-                vm.VM_Path = textbox.Text;
+                vm.VM_Path = openFileDialog.FileName;
             }
         }
 
