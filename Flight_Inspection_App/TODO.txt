@@ -1,0 +1,22 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Flight_Inspection_App
+{
+    class TODO
+    {
+
+    1. Play button - make sure csv file was uploaded (boolean variable = false)
+    2. Play button - make sure Tcp connection was made
+    3. Start running when clicking on play
+    4. Pause when clicking pause (freeze the picture)
+    5. Slider moves according to flight time (currently sent line) 
+    6. Change current line sent according to slider movement
+    7. Show current time
+    8. Change speed
+    9. Jump 10 second ahead or back 
+    10. 
+
+    }
+}

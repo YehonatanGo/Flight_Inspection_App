@@ -17,7 +17,7 @@
 
 
         <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine">
-            <Slider Width="570" Margin="2" Background="BlanchedAlmond"/>
+            <Slider Width="570" Margin="2" Background="BlanchedAlmond" Minimum="0" Maximum="30" Value="15"/>
             <Separator Margin="3"/>
             <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
                 <Button x:Name="Button_Backward" FontFamily="Segoe MDL2 Assets" Content="&#xEDD9;&#xEDD9;" HorizontalAlignment="Left"/>

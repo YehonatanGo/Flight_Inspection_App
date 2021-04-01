@@ -35,9 +35,6 @@ namespace Flight_Inspection_App
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
             vm.start();
-            /*IClientModel c = new myClientModel();
-            *//*c.Path = path;*//*
-            c.connectFlightGear();*/
 
 
         }

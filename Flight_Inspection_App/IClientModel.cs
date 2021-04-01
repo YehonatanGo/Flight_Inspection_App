@@ -10,13 +10,20 @@ namespace Flight_Inspection_App
         string Path { get; set; }
         bool Play { get; set; }
         double PlaySpeed { get; set; }
-
         int RunningLine { get; set; }
 
 
 
-        public void connect(string ip, int port);
+
+
+        // open FG and open TCP connection 
+        public void connectFlightGear(string ip, int port);
+
+        // create a thread, start sending data in a loop
         public void start();
+
+        // send a line
+        public void sendLine();
 
         public void loadFileToMap();
 

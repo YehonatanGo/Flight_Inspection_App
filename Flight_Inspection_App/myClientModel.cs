@@ -44,21 +44,21 @@ namespace Flight_Inspection_App
         public void connectFlightGear()
         {
             // cmd process
-            Process p = new Process();
-            p.StartInfo.FileName = "cmd.exe";
-            p.StartInfo.UseShellExecute = false;
-            p.StartInfo.WorkingDirectory = @"C:\Program Files\FlightGear 2020.3.6\bin";
-            p.StartInfo.RedirectStandardOutput = false;
-            p.StartInfo.RedirectStandardInput = true;
-            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
-            p.StartInfo.CreateNoWindow = true;
-            p.Start();
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = "cmd.exe";
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.StartInfo.WorkingDirectory = @"C:\Program Files\FlightGear 2020.3.6\bin";
+            cmd.StartInfo.RedirectStandardOutput = false;
+            cmd.StartInfo.RedirectStandardInput = true;
+            cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            cmd.StartInfo.CreateNoWindow = true;
+            cmd.Start();
 
             // run FlightGear
-            p.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
+            cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
             // wait till FG starts
-            Thread.Sleep(20000);
+            Thread.Sleep(100000);
 
             var client = new TcpClient("localhost", 5400);
             NetworkStream ns = client.GetStream();
@@ -95,6 +95,16 @@ namespace Flight_Inspection_App
         }
 
         public void disconnect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void connectFlightGear(string ip, int port)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void sendLine()
         {
             throw new System.NotImplementedException();
         }
