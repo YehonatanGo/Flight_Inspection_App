@@ -21,7 +21,7 @@ namespace Flight_Inspection_App
             path = "";
         }
 
-        private void Button_OpenDataFile(object sender, RoutedEventArgs e)
+        private void Button_OpenFlightDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             /*openFileDialog.Filter = "XML files (*.xml)|*.xml";*/
@@ -32,7 +32,7 @@ namespace Flight_Inspection_App
             }
         }
 
-        private void Button_ShowFlight(object sender, RoutedEventArgs e)
+        private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
             vm.start();
             /*IClientModel c = new myClientModel();
