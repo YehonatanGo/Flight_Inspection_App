@@ -43,9 +43,24 @@ namespace Flight_Inspection_App
 
         public void connectFlightGear()
         {
+            // cmd process
+            Process p = new Process();
+            p.StartInfo.FileName = "cmd.exe";
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.WorkingDirectory = @"C:\Program Files\FlightGear 2020.3.6\bin";
+            p.StartInfo.RedirectStandardOutput = false;
+            p.StartInfo.RedirectStandardInput = true;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            p.StartInfo.CreateNoWindow = true;
+            p.Start();
+
+            // run FlightGear
+            p.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
+
+            // wait till FG starts
+            Thread.Sleep(20000);
+
             var client = new TcpClient("localhost", 5400);
-
-
             NetworkStream ns = client.GetStream();
             var file = new System.IO.StreamReader(path);
             string line;
@@ -83,11 +98,5 @@ namespace Flight_Inspection_App
         {
             throw new System.NotImplementedException();
         }
-
-        /**
-         * ViewModel:
-         * cm.ProC += delgate(){.....};
-         * 
-         */
     }
 }
