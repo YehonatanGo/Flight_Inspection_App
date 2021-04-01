@@ -32,7 +32,7 @@ namespace Flight_Inspection_App
             }
         }
 
-        private void Button_Play(object sender, RoutedEventArgs e)
+        private void Button_ShowFlight(object sender, RoutedEventArgs e)
         {
             vm.start();
             /*IClientModel c = new myClientModel();
