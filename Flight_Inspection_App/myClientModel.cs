@@ -43,8 +43,8 @@ namespace Flight_Inspection_App
             }
         }
 
-
-        public bool Play { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        volatile private bool play;
+        
         
         public double PlaySpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         
@@ -85,26 +85,12 @@ namespace Flight_Inspection_App
             // wait till FG starts
             Thread.Sleep(40000);
 
+            //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);
-            this.ns = client.GetStream();
-
-            /*   var file = new System.IO.StreamReader(path);*/
-
-            //send csv file to FlightGear, line after line
-            /*while ((line = file.ReadLine()) != null)
-            {
-                line += "\r\n";
-                ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
-                ns.Flush();
-                Thread.Sleep(100);
-            }
-
-            file.Close();*/
-            
-
+            this.ns = client.GetStream();        
         }
 
-
+        // creating thread and runs sendLines method.
         public void start()
         {
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
@@ -112,6 +98,8 @@ namespace Flight_Inspection_App
             sending_lines_thread.Join();
 
         }
+
+        //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
             string line;
@@ -132,15 +120,11 @@ namespace Flight_Inspection_App
             throw new System.NotImplementedException();
         }
 
+        //closing all the connections
         public void disconnect()
         {
             ns.Close();
             client.Close();
-        }
-
-        public void connectFlightGear(string ip, int port)
-        {
-            throw new System.NotImplementedException();
         }
 
     }
