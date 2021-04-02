@@ -22,7 +22,7 @@
             <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
                 <Button x:Name="Button_Backward" FontFamily="Segoe MDL2 Assets" Content="&#xEDD9;&#xEDD9;" HorizontalAlignment="Left"/>
                 <Separator Margin="3"/>
-                <Button x:Name="Button_Play" FontFamily="Segoe MDL2 Assets" Content="&#xF5B0;" HorizontalAlignment="Left"/>
+                <Button x:Name="Button_Play" FontFamily="Segoe MDL2 Assets" Content="&#xF5B0;" HorizontalAlignment="Left" Click="Button_Play_Click"/>
                 <Separator Margin="3"/>
                 <Button x:Name="Button_Pause" FontFamily="Segoe MDL2 Assets" Content="&#xF8AE;" HorizontalAlignment="Left"/>
                 <Separator Margin="3"/>

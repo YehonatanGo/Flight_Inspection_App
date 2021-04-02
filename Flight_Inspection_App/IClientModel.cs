@@ -13,27 +13,21 @@ namespace Flight_Inspection_App
         int RunningLine { get; set; }
 
 
-
-
-
-        // open FG and open TCP connection 
-        public void connectFlightGear(string ip, int port);
+        // read the csv file into CsvHanlder, open FG and open TCP connection 
+        public void connectFlightGear();
 
         // create a thread, start sending data in a loop
         public void start();
 
         // send a line
-        public void sendLine();
+        public void sendLines();
 
         public void loadFileToMap();
 
         public void disconnect();
 
 
-
-        public void connectFlightGear();
         public void NotifyPropertyChanged(string propName);
     }
-
 
 }

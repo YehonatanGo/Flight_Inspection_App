@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
@@ -9,8 +10,11 @@ namespace Flight_Inspection_App
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-
-
+        volatile private CsvHandler csv_handler;
+        volatile private NetworkStream ns;
+        volatile private TcpClient client;
+        volatile private Thread sending_lines_thread;
+  
         private string path;
         public string Path
         {
@@ -25,9 +29,26 @@ namespace Flight_Inspection_App
             }
         }
 
+        private int running_line;
+        public int RunningLine
+        {
+            set
+            {
+                running_line = value;
+                NotifyPropertyChanged("running_line");
+            }
+            get
+            {
+                return running_line;
+            }
+        }
+
+
         public bool Play { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        
         public double PlaySpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public int RunningLine { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        
+       
 
         public void NotifyPropertyChanged(string propName)
         {
@@ -38,11 +59,15 @@ namespace Flight_Inspection_App
         public myClientModel()
         {
             Path = "";
+            running_line = 0;
         }
 
 
         public void connectFlightGear()
         {
+
+            csv_handler = new CsvHandler(path);
+
             // cmd process
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -58,15 +83,15 @@ namespace Flight_Inspection_App
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
             // wait till FG starts
-            Thread.Sleep(100000);
+            Thread.Sleep(40000);
 
-            var client = new TcpClient("localhost", 5400);
-            NetworkStream ns = client.GetStream();
-            var file = new System.IO.StreamReader(path);
-            string line;
+            this.client = new TcpClient("localhost", 5400);
+            this.ns = client.GetStream();
+
+            /*   var file = new System.IO.StreamReader(path);*/
 
             //send csv file to FlightGear, line after line
-            while ((line = file.ReadLine()) != null)
+            /*while ((line = file.ReadLine()) != null)
             {
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
@@ -74,19 +99,32 @@ namespace Flight_Inspection_App
                 Thread.Sleep(100);
             }
 
-            file.Close();
-            ns.Close();
-            client.Close();
+            file.Close();*/
+            
+
         }
 
-        public void connect(string ip, int port)
-        {
-            throw new System.NotImplementedException();
-        }
 
         public void start()
         {
-            throw new System.NotImplementedException();
+            sending_lines_thread = new Thread(new ThreadStart(sendLines));
+            sending_lines_thread.Start();
+            sending_lines_thread.Join();
+
+        }
+        public void sendLines()
+        {
+            string line;
+            while (running_line < csv_handler.getRowCount())
+            {
+                line = csv_handler.getLine(running_line);
+                line += "\r\n";
+                ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
+                ns.Flush();
+                Thread.Sleep(10);
+                running_line++;
+                Trace.WriteLine(line);
+            }
         }
 
         public void loadFileToMap()
@@ -96,7 +134,8 @@ namespace Flight_Inspection_App
 
         public void disconnect()
         {
-            throw new System.NotImplementedException();
+            ns.Close();
+            client.Close();
         }
 
         public void connectFlightGear(string ip, int port)
@@ -104,9 +143,5 @@ namespace Flight_Inspection_App
             throw new System.NotImplementedException();
         }
 
-        public void sendLine()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

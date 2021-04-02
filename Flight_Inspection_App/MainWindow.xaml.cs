@@ -34,9 +34,13 @@ namespace Flight_Inspection_App
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
+
             vm.start();
+        }
 
-
+        private void Button_Play_Click(object sender, RoutedEventArgs e)
+        {
+            
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Flight_Inspection_App
         public CsvHandler(string path)
         {
             this.path = path;
+            row_count = 0;
             parseCsv();
         }
 
@@ -25,8 +26,8 @@ namespace Flight_Inspection_App
                     var line = reader.ReadLine();
                     if (line == null) continue;
                     my_list.Add(line);
+                    row_count++;
                 }
-                row_count++;
             }
         }
 
@@ -53,6 +54,21 @@ namespace Flight_Inspection_App
             }
             return featuresDict;
 
+        }
+
+        public List<string> getList()
+        {
+            return this.my_list;
+        }
+
+        public string getLine(int index)
+        {
+            return my_list[index];
+        }
+        
+        public int getRowCount()
+        {
+            return row_count;
         }
     }
 }

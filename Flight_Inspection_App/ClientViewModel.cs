@@ -39,6 +39,8 @@ namespace Flight_Inspection_App
         public void start()
         {
             model.connectFlightGear();
+            model.start();
+            model.disconnect();
         }
 
 
