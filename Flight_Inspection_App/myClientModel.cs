@@ -44,7 +44,7 @@ namespace Flight_Inspection_App
         }
 
         volatile private bool play;
-        
+        public bool Play { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         
         public double PlaySpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         
