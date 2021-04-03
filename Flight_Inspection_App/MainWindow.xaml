@@ -12,7 +12,7 @@
 
     <Grid>
 
-        <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" Margin="400,378,224,10"/>
+        <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" Margin="400,378,224,10" IsEnabled="False"/>
         <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Margin="238,378,400,10"/>
 
 
@@ -24,7 +24,7 @@
                 <Separator Margin="3"/>
                 <Button x:Name="Button_Play" FontFamily="Segoe MDL2 Assets" Content="&#xF5B0;" HorizontalAlignment="Left" Click="Button_Play_Click"/>
                 <Separator Margin="3"/>
-                <Button x:Name="Button_Pause" FontFamily="Segoe MDL2 Assets" Content="&#xF8AE;" HorizontalAlignment="Left"/>
+                <Button x:Name="Button_Pause" FontFamily="Segoe MDL2 Assets" Content="&#xF8AE;" HorizontalAlignment="Left" Click="Button_Pause_Click"/>
                 <Separator Margin="3"/>
                 <Button x:Name="Button_Stop" FontFamily="Segoe MDL2 Assets" Content="&#xE71A;" HorizontalAlignment="Left"/>
                 <Separator Margin="3"/>

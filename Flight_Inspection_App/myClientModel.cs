@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
@@ -14,6 +13,7 @@ namespace Flight_Inspection_App
         volatile private NetworkStream ns;
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
+        volatile private bool isAlreadyStarted;
   
         private string path;
         public string Path
@@ -44,12 +44,38 @@ namespace Flight_Inspection_App
         }
 
         volatile private bool play;
-        public bool Play { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public bool Play { get
+            {
+                return play;
+            }
+            set
+            {
+                play = value;
+
+                if(play)
+                {
+                    if(isAlreadyStarted == false)
+                    {
+                        isAlreadyStarted = true;
+                        start();
+
+                    }
+                    else
+                    {
+                        // resume playing by waking up sending lines thread
+                        sending_lines_thread.Resume();
+                    }
+                } else 
+                // play = false
+                {
+                    sending_lines_thread.Suspend();
+                }
+            }
+         }
         
         public double PlaySpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
         
-       
-
+    
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
@@ -61,7 +87,6 @@ namespace Flight_Inspection_App
             Path = "";
             running_line = 0;
         }
-
 
         public void connectFlightGear()
         {
@@ -78,7 +103,6 @@ namespace Flight_Inspection_App
             cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
             cmd.StartInfo.CreateNoWindow = true;
             cmd.Start();
-
             // run FlightGear
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
@@ -95,7 +119,7 @@ namespace Flight_Inspection_App
         {
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
-            sending_lines_thread.Join();
+            /*sending_lines_thread.Join();*/
 
         }
 
@@ -113,11 +137,6 @@ namespace Flight_Inspection_App
                 running_line++;
                 Trace.WriteLine(line);
             }
-        }
-
-        public void loadFileToMap()
-        {
-            throw new System.NotImplementedException();
         }
 
         //closing all the connections

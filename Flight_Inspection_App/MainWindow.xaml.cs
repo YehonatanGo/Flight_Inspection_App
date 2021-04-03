@@ -11,6 +11,7 @@ namespace Flight_Inspection_App
     {
 
         private String path;
+        private bool isAlreadyPlayed;
         ClientViewModel vm;
         public MainWindow()
         {
@@ -19,28 +20,35 @@ namespace Flight_Inspection_App
             vm = new ClientViewModel(new myClientModel());
             DataContext = vm;
             path = "";
+            isAlreadyPlayed = false;
         }
 
         private void Button_OpenFlightDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            /*openFileDialog.Filter = "XML files (*.xml)|*.xml";*/
-            /*openFileDialog.Filter = "CSV files (*.csv)|*.csv";*/
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
                 vm.VM_Path = openFileDialog.FileName;
+                Button_ShowFlight.IsEnabled = true;
             }
         }
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
-
-            vm.start();
+            Button_ShowFlight.IsEnabled = false;
+            Button_OpenDataFile.IsEnabled = false;
+            vm.connectFlightGear();
         }
 
         private void Button_Play_Click(object sender, RoutedEventArgs e)
         {
-            
+            vm.VM_play = true;
+        }
+
+        private void Button_Pause_Click(object sender, RoutedEventArgs e)
+        {
+            vm.VM_play = false;
         }
     }
 }

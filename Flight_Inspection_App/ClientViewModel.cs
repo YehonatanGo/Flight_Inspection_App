@@ -36,11 +36,23 @@ namespace Flight_Inspection_App
             }
         }
 
-        public void start()
+        private bool play;
+        public bool VM_play {
+            get
+            {
+                return play;
+            }
+            set
+            {
+                model.Play = value;
+            }
+        }
+
+        public void connectFlightGear()
         {
             model.connectFlightGear();
-            model.start();
-            model.disconnect();
+            /*model.start();
+            model.disconnect();*/
         }
 
 

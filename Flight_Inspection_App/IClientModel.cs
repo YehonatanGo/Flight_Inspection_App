@@ -22,8 +22,6 @@ namespace Flight_Inspection_App
         // send a line
         public void sendLines();
 
-        public void loadFileToMap();
-
         public void disconnect();
 
 
