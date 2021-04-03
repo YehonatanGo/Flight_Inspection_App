@@ -57,18 +57,20 @@ namespace Flight_Inspection_App
 
                 if(play)
                 {
+                    // first time played is pressed - start the sending thread
                     if(isAlreadyStarted == false)
                     {
                         isAlreadyStarted = true;
                         start();
 
                     }
+                    // play after pausing - wake up sending thread
                     else
                     {
                         mre.Set();
                     }
                 } else 
-                // play = false
+                // play = false - put sending thread asleep
                 {
                     mre.Reset();
                 }
@@ -139,13 +141,17 @@ namespace Flight_Inspection_App
             string line;
             while (running_line < csv_handler.getRowCount())
         {
+                // wait fot pause/play signal
                 mre.WaitOne();
+
                 line = csv_handler.getLine(running_line);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
                 Thread.Sleep(sleepTime);
                 running_line++;
+
+                // just for debug
                 Trace.WriteLine(line);
             }
         }
@@ -157,5 +163,15 @@ namespace Flight_Inspection_App
             client.Close();
         }
 
+        // return to the begining of the flight & pause
+        public void stop()
+        {
+            RunningLine = 0;
+            // to bring to picture back to the begining, let the flight play for as little as possible 
+            Play = true;
+            Thread.Sleep(35);
+            // then pause
+            Play = false;
+        }
     }
 }

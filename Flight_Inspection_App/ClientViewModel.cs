@@ -66,8 +66,10 @@ namespace Flight_Inspection_App
             model.connectFlightGear();
         }
 
-
-
+        public void stop()
+        {
+            model.stop();
+        }
 
     }
 }

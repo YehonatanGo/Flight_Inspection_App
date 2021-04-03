@@ -24,7 +24,7 @@
                 <Separator Margin="3"/>
                 <Button x:Name="Button_Pause" FontFamily="Segoe MDL2 Assets" Content="&#xF8AE;" HorizontalAlignment="Left" Click="Button_Pause_Click"/>
                 <Separator Margin="3"/>
-                <Button x:Name="Button_Stop" FontFamily="Segoe MDL2 Assets" Content="&#xE71A;" HorizontalAlignment="Left"/>
+                <Button x:Name="Button_Stop" FontFamily="Segoe MDL2 Assets" Content="&#xE73B;" HorizontalAlignment="Left" Click="Button_Stop_Click"/>
                 <Separator Margin="3"/>
                 <Button x:Name="Button_Forward" FontFamily="Segoe MDL2 Assets" Content="&#xEDDA;&#xEDDA;" HorizontalAlignment="Left"/>
                 <Separator Margin="10"/>

@@ -54,5 +54,10 @@ namespace Flight_Inspection_App
         {
             vm.VM_PLAYSPEED = Slider_Speed.Value;
         }
+
+        private void Button_Stop_Click(object sender, RoutedEventArgs e)
+        {
+            vm.stop();
+        }
     }
 }

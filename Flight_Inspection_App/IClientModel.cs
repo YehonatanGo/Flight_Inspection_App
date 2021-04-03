@@ -24,8 +24,10 @@ namespace Flight_Inspection_App
         // send a line
         public void sendLines();
 
-        public void disconnect();
+        // stop button - pause and go back to the begiging
+        public void stop();
 
+        public void disconnect();
 
         public void NotifyPropertyChanged(string propName);
     }
