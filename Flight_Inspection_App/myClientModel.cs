@@ -14,6 +14,8 @@ namespace Flight_Inspection_App
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
+        
+        ManualResetEvent mre = new ManualResetEvent(true);
   
         private string path;
         public string Path
@@ -62,13 +64,12 @@ namespace Flight_Inspection_App
                     }
                     else
                     {
-                        // resume playing by waking up sending lines thread
-                        sending_lines_thread.Resume();
+                        mre.Set();
                     }
                 } else 
                 // play = false
                 {
-                    sending_lines_thread.Suspend();
+                    mre.Reset();
                 }
             }
          }
@@ -119,16 +120,16 @@ namespace Flight_Inspection_App
         {
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
-            /*sending_lines_thread.Join();*/
 
         }
-
+        
         //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
             string line;
             while (running_line < csv_handler.getRowCount())
-            {
+        {
+                mre.WaitOne();
                 line = csv_handler.getLine(running_line);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
