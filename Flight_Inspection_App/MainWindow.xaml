@@ -11,10 +11,8 @@
     </Window.Resources>
 
     <Grid>
-
         <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" Margin="400,378,224,10" IsEnabled="False"/>
         <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Margin="238,378,400,10"/>
-
 
         <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine">
             <Slider Width="570" Margin="2" Background="BlanchedAlmond" Minimum="0" Maximum="30" Value="15"/>
@@ -33,16 +31,9 @@
                 <TextBlock x:Name="Text_CurrnetTime" Background="Gold" Text="- current time -"/>
                 <Separator Margin="10"/>
                 <TextBlock x:Name="Text_PlaySpeed" Background="Goldenrod" Text="Play speed:    "/>
-                <Slider Background="Goldenrod" Minimum="0" Maximum="30" Value ="15" TickPlacement="BottomRight" TickFrequency="5" IsSnapToTickEnabled="True" Width="80"  />
+                <Slider Background="Goldenrod" x:Name="Slider_Speed" Minimum="0.1" Maximum="3.1" Value ="1.6" TickPlacement="BottomRight" TickFrequency="0.2" IsSnapToTickEnabled="True" Width="80" ValueChanged="Slider_ValueChanged"  />
 
             </StackPanel>
-
         </StackPanel>
-
-
-
     </Grid>
-
-
-
 </Window>

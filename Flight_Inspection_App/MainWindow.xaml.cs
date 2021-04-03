@@ -15,9 +15,8 @@ namespace Flight_Inspection_App
         ClientViewModel vm;
         public MainWindow()
         {
-
-            InitializeComponent();
             vm = new ClientViewModel(new myClientModel());
+            InitializeComponent();
             DataContext = vm;
             path = "";
             isAlreadyPlayed = false;
@@ -49,6 +48,11 @@ namespace Flight_Inspection_App
         private void Button_Pause_Click(object sender, RoutedEventArgs e)
         {
             vm.VM_play = false;
+        }
+
+        private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            vm.VM_PLAYSPEED = Slider_Speed.Value;
         }
     }
 }

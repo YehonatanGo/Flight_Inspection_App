@@ -14,6 +14,7 @@ namespace Flight_Inspection_App
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
+        volatile private int sleepTime;
         
         ManualResetEvent mre = new ManualResetEvent(true);
   
@@ -73,8 +74,16 @@ namespace Flight_Inspection_App
                 }
             }
          }
-        
-        public double PlaySpeed { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+
+        private double playSpeed;
+        public double PlaySpeed { get {
+                return playSpeed;
+            }
+            set {
+                playSpeed = value;
+                sleepTime = (int)((1 / value) * 100);
+            }
+        }
         
     
         public void NotifyPropertyChanged(string propName)
@@ -87,6 +96,7 @@ namespace Flight_Inspection_App
         {
             Path = "";
             running_line = 0;
+            PlaySpeed = 1;
         }
 
         public void connectFlightGear()
@@ -134,7 +144,7 @@ namespace Flight_Inspection_App
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
-                Thread.Sleep(10);
+                Thread.Sleep(sleepTime);
                 running_line++;
                 Trace.WriteLine(line);
             }

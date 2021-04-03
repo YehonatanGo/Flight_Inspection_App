@@ -48,11 +48,22 @@ namespace Flight_Inspection_App
             }
         }
 
+        private double VM_playSpeed;
+        public double VM_PLAYSPEED
+        {
+            get
+            {
+                return model.PlaySpeed;
+            }
+            set
+            {
+                model.PlaySpeed = value;
+            }
+        }
+
         public void connectFlightGear()
         {
             model.connectFlightGear();
-            /*model.start();
-            model.disconnect();*/
         }
 
 

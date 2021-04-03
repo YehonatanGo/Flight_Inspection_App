@@ -13,6 +13,8 @@ namespace Flight_Inspection_App
         int RunningLine { get; set; }
 
 
+
+
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();
 
