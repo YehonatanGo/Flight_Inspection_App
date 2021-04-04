@@ -68,7 +68,7 @@ namespace Flight_Inspection_App
 
         private void Button_Backward_Click(object sender, RoutedEventArgs e)
         {
-            vm.VM_Running_Line -= 150;
+            vm.VM_Running_Line -= 150;//
         }
     }
 }
