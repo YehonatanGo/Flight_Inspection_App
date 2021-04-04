@@ -217,21 +217,19 @@ namespace Flight_Inspection_App
         //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
-            double current_aileron_value, current_elevator_value;
             string line;
             while (running_line < csv_handler.getRowCount())
             {
                 // wait fot pause/play signal
                 mre.WaitOne();
                 line = csv_handler.getLine(running_line);
-                double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
-                current_aileron_value = doubles[0];
-                current_elevator_value = doubles[1];
-                calculateAileron(current_aileron_value);
-                calculateElevator(current_elevator_value);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
+                calculateAileron(csv_handler.getAileronByLine(running_line));
+                calculateElevator(csv_handler.getElevatorByLine(running_line));
+                Throttle = csv_handler.getThrottleByLine(running_line);
+                Rudder = csv_handler.getRudderByLine(running_line);
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }

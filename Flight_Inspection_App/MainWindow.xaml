@@ -151,6 +151,17 @@
                 </Canvas.Resources>
             </Canvas>
         </Canvas>
-        
+        <Slider Margin="71,90,600,273" Minimum="0" Maximum="1" RenderTransformOrigin="0.5,0.5" Value="{Binding VM_Throttle, Mode=OneWay}">
+            <Slider.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="-90.591"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Slider.RenderTransform>
+        </Slider>
+        <Slider Margin="59,233,575,156" Minimum="-1" Maximum="1" Value="{Binding VM_Rudder , Mode=OneWay}"/>
+
     </Grid>
 </Window>
