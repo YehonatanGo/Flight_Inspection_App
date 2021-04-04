@@ -11,10 +11,18 @@
     </Window.Resources>
 
     <Grid>
-        <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" Margin="400,378,224,10" IsEnabled="False"/>
-        <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Margin="238,378,400,10"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="37*"/>
+            <ColumnDefinition Width="11*"/>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="455*"/>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="243*"/>
+        </Grid.ColumnDefinitions>
+        <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" Margin="331,378,224,10" IsEnabled="False" Grid.ColumnSpan="3" Grid.Column="3"/>
+        <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Margin="169,378,124,10" Grid.Column="3"/>
 
-        <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine">
+        <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine" Grid.ColumnSpan="6">
             <Slider x:Name="Slider_Time" Width="570" Margin="2" Background="BlanchedAlmond" Minimum="0" Maximum="2500" Value="{Binding VM_Running_Line, Mode=TwoWay}"/>
             <Separator Margin="3"/>
             <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
@@ -36,7 +44,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Canvas  x:Name="Base" Margin="0" Width="340" Height="340">
+        <Canvas  x:Name="Base" Margin="161,47,230,47" Width="340" Height="340" Grid.ColumnSpan="3" Grid.Column="3">
             <Ellipse HorizontalAlignment="Left" Height="340" VerticalAlignment="Top" Width="340">
                 <Ellipse.Fill>
                     <RadialGradientBrush>
@@ -151,7 +159,7 @@
                 </Canvas.Resources>
             </Canvas>
         </Canvas>
-        <Slider Margin="71,90,600,273" Minimum="0" Maximum="1" RenderTransformOrigin="0.5,0.5" Value="{Binding VM_Throttle, Mode=OneWay}">
+        <Slider x:Name="Slider_Throttle" Margin="2,90,324,273" Minimum="0" Maximum="1" RenderTransformOrigin="0.5,0.5" Value="{Binding VM_Throttle, Mode=OneWay}" Grid.Column="3">
             <Slider.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -161,7 +169,7 @@
                 </TransformGroup>
             </Slider.RenderTransform>
         </Slider>
-        <Slider Margin="59,233,575,156" Minimum="-1" Maximum="1" Value="{Binding VM_Rudder , Mode=OneWay}"/>
+        <Slider x:Name="Slider_Rudder" Margin="11,233,299,156" Minimum="-1" Maximum="1" Value="{Binding VM_Rudder , Mode=OneWay}" Grid.Column="2" Grid.ColumnSpan="2"/>
 
     </Grid>
 </Window>

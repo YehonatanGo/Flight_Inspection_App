@@ -76,7 +76,7 @@ namespace Flight_Inspection_App
             }
         }
 
-        ManualResetEvent mre = new ManualResetEvent(true);
+        ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
         private string path;
         public string Path
@@ -97,11 +97,12 @@ namespace Flight_Inspection_App
         {
             set
             {
+                // check edge cases - less than 0, more than all the rows
                 if (value < 0)
                 {
                     value = 0;
                 }
-                if (value > csv_handler.getRowCount())
+                if (value > numOfLines)
                 {
                     value = numOfLines;
                 }
@@ -137,13 +138,13 @@ namespace Flight_Inspection_App
                     // play after pausing - wake up sending thread
                     else
                     {
-                        mre.Set();
+                        manualResetEvent.Set();
                     }
                 }
                 else
                 // play = false - put sending thread asleep
                 {
-                    mre.Reset();
+                    manualResetEvent.Reset();
                 }
             }
         }
@@ -218,22 +219,32 @@ namespace Flight_Inspection_App
         public void sendLines()
         {
             string line;
-            while (running_line < csv_handler.getRowCount())
+            while (running_line < numOfLines)
             {
-                // wait fot pause/play signal
-                mre.WaitOne();
+                // wait for pause/play signal if needed
+                manualResetEvent.WaitOne();
+                // send line to FG
                 line = csv_handler.getLine(running_line);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
+                //update the joystick according to Aileron and Elevator values
                 calculateAileron(csv_handler.getAileronByLine(running_line));
                 calculateElevator(csv_handler.getElevatorByLine(running_line));
+                // update throttle and rudder sliders
                 Throttle = csv_handler.getThrottleByLine(running_line);
                 Rudder = csv_handler.getRudderByLine(running_line);
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }
         }
+
+        /**
+         * joystick center value is (125, 125)
+         * Aileron contorls X-axis, Elevator controls Y-axis.
+         * Both in range [65, 185] - up to 60 from the center.
+         * real Aileron and Elevator values are in range [-1,1]
+         */
 
         private void calculateAileron(double current)
         {
@@ -261,6 +272,7 @@ namespace Flight_Inspection_App
             Play = false;
         }
 
+        // sending one line, needed when we only want to display current line without further playing
         public void sendOneLine()
         {
             string line = csv_handler.getLine(running_line);
