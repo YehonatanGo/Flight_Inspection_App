@@ -49,7 +49,7 @@ namespace Flight_Inspection_App
         }
 
         private double VM_playSpeed;
-        public double VM_PLAYSPEED
+        public double VM_PLAY_SPEED
         {
             get
             {
@@ -58,6 +58,19 @@ namespace Flight_Inspection_App
             set
             {
                 model.PlaySpeed = value;
+            }
+        }
+
+        private int VM_runningLine;
+        public int VM_RUNNING_LINE
+        {
+            get
+            {
+                return model.RunningLine;
+            }
+            set
+            {
+                model.RunningLine = value;
             }
         }
 

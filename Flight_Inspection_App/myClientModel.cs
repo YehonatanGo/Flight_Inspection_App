@@ -37,6 +37,14 @@ namespace Flight_Inspection_App
         {
             set
             {
+                if(value < 0)
+                {
+                    value = 0;
+                }
+                if(value > csv_handler.getRowCount())
+                {
+                    value = csv_handler.getRowCount();
+                }
                 running_line = value;
                 NotifyPropertyChanged("running_line");
             }
@@ -167,11 +175,17 @@ namespace Flight_Inspection_App
         public void stop()
         {
             RunningLine = 0;
-            // to bring to picture back to the begining, let the flight play for as little as possible 
-            Play = true;
-            Thread.Sleep(35);
-            // then pause
+            sendOneLine();
             Play = false;
+        }
+
+        public void sendOneLine()
+        {
+            string line = csv_handler.getLine(running_line);
+            line += "\r\n";
+            ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
+            ns.Flush();
+            Thread.Sleep(sleepTime);
         }
     }
 }

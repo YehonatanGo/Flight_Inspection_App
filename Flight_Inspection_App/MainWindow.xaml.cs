@@ -52,12 +52,22 @@ namespace Flight_Inspection_App
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            vm.VM_PLAYSPEED = Slider_Speed.Value;
+            vm.VM_PLAY_SPEED = Slider_Speed.Value;
         }
 
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
         {
             vm.stop();
+        }
+
+        private void Button_Forward_Click(object sender, RoutedEventArgs e)
+        {
+            vm.VM_RUNNING_LINE += 150;
+        }
+
+        private void Button_Backward_Click(object sender, RoutedEventArgs e)
+        {
+            vm.VM_RUNNING_LINE -= 150;
         }
     }
 }
