@@ -15,16 +15,76 @@ namespace Flight_Inspection_App
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
         volatile private int sleepTime;
-        
+
+
+        private double elevator;
+        public double Elevator
+        {
+            get
+            {
+                return this.elevator;
+            }
+            set
+            {
+
+                this.elevator = value;
+                NotifyPropertyChanged("Elevator");
+            }
+        }
+
+        private double aileron;
+
+        public double Aileron
+        {
+            get
+            {
+                return this.aileron;
+            }
+            set
+            {
+                this.aileron = value;
+                NotifyPropertyChanged("Aileron");
+            }
+        }
+
+        private double rudder;
+
+        public double Rudder
+        {
+            get
+            {
+                return this.rudder;
+            }
+            set
+            {
+                this.rudder = value;
+                NotifyPropertyChanged("Rudder");
+            }
+        }
+
+        private double throttle;
+        public double Throttle
+        {
+            get
+            {
+                return this.throttle;
+            }
+            set
+            {
+                this.throttle = value;
+                NotifyPropertyChanged("Throttle");
+            }
+        }
+
         ManualResetEvent mre = new ManualResetEvent(true);
-  
+
         private string path;
         public string Path
         {
             set
             {
                 path = value;
-                NotifyPropertyChanged("path");
+                NotifyPropertyChanged("Path");
             }
             get
             {
@@ -37,16 +97,16 @@ namespace Flight_Inspection_App
         {
             set
             {
-                if(value < 0)
+                if (value < 0)
                 {
                     value = 0;
                 }
-                if(value > csv_handler.getRowCount())
+                if (value > csv_handler.getRowCount())
                 {
                     value = csv_handler.getRowCount();
                 }
                 running_line = value;
-                NotifyPropertyChanged("running_line");
+                NotifyPropertyChanged("Running_line");
             }
             get
             {
@@ -55,7 +115,9 @@ namespace Flight_Inspection_App
         }
 
         volatile private bool play;
-        public bool Play { get
+        public bool Play
+        {
+            get
             {
                 return play;
             }
@@ -63,10 +125,10 @@ namespace Flight_Inspection_App
             {
                 play = value;
 
-                if(play)
+                if (play)
                 {
                     // first time played is pressed - start the sending thread
-                    if(isAlreadyStarted == false)
+                    if (isAlreadyStarted == false)
                     {
                         isAlreadyStarted = true;
                         start();
@@ -77,19 +139,24 @@ namespace Flight_Inspection_App
                     {
                         mre.Set();
                     }
-                } else 
+                }
+                else
                 // play = false - put sending thread asleep
                 {
                     mre.Reset();
                 }
             }
-         }
+        }
 
         private double playSpeed;
-        public double PlaySpeed { get {
+        public double PlaySpeed
+        {
+            get
+            {
                 return playSpeed;
             }
-            set {
+            set
+            {
                 playSpeed = value;
                 sleepTime = (int)((1 / playSpeed) * 160);
             }
@@ -109,6 +176,8 @@ namespace Flight_Inspection_App
             Path = "";
             running_line = 0;
             PlaySpeed = 1;
+            elevator = 125;
+            aileron = 125;
         }
 
         public void connectFlightGear()
@@ -134,7 +203,7 @@ namespace Flight_Inspection_App
 
             //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);
-            this.ns = client.GetStream();        
+            this.ns = client.GetStream();
         }
 
         // creating thread and runs sendLines method.
@@ -144,28 +213,38 @@ namespace Flight_Inspection_App
             sending_lines_thread.Start();
 
         }
-        
+
         //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
+            double current_aileron_value, current_elevator_value;
             string line;
             while (running_line < csv_handler.getRowCount())
-        {
+            {
                 // wait fot pause/play signal
                 mre.WaitOne();
-
                 line = csv_handler.getLine(running_line);
+                double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
+                current_aileron_value = doubles[0];
+                current_elevator_value = doubles[1];
+                calculateAileron(current_aileron_value);
+                calculateElevator(current_elevator_value);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
                 Thread.Sleep(sleepTime);
-                running_line++;
-                NotifyPropertyChanged("running_line");
-
-
-                // just for debug
-                Trace.WriteLine(line);
+                RunningLine++;
             }
+        }
+
+        private void calculateAileron(double current)
+        {
+            Aileron = current * 60 + 125;
+        }
+
+        private void calculateElevator(double current)
+        {
+            Elevator = current * 60 + 125;
         }
 
         //closing all the connections

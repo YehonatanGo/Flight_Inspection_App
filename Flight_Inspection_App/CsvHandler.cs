@@ -9,6 +9,9 @@ namespace Flight_Inspection_App
         private string path;
         private int row_count;
         private List<string> my_list = new List<string>();
+        private List<double> aileron_list;
+        private List<double> elevator_list;
+
 
         public CsvHandler(string path)
         {
