@@ -21,7 +21,6 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        private string vm_path;
         public string VM_Path
         {
             get
@@ -36,7 +35,8 @@ namespace Flight_Inspection_App
         }
 
         private bool play;
-        public bool VM_play {
+        public bool VM_play
+        {
             get
             {
                 return play;
@@ -47,7 +47,6 @@ namespace Flight_Inspection_App
             }
         }
 
-        private double VM_playSpeed;
         public double VM_Play_Speed
         {
             get
@@ -60,7 +59,6 @@ namespace Flight_Inspection_App
             }
         }
 
-        private int VM_runningLine;
         public int VM_Running_Line
         {
             get
@@ -73,7 +71,6 @@ namespace Flight_Inspection_App
             }
         }
 
-        private int VM_numOfLines;
         public int VM_NumOfLines
         {
             get
@@ -85,6 +82,40 @@ namespace Flight_Inspection_App
                 model.NumOfLines = value;
             }
         }
+
+        public double VM_Elevator
+        {
+            get
+            {
+                return model.Elevator;
+            }
+        }
+
+
+        public double VM_Aileron
+        {
+            get
+            {
+                return model.Aileron;
+            }
+        }
+
+        public double VM_Rudder
+        {
+            get
+            {
+                return model.Rudder;
+            }
+        }
+
+        public double VM_Throttle
+        {
+            get
+            {
+                return model.Throttle;
+            }
+        }
+
 
         public void connectFlightGear()
         {

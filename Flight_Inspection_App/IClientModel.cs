@@ -11,9 +11,11 @@ namespace Flight_Inspection_App
         bool Play { get; set; }
         double PlaySpeed { get; set; }
         int RunningLine { get; set; }
-
         int NumOfLines { get; set; }
-
+        double Elevator { get; set; }
+        double Aileron { get; set; }
+        double Rudder { get; set; }
+        double Throttle { get; set; }
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();

@@ -16,6 +16,66 @@ namespace Flight_Inspection_App
         volatile private bool isAlreadyStarted;
         volatile private int sleepTime;
 
+
+        private double elevator;
+        public double Elevator
+        {
+            get
+            {
+                return this.elevator;
+            }
+            set
+            {
+
+                this.elevator = value;
+                NotifyPropertyChanged("Elevator");
+            }
+        }
+
+        private double aileron;
+
+        public double Aileron
+        {
+            get
+            {
+                return this.aileron;
+            }
+            set
+            {
+                this.aileron = value;
+                NotifyPropertyChanged("Aileron");
+            }
+        }
+
+        private double rudder;
+
+        public double Rudder
+        {
+            get
+            {
+                return this.rudder;
+            }
+            set
+            {
+                this.rudder = value;
+                NotifyPropertyChanged("Rudder");
+            }
+        }
+
+        private double throttle;
+        public double Throttle
+        {
+            get
+            {
+                return this.throttle;
+            }
+            set
+            {
+                this.throttle = value;
+                NotifyPropertyChanged("Throttle");
+            }
+        }
+
         ManualResetEvent mre = new ManualResetEvent(true);
 
         private string path;
@@ -24,7 +84,7 @@ namespace Flight_Inspection_App
             set
             {
                 path = value;
-                NotifyPropertyChanged("path");
+                NotifyPropertyChanged("Path");
             }
             get
             {
@@ -41,12 +101,12 @@ namespace Flight_Inspection_App
                 {
                     value = 0;
                 }
-                if (value > numOfLines)
+                if (value > csv_handler.getRowCount())
                 {
                     value = numOfLines;
                 }
                 running_line = value;
-                NotifyPropertyChanged("running_line");
+                NotifyPropertyChanged("Running_line");
             }
             get
             {
@@ -116,6 +176,8 @@ namespace Flight_Inspection_App
             Path = "";
             running_line = 0;
             PlaySpeed = 1;
+            elevator = 125;
+            aileron = 125;
         }
 
         public void connectFlightGear()
@@ -155,24 +217,34 @@ namespace Flight_Inspection_App
         //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
+            double current_aileron_value, current_elevator_value;
             string line;
-            while (running_line < numOfLines)
+            while (running_line < csv_handler.getRowCount())
             {
                 // wait fot pause/play signal
                 mre.WaitOne();
-                
                 line = csv_handler.getLine(running_line);
+                double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
+                current_aileron_value = doubles[0];
+                current_elevator_value = doubles[1];
+                calculateAileron(current_aileron_value);
+                calculateElevator(current_elevator_value);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
                 Thread.Sleep(sleepTime);
-                running_line++;
-                NotifyPropertyChanged("running_line");
-
-
-                // just for debug
-                Trace.WriteLine(line);
+                RunningLine++;
             }
+        }
+
+        private void calculateAileron(double current)
+        {
+            Aileron = current * 60 + 125;
+        }
+
+        private void calculateElevator(double current)
+        {
+            Elevator = current * 60 + 125;
         }
 
         //closing all the connections
