@@ -15,9 +15,9 @@ namespace Flight_Inspection_App
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
         volatile private int sleepTime;
-        
+
         ManualResetEvent mre = new ManualResetEvent(true);
-  
+
         private string path;
         public string Path
         {
@@ -37,13 +37,13 @@ namespace Flight_Inspection_App
         {
             set
             {
-                if(value < 0)
+                if (value < 0)
                 {
                     value = 0;
                 }
-                if(value > csv_handler.getRowCount())
+                if (value > numOfLines)
                 {
-                    value = csv_handler.getRowCount();
+                    value = numOfLines;
                 }
                 running_line = value;
                 NotifyPropertyChanged("running_line");
@@ -55,7 +55,9 @@ namespace Flight_Inspection_App
         }
 
         volatile private bool play;
-        public bool Play { get
+        public bool Play
+        {
+            get
             {
                 return play;
             }
@@ -63,10 +65,10 @@ namespace Flight_Inspection_App
             {
                 play = value;
 
-                if(play)
+                if (play)
                 {
                     // first time played is pressed - start the sending thread
-                    if(isAlreadyStarted == false)
+                    if (isAlreadyStarted == false)
                     {
                         isAlreadyStarted = true;
                         start();
@@ -77,19 +79,24 @@ namespace Flight_Inspection_App
                     {
                         mre.Set();
                     }
-                } else 
+                }
+                else
                 // play = false - put sending thread asleep
                 {
                     mre.Reset();
                 }
             }
-         }
+        }
 
         private double playSpeed;
-        public double PlaySpeed { get {
+        public double PlaySpeed
+        {
+            get
+            {
                 return playSpeed;
             }
-            set {
+            set
+            {
                 playSpeed = value;
                 sleepTime = (int)((1 / playSpeed) * 160);
             }
@@ -134,7 +141,7 @@ namespace Flight_Inspection_App
 
             //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);
-            this.ns = client.GetStream();        
+            this.ns = client.GetStream();
         }
 
         // creating thread and runs sendLines method.
@@ -144,16 +151,16 @@ namespace Flight_Inspection_App
             sending_lines_thread.Start();
 
         }
-        
+
         //sending the csv data from the csvHandler to the FG.
         public void sendLines()
         {
             string line;
-            while (running_line < csv_handler.getRowCount())
-        {
+            while (running_line < numOfLines)
+            {
                 // wait fot pause/play signal
                 mre.WaitOne();
-
+                
                 line = csv_handler.getLine(running_line);
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
