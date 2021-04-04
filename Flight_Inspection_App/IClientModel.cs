@@ -12,7 +12,7 @@ namespace Flight_Inspection_App
         double PlaySpeed { get; set; }
         int RunningLine { get; set; }
 
-
+        int NumOfLines { get; set; }
 
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 

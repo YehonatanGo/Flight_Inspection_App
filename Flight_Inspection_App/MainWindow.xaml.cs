@@ -38,6 +38,7 @@ namespace Flight_Inspection_App
             Button_ShowFlight.IsEnabled = false;
             Button_OpenDataFile.IsEnabled = false;
             vm.connectFlightGear();
+            Slider_Time.Maximum = vm.VM_NumOfLines;
         }
 
         private void Button_Play_Click(object sender, RoutedEventArgs e)
@@ -52,7 +53,7 @@ namespace Flight_Inspection_App
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            vm.VM_PLAY_SPEED = Slider_Speed.Value;
+            vm.VM_Play_Speed = Slider_Speed.Value;
         }
 
         private void Button_Stop_Click(object sender, RoutedEventArgs e)
@@ -62,12 +63,12 @@ namespace Flight_Inspection_App
 
         private void Button_Forward_Click(object sender, RoutedEventArgs e)
         {
-            vm.VM_RUNNING_LINE += 150;
+            vm.VM_Running_Line += 150;
         }
 
         private void Button_Backward_Click(object sender, RoutedEventArgs e)
         {
-            vm.VM_RUNNING_LINE -= 150;
+            vm.VM_Running_Line -= 150;
         }
     }
 }

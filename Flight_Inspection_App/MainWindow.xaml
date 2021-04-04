@@ -15,7 +15,7 @@
         <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Margin="238,378,400,10"/>
 
         <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine">
-            <Slider Width="570" Margin="2" Background="BlanchedAlmond" Minimum="0" Maximum="30" Value="15"/>
+            <Slider x:Name="Slider_Time" Width="570" Margin="2" Background="BlanchedAlmond" Minimum="0" Maximum="2500" Value="{Binding VM_Running_Line, Mode=TwoWay}"/>
             <Separator Margin="3"/>
             <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
                 <Button x:Name="Button_Backward" FontFamily="Segoe MDL2 Assets" Content="&#xEDD9;&#xEDD9;" HorizontalAlignment="Left" Click="Button_Backward_Click"/>

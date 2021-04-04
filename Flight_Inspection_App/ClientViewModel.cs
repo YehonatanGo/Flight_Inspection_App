@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
+
 using System.ComponentModel;
-using System.Text;
 
 namespace Flight_Inspection_App
 {
@@ -19,7 +18,7 @@ namespace Flight_Inspection_App
         }
         public void NotifyPropertyChanged(string propName)
         {
-
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
         private string vm_path;
@@ -49,7 +48,7 @@ namespace Flight_Inspection_App
         }
 
         private double VM_playSpeed;
-        public double VM_PLAY_SPEED
+        public double VM_Play_Speed
         {
             get
             {
@@ -62,7 +61,7 @@ namespace Flight_Inspection_App
         }
 
         private int VM_runningLine;
-        public int VM_RUNNING_LINE
+        public int VM_Running_Line
         {
             get
             {
@@ -71,6 +70,19 @@ namespace Flight_Inspection_App
             set
             {
                 model.RunningLine = value;
+            }
+        }
+
+        private int VM_numOfLines;
+        public int VM_NumOfLines
+        {
+            get
+            {
+                return model.NumOfLines;
+            }
+            set
+            {
+                model.NumOfLines = value;
             }
         }
 

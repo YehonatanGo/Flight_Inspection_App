@@ -91,11 +91,13 @@ namespace Flight_Inspection_App
             }
             set {
                 playSpeed = value;
-                sleepTime = (int)((1 / value) * 100);
+                sleepTime = (int)((1 / playSpeed) * 160);
             }
         }
-        
-    
+
+        private int numOfLines;
+        public int NumOfLines { get { return numOfLines; } set { numOfLines = value; } }
+
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
@@ -111,8 +113,8 @@ namespace Flight_Inspection_App
 
         public void connectFlightGear()
         {
-
             csv_handler = new CsvHandler(path);
+            numOfLines = csv_handler.getRowCount();
 
             // cmd process
             Process cmd = new Process();
@@ -158,6 +160,8 @@ namespace Flight_Inspection_App
                 ns.Flush();
                 Thread.Sleep(sleepTime);
                 running_line++;
+                NotifyPropertyChanged("running_line");
+
 
                 // just for debug
                 Trace.WriteLine(line);
@@ -175,6 +179,7 @@ namespace Flight_Inspection_App
         public void stop()
         {
             RunningLine = 0;
+            // send first line to bring the picture back to the begining
             sendOneLine();
             Play = false;
         }
