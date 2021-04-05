@@ -225,9 +225,6 @@ namespace Flight_Inspection_App
                 manualResetEvent.WaitOne();
                 // send line to FG
                 line = csv_handler.getLine(running_line);
-                line += "\r\n";
-                ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
-                ns.Flush();
                 //update the joystick according to Aileron and Elevator values
                 calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
                 calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
