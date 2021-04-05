@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Flight_Inspection_App" d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
+        xmlns:local="clr-namespace:Flight_Inspection_App" xmlns:oxy="http://oxyplot.org/wpf" d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
@@ -166,6 +166,14 @@
             </Slider>
             <Slider x:Name="Slider_Rudder" Minimum="-1" Maximum="1" Value="{Binding VM_Rudder, Mode=OneWay}" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center">
             </Slider>
+        </Grid>
+
+        <Grid>
+            <oxy:Plot x:Name="feature_plot" Margin="588,10,10,251" Visibility="Visible">
+                <oxy:Plot.Series>
+                    <oxy:LineSeries ItemsSource="{Binding VM_DataPoints}"/>
+                </oxy:Plot.Series>
+            </oxy:Plot>
         </Grid>
     </Grid>
 </Window>
