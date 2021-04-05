@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -8,14 +9,21 @@ namespace Flight_Inspection_App
     interface IClientModel : INotifyPropertyChanged
     {
         string Path { get; set; }
+
+        // playing controller
         bool Play { get; set; }
         double PlaySpeed { get; set; }
         int RunningLine { get; set; }
         int NumOfLines { get; set; }
+
+        // dashborad controller
         double Elevator { get; set; }
         double Aileron { get; set; }
         double Rudder { get; set; }
         double Throttle { get; set; }
+
+        // graphs controller
+        List<DataPoint> DataPoints { get; set; }
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();

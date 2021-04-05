@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using OxyPlot;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
@@ -7,6 +9,24 @@ namespace Flight_Inspection_App
 {
     class myClientModel : IClientModel
     {
+        public myClientModel()
+        {
+            Path = "";
+            running_line = 0;
+            PlaySpeed = 1;
+            elevator = 125;
+            aileron = 125;
+            data_points = new List<DataPoint>
+                              {
+                                  new DataPoint(0, 4),
+                                  new DataPoint(10, 13),
+                                  new DataPoint(20, 15),
+                                  new DataPoint(30, 16),
+                                  new DataPoint(40, 12),
+                                  new DataPoint(50, 12)
+                              };
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         volatile private CsvHandler csv_handler;
@@ -166,19 +186,24 @@ namespace Flight_Inspection_App
         private int numOfLines;
         public int NumOfLines { get { return numOfLines; } set { numOfLines = value; } }
 
+        private List<DataPoint> data_points;
+        public List<DataPoint> DataPoints
+        {
+            get
+            {
+                return data_points;
+            }
+            set
+            {
+                this.data_points = value;
+                NotifyPropertyChanged("data_points");
+            }
+        }
+
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
-        }
-
-        public myClientModel()
-        {
-            Path = "";
-            running_line = 0;
-            PlaySpeed = 1;
-            elevator = 125;
-            aileron = 125;
         }
 
         public void connectFlightGear()
@@ -226,11 +251,15 @@ namespace Flight_Inspection_App
                 // send line to FG
                 line = csv_handler.getLine(running_line);
                 //update the joystick according to Aileron and Elevator values
-                calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));    
+                calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
                 calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
                 // update throttle and rudder sliders
-                Throttle = csv_handler.getFeatureByLine("throttle",running_line);
+                Throttle = csv_handler.getFeatureByLine("throttle", running_line);
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
+
+                /*List<DataPoint> newList = new List<DataPoint>(data_points);
+                newList.Add(new DataPoint(running_line, running_line * 0.5));
+                DataPoints = newList;*/
 
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));

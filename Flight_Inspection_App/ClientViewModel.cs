@@ -1,5 +1,6 @@
-﻿using System;
-
+﻿using OxyPlot;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Flight_Inspection_App
@@ -34,6 +35,7 @@ namespace Flight_Inspection_App
             }
         }
 
+        // playeing controller
         private bool play;
         public bool VM_play
         {
@@ -83,6 +85,8 @@ namespace Flight_Inspection_App
             }
         }
 
+
+        // dashboard controller
         public double VM_Elevator
         {
             get
@@ -90,7 +94,6 @@ namespace Flight_Inspection_App
                 return model.Elevator;
             }
         }
-
 
         public double VM_Aileron
         {
@@ -115,6 +118,9 @@ namespace Flight_Inspection_App
                 return model.Throttle;
             }
         }
+
+        // graphs controller
+        public List<DataPoint> VM_DataPoints { get { return model.DataPoints; } }
 
 
         public void connectFlightGear()
