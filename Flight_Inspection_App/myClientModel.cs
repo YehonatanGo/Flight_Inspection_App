@@ -226,12 +226,12 @@ namespace Flight_Inspection_App
                 line = csv_handler.getLine(running_line);
                 double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
                 current_aileron_value = doubles[0];
-                current_elevator_value = doubles[1];
-                calculateAileron(current_aileron_value);
-                calculateElevator(current_elevator_value);
+                current_elevator_value = doubles[1];         
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
+                calculateAileron(current_aileron_value);
+                calculateElevator(current_elevator_value);
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }
