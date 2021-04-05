@@ -21,6 +21,7 @@ namespace Flight_Inspection_App
         double Aileron { get; set; }
         double Rudder { get; set; }
         double Throttle { get; set; }
+        double Airspeed { get; set; }
 
         // graphs controller
         List<DataPoint> DataPoints { get; set; }

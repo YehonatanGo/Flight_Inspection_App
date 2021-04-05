@@ -3,9 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Flight_Inspection_App" xmlns:oxy="http://oxyplot.org/wpf" d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
+        xmlns:local="clr-namespace:Flight_Inspection_App"
+        xmlns:oxy="http://oxyplot.org/wpf" d:DataContext="{d:DesignInstance Type=local:ClientViewModel}"
         mc:Ignorable="d"
+        xmlns:gauge ="clr-namespace:Syncfusion.UI.Xaml.Gauges;assembly=Syncfusion.SfGauge.Wpf"
+        
         Title="MainWindow" Height="450" Width="800">
+
+
+    
     <Window.Resources>
 
     </Window.Resources>
@@ -168,12 +174,62 @@
             </Slider>
         </Grid>
 
-        <Grid>
-            <oxy:Plot x:Name="feature_plot" Margin="588,10,10,251" Visibility="Visible">
-                <oxy:Plot.Series>
-                    <oxy:LineSeries ItemsSource="{Binding VM_DataPoints}"/>
-                </oxy:Plot.Series>
-            </oxy:Plot>
-        </Grid>
+        <Viewbox Margin="214,0,155,161">
+            <gauge:SfCircularGauge Height="250"
+                       Width="250"
+                       HeaderAlignment="Custom"
+                       GaugeHeaderPosition="0.63,0.75">
+                <gauge:SfCircularGauge.Scales>
+                    <gauge:CircularScale ShowRim="True"
+                             RimStroke="LightGray"
+                             RimStrokeThickness="3"
+                             LabelOffset="0.1">
+
+                        <gauge:CircularScale.MajorTickSettings>
+                            <gauge:MajorTickSetting Length="10"
+                                        StrokeThickness="1" />
+                        </gauge:CircularScale.MajorTickSettings>
+
+                        <gauge:CircularScale.MinorTickSettings>
+                            <gauge:MinorTickSetting Length="5"
+                                        StrokeThickness="1" />
+                        </gauge:CircularScale.MinorTickSettings>
+
+                        <gauge:CircularScale.Ranges>
+                            <gauge:CircularRange StartValue="0"
+                                     EndValue="60"
+                                     Stroke="Gray" />
+                        </gauge:CircularScale.Ranges>
+                        <gauge:CircularScale.Pointers>
+                            <gauge:CircularPointer PointerType="NeedlePointer"
+                                       Value="{Binding VM_Airspeed}"
+                                       NeedleLengthFactor="0.5"
+                                       NeedlePointerType="Triangle"
+                                       PointerCapDiameter="12"
+                                       NeedlePointerStroke="#757575"
+                                       KnobFill="#757575"
+                                       KnobStroke="#757575"
+                                       NeedlePointerStrokeThickness="7" />
+                            <gauge:CircularPointer PointerType="RangePointer"
+                                       Value="40"
+                                       RangePointerStrokeThickness="5"
+                                       RangePointerStroke="#27beb6" />
+                            <gauge:CircularPointer PointerType="SymbolPointer"
+                                       Value="70"
+                                       SymbolPointerHeight="12"
+                                       SymbolPointerWidth="12"
+                                       Symbol="InvertedTriangle"
+                                       SymbolPointerStroke="#757575" />
+                        </gauge:CircularScale.Pointers>
+                    </gauge:CircularScale>
+                </gauge:SfCircularGauge.Scales>
+            </gauge:SfCircularGauge>
+        </Viewbox>
+
+        <oxy:Plot x:Name="feature_plot" Margin="588,10,10,251" Visibility="Visible">
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_DataPoints}"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
     </Grid>
 </Window>

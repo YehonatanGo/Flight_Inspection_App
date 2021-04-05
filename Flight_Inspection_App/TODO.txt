@@ -7,7 +7,6 @@ namespace Flight_Inspection_App
     class TODO
     {
 
-    1. Styling - smaller joystick etc.
     2. user story 5 view
     3. extend csv_handler - create string-list map (feature:list_of_values)
     4. graphs (oxyplot)
