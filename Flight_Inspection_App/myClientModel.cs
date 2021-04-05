@@ -229,11 +229,11 @@ namespace Flight_Inspection_App
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
                 //update the joystick according to Aileron and Elevator values
-                calculateAileron(csv_handler.getAileronByLine(running_line));
-                calculateElevator(csv_handler.getElevatorByLine(running_line));
+                calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
+                calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
                 // update throttle and rudder sliders
-                Throttle = csv_handler.getThrottleByLine(running_line);
-                Rudder = csv_handler.getRudderByLine(running_line);
+                Throttle = csv_handler.getFeatureByLine("throttle",running_line);
+                Rudder = csv_handler.getFeatureByLine("rudder", running_line);
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }

@@ -9,10 +9,6 @@ namespace Flight_Inspection_App
         private string path;
         private int row_count;
         private List<string> lines_list;
-        private List<double> aileron_list;
-        private List<double> elevator_list;
-        private List<double> Rudder_list;
-        private List<double> Throttle_list;
         private Dictionary<string, List<double>> featuresDict;
         
 
@@ -21,28 +17,31 @@ namespace Flight_Inspection_App
             this.path = path;
             row_count = 0;
             lines_list = new List<string>();
-            aileron_list = new List<double>();
-            elevator_list = new List<double>();
-            Rudder_list = new List<double>();
-            Throttle_list = new List<double>();
             featuresDict = new Dictionary<string, List<double>>();
             parseCsv();
-            
         }
 
         private void parseCsv()
         {
             using (var reader = new StreamReader(path))
             {
+                Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear 2020.3.6\data\Protocol\playback_small.xml");
+                // add a pair of (feature, values-list) to the features dictionary, for each feature given by the xml
+                foreach(var feature in features_names_to_idx)
+                {
+                    featuresDict.Add(feature.Key, new List<double>());
+                }
+
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
                     // split each line by ',' to get specific features values
                     double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
-                    aileron_list.Add(doubles[0]);
-                    elevator_list.Add(doubles[1]);
-                    Rudder_list.Add(doubles[2]);
-                    Throttle_list.Add(doubles[6]);
+                    // add each value in doubles list to the matching feature's values list in the dictionary
+                    foreach(var feature in featuresDict)
+                    {
+                        feature.Value.Add(doubles[features_names_to_idx[feature.Key]]);
+                    }
                     if (line == null) continue;
                     lines_list.Add(line);
                     row_count++;
@@ -94,23 +93,9 @@ namespace Flight_Inspection_App
             return lines_list[index];
         }
 
-        // next methods - for getting spefic feature's value in a given line
-
-        public double getAileronByLine(int line)
+        public double getFeatureByLine(string feature, int line)
         {
-            return aileron_list[line];
-        }
-        public double getElevatorByLine(int line)
-        {
-            return elevator_list[line];
-        }
-        public double getRudderByLine(int line)
-        {
-            return Rudder_list[line];
-        }
-        public double getThrottleByLine(int line)
-        {
-            return Throttle_list[line];
+            return featuresDict[feature][line];
         }
     }
 }
