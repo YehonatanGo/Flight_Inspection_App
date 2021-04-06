@@ -161,6 +161,48 @@ namespace Flight_Inspection_App
             }
         }
 
+        private double yaw;
+        public double Yaw
+        {
+            get
+            {
+                return this.yaw;
+            }
+            set
+            {
+                this.yaw = value;
+                NotifyPropertyChanged("Yaw");
+            }
+        }
+
+        private double roll;
+        public double Roll
+        {
+            get
+            {
+                return this.roll;
+            }
+            set
+            {
+                this.roll = value;
+                NotifyPropertyChanged("Roll");
+            }
+        }
+
+        private double pitch;
+        public double Pitch
+        {
+            get
+            {
+                return this.pitch;
+            }
+            set
+            {
+                this.pitch = value;
+                NotifyPropertyChanged("Pitch");
+            }
+        }
+
 
         ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
@@ -360,6 +402,11 @@ namespace Flight_Inspection_App
                 Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
                 // update altitude: altimeter
                 CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
+
+                // update Yaw, Roll, Pitch
+                Yaw = csv_handler.getFeatureByLine("side-slip-deg", running_line);
+                Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
+                Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
 
                 var newList = new List<DataPoint>();
                 for(int i =0; i <= running_line; i++)
