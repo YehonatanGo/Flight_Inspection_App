@@ -17,6 +17,7 @@ namespace Flight_Inspection_App
             elevator = 125;
             aileron = 125;
             airspeed = 0;
+            heading = 0;
             data_points = new List<DataPoint>
                               {
                                   new DataPoint(0, 4),
@@ -106,6 +107,20 @@ namespace Flight_Inspection_App
             {
                 this.airspeed = value;
                 NotifyPropertyChanged("Airspeed");
+            }
+        }
+
+        private double heading;
+        public double Heading
+        {
+            get
+            {
+                return this.heading;
+            }
+            set
+            {
+                this.heading = value;
+                NotifyPropertyChanged("Heading");
             }
         }
 
@@ -281,6 +296,8 @@ namespace Flight_Inspection_App
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
                 //update airspeed radial gauge
                 Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
+                //
+                Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
 
 
                 /*List<DataPoint> newList = new List<DataPoint>(data_points);

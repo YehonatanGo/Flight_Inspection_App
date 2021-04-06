@@ -174,7 +174,7 @@
             </Slider>
         </Grid>
 
-        <Viewbox Margin="319,0,313,270" >
+        <Viewbox Margin="319,0,313,270" Height="100" Width="100">
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
@@ -229,6 +229,53 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
+        <Viewbox Height="100" Width="100">
+            <gauge:SfCircularGauge
+                Height="250"
+                Width="250"
+                HeaderAlignment="Custom"
+                >
+                <gauge:SfCircularGauge.Scales>
+                    <gauge:CircularScale
+                        StartValue="0"
+                        EndValue="360"
+                        StartAngle="270"
+                        SweepAngle="360"
+                        Interval="45"
+                        RadiusFactor="1"
+                        RimStrokeThickness="20"
+                        RimStroke="DarkBlue"
+                        MinorTicksPerInterval="10">
+                        <gauge:CircularScale.MajorTickSettings>
+                            <gauge:MajorTickSetting  Length="20" Stroke="Brown" StrokeThickness="5" />
+                        </gauge:CircularScale.MajorTickSettings>
+
+                        <gauge:CircularScale.Pointers>
+                            <gauge:CircularPointer
+                                PointerType="NeedlePointer"
+                                NeedlePointerType="Triangle"
+                                NeedlePointerStrokeThickness="20"
+                                NeedleLengthFactor="0.5"
+                                
+                                Value="{Binding VM_Heading}"
+                                PointerCapDiameter="30"
+                                NeedlePointerStroke="Brown"
+                                KnobFill="DarkBlue"
+                                KnobStroke="Brown"
+                            />
+                        </gauge:CircularScale.Pointers>
+                    </gauge:CircularScale>
+                </gauge:SfCircularGauge.Scales>
+                
+                
+                
+            </gauge:SfCircularGauge>
+
+
+
+
+        </Viewbox>
+        
         <oxy:Plot x:Name="feature_plot" Margin="588,10,10,251" Visibility="Visible">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_DataPoints}"/>

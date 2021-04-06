@@ -127,6 +127,14 @@ namespace Flight_Inspection_App
             }
         }
 
+        public double VM_Heading
+        {
+            get
+            {
+                return model.Heading;
+            }
+        }
+
         // graphs controller
         public List<DataPoint> VM_DataPoints { get { return model.DataPoints; } }
 
