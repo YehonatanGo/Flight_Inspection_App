@@ -16,6 +16,7 @@ namespace Flight_Inspection_App
             PlaySpeed = 1;
             elevator = 125;
             aileron = 125;
+            airspeed = 0;
             data_points = new List<DataPoint>();
             featuresList = new List<string>();
             displayedFeature = "aileron";
@@ -47,7 +48,6 @@ namespace Flight_Inspection_App
         }
 
         private double aileron;
-
         public double Aileron
         {
             get
@@ -62,7 +62,6 @@ namespace Flight_Inspection_App
         }
 
         private double rudder;
-
         public double Rudder
         {
             get
@@ -87,6 +86,20 @@ namespace Flight_Inspection_App
             {
                 this.throttle = value;
                 NotifyPropertyChanged("Throttle");
+            }
+        }
+
+        private double airspeed;
+        public double Airspeed
+        {
+            get
+            {
+                return this.airspeed;
+            }
+            set
+            {
+                this.airspeed = value;
+                NotifyPropertyChanged("Airspeed");
             }
         }
 
@@ -178,7 +191,17 @@ namespace Flight_Inspection_App
         }
 
         private int numOfLines;
-        public int NumOfLines { get { return numOfLines; } set { numOfLines = value; } }
+        public int NumOfLines
+        {
+            get
+            {
+                return numOfLines;
+            }
+            set
+            {
+                numOfLines = value;
+            }
+        }
 
         // graphs contoroller
 
@@ -272,6 +295,9 @@ namespace Flight_Inspection_App
                 // update throttle and rudder sliders
                 Throttle = csv_handler.getFeatureByLine("throttle", running_line);
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
+                //update airspeed radial gauge
+                Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
+
 
                 var newList = new List<DataPoint>();
                 for(int i =0; i <= running_line; i++)

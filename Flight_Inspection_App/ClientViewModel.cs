@@ -119,6 +119,14 @@ namespace Flight_Inspection_App
             }
         }
 
+        public double VM_Airspeed
+        {
+            get
+            {
+                return model.Airspeed;
+            }
+        }
+
         // graphs controller
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 
