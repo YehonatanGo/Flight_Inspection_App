@@ -135,6 +135,32 @@ namespace Flight_Inspection_App
             }
         }
 
+        public double VM_Altitude_hundreds
+        {
+            get
+            {
+                return model.Altitude_hundreds;
+            }
+        }
+
+        public double VM_Altitude_thousands
+        {
+            get
+            {
+                return model.Altitude_thousands;
+            }
+        }
+
+        public double VM_Altitude_dozens
+        {
+            get
+            {
+                return model.Altitude_dozens;
+            }
+        }
+
+
+
         // graphs controller
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 

@@ -18,6 +18,10 @@ namespace Flight_Inspection_App
             aileron = 125;
             airspeed = 0;
             heading = 0;
+            altitude_hundreds = 0;
+            altitude_thousands = 0;
+            altitude_dozens = 0;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -114,6 +118,49 @@ namespace Flight_Inspection_App
                 NotifyPropertyChanged("Heading");
             }
         }
+
+        private double altitude_hundreds;
+        public double Altitude_hundreds
+        {
+            get
+            {
+                return this.altitude_hundreds;
+            }
+            set
+            {
+                this.altitude_hundreds = value;
+                NotifyPropertyChanged("Altitude_hundreds");
+            }
+        }
+
+        private double altitude_thousands;
+        public double Altitude_thousands
+        {
+            get
+            {
+                return this.altitude_thousands;
+            }
+            set
+            {
+                this.altitude_thousands = value;
+                NotifyPropertyChanged("Altitude_thousands");
+            }
+        }
+
+        private double altitude_dozens;
+        public double Altitude_dozens
+        {
+            get
+            {
+                return this.altitude_dozens;
+            }
+            set
+            {
+                this.altitude_dozens = value;
+                NotifyPropertyChanged("Altitude_dozens");
+            }
+        }
+
 
         ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
@@ -302,16 +349,17 @@ namespace Flight_Inspection_App
                 line = csv_handler.getLine(running_line);
 
                 //update the joystick according to Aileron and Elevator values
-                calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
-                calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
+                CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
+                CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
                 // update throttle and rudder sliders
                 Throttle = csv_handler.getFeatureByLine("throttle", running_line);
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
-                //update airspeed radial gauge
+                // update airspeed: radial gauge
                 Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
-                //
+                // update heading: compass
                 Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
-
+                // update altitude: altimeter
+                CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
 
                 var newList = new List<DataPoint>();
                 for(int i =0; i <= running_line; i++)
@@ -336,14 +384,21 @@ namespace Flight_Inspection_App
          * real Aileron and Elevator values are in range [-1,1]
          */
 
-        private void calculateAileron(double current)
+        private void CalculateAileron(double current)
         {
             Aileron = current * 60 + 125;
         }
 
-        private void calculateElevator(double current)
+        private void CalculateElevator(double current)
         {
             Elevator = current * 60 + 125;
+        }
+
+        private void CalculateAltitude(double current)
+        {
+            Altitude_hundreds = (current % 1000) / 100.0;
+            Altitude_thousands = (current % 10000) / 1000.0;
+            Altitude_dozens = current / 10000.0;
         }
 
         //closing all the connections

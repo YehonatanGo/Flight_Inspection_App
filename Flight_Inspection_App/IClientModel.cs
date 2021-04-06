@@ -23,6 +23,9 @@ namespace Flight_Inspection_App
         double Throttle { get; set; }
         double Airspeed { get; set; }
         double Heading { get; set; }
+        double Altitude_hundreds { get; set; }
+        double Altitude_thousands { get; set; }
+        double Altitude_dozens { get; set; }
 
         // graphs controller
         List<DataPoint> DataPoints { get; set; }
