@@ -174,13 +174,17 @@
             </Slider>
         </Grid>
 
-        <Viewbox Margin="214,0,155,161">
+        <Viewbox Margin="319,0,313,270" >
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
                        GaugeHeaderPosition="0.63,0.75">
+                
                 <gauge:SfCircularGauge.Scales>
+                    
                     <gauge:CircularScale ShowRim="True"
+                             StartValue="0"
+                             EndValue="200"
                              RimStroke="LightGray"
                              RimStrokeThickness="3"
                              LabelOffset="0.1">
@@ -197,8 +201,17 @@
 
                         <gauge:CircularScale.Ranges>
                             <gauge:CircularRange StartValue="0"
-                                     EndValue="60"
-                                     Stroke="Gray" />
+                                     EndValue="30"
+                                     Stroke="GreenYellow" />
+                            <gauge:CircularRange StartValue="30"
+                                     EndValue="170"
+                                     Stroke="Green" />
+                            <gauge:CircularRange StartValue="170"
+                                     EndValue="190"
+                                     Stroke="Orange" />
+                            <gauge:CircularRange StartValue="190"
+                                     EndValue="200"
+                                     Stroke="OrangeRed" />
                         </gauge:CircularScale.Ranges>
                         <gauge:CircularScale.Pointers>
                             <gauge:CircularPointer PointerType="NeedlePointer"
@@ -210,16 +223,6 @@
                                        KnobFill="#757575"
                                        KnobStroke="#757575"
                                        NeedlePointerStrokeThickness="7" />
-                            <gauge:CircularPointer PointerType="RangePointer"
-                                       Value="40"
-                                       RangePointerStrokeThickness="5"
-                                       RangePointerStroke="#27beb6" />
-                            <gauge:CircularPointer PointerType="SymbolPointer"
-                                       Value="70"
-                                       SymbolPointerHeight="12"
-                                       SymbolPointerWidth="12"
-                                       Symbol="InvertedTriangle"
-                                       SymbolPointerStroke="#757575" />
                         </gauge:CircularScale.Pointers>
                     </gauge:CircularScale>
                 </gauge:SfCircularGauge.Scales>
