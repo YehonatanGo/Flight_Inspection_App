@@ -25,6 +25,11 @@ namespace Flight_Inspection_App
         // graphs controller
         List<DataPoint> DataPoints { get; set; }
 
+        List<string> FeaturesList { get; set; }
+
+        string DisplayedFeature { get; set; }   
+
+
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();
 

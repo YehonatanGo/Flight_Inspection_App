@@ -82,6 +82,11 @@ namespace Flight_Inspection_App
 
         }
 
+        public List<string> getFeaturesNamesList()
+        {
+            return new List<string>(featuresDict.Keys);
+        }
+
         //returns the list of lines
         public List<string> getList()
         {

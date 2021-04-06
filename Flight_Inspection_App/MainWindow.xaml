@@ -171,9 +171,10 @@
         <Grid>
             <oxy:Plot x:Name="feature_plot" Margin="588,10,10,251" Visibility="Visible">
                 <oxy:Plot.Series>
-                    <oxy:LineSeries ItemsSource="{Binding VM_DataPoints}"/>
+                    <oxy:LineSeries ItemsSource="{Binding VM_Data_Points}"/>
                 </oxy:Plot.Series>
             </oxy:Plot>
+            <ListBox x:Name="ListBox_Features_List" SelectedIndex="0" ItemsSource="{Binding VM_FeaturesList}" HorizontalAlignment="Left" Height="111" Margin="10,0,0,0" VerticalAlignment="Center" Width="175" SelectionChanged="ListBox_SelectionChanged"/>
         </Grid>
     </Grid>
 </Window>

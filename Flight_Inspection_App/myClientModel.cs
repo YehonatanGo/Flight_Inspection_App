@@ -16,15 +16,9 @@ namespace Flight_Inspection_App
             PlaySpeed = 1;
             elevator = 125;
             aileron = 125;
-            data_points = new List<DataPoint>
-                              {
-                                  new DataPoint(0, 4),
-                                  new DataPoint(10, 13),
-                                  new DataPoint(20, 15),
-                                  new DataPoint(30, 16),
-                                  new DataPoint(40, 12),
-                                  new DataPoint(50, 12)
-                              };
+            data_points = new List<DataPoint>();
+            featuresList = new List<string>();
+            displayedFeature = "aileron";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -186,7 +180,18 @@ namespace Flight_Inspection_App
         private int numOfLines;
         public int NumOfLines { get { return numOfLines; } set { numOfLines = value; } }
 
-        private List<DataPoint> data_points;
+        // graphs contoroller
+
+        private string displayedFeature;
+        public string DisplayedFeature { 
+            get { return displayedFeature; }
+            set
+            {
+                this.displayedFeature = value;
+            }
+        }
+
+        private volatile List<DataPoint> data_points;
         public List<DataPoint> DataPoints
         {
             get
@@ -200,6 +205,15 @@ namespace Flight_Inspection_App
             }
         }
 
+        private List<string> featuresList;
+        public List<string> FeaturesList {
+            get { return featuresList; }
+            set {
+                this.featuresList = value;
+                NotifyPropertyChanged("featuresList");
+            }
+        }
+
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
@@ -210,6 +224,7 @@ namespace Flight_Inspection_App
         {
             csv_handler = new CsvHandler(path);
             numOfLines = csv_handler.getRowCount();
+            FeaturesList = csv_handler.getFeaturesNamesList();
 
             // cmd process
             Process cmd = new Process();
@@ -248,8 +263,9 @@ namespace Flight_Inspection_App
             {
                 // wait for pause/play signal if needed
                 manualResetEvent.WaitOne();
-                // send line to FG
+                
                 line = csv_handler.getLine(running_line);
+
                 //update the joystick according to Aileron and Elevator values
                 calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
                 calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
@@ -257,10 +273,14 @@ namespace Flight_Inspection_App
                 Throttle = csv_handler.getFeatureByLine("throttle", running_line);
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
 
-                /*List<DataPoint> newList = new List<DataPoint>(data_points);
-                newList.Add(new DataPoint(running_line, running_line * 0.5));
-                DataPoints = newList;*/
+                var newList = new List<DataPoint>();
+                for(int i =0; i <= running_line; i++)
+                {
+                    newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
+                }
+                DataPoints = newList;
 
+                // send the line to FG
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
