@@ -119,8 +119,54 @@ namespace Flight_Inspection_App
             }
         }
 
+        public double VM_Airspeed
+        {
+            get
+            {
+                return model.Airspeed;
+            }
+        }
+
+        public double VM_Heading
+        {
+            get
+            {
+                return model.Heading;
+            }
+        }
+
+        public double VM_Altitude_hundreds
+        {
+            get
+            {
+                return model.Altitude_hundreds;
+            }
+        }
+
+        public double VM_Altitude_thousands
+        {
+            get
+            {
+                return model.Altitude_thousands;
+            }
+        }
+
+        public double VM_Altitude_dozens
+        {
+            get
+            {
+                return model.Altitude_dozens;
+            }
+        }
+
+
+
         // graphs controller
-        public List<DataPoint> VM_DataPoints { get { return model.DataPoints; } }
+        public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
+
+        public  List<string> VM_FeaturesList { get{ return model.FeaturesList; } }
+
+        public string VM_DisplayedFeature { set { model.DisplayedFeature = value; } }
 
 
         public void connectFlightGear()

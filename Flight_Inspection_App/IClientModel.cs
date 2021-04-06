@@ -21,9 +21,19 @@ namespace Flight_Inspection_App
         double Aileron { get; set; }
         double Rudder { get; set; }
         double Throttle { get; set; }
+        double Airspeed { get; set; }
+        double Heading { get; set; }
+        double Altitude_hundreds { get; set; }
+        double Altitude_thousands { get; set; }
+        double Altitude_dozens { get; set; }
 
         // graphs controller
         List<DataPoint> DataPoints { get; set; }
+
+        List<string> FeaturesList { get; set; }
+
+        string DisplayedFeature { get; set; }   
+
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();

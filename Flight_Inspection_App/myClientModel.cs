@@ -16,15 +16,12 @@ namespace Flight_Inspection_App
             PlaySpeed = 1;
             elevator = 125;
             aileron = 125;
-            data_points = new List<DataPoint>
-                              {
-                                  new DataPoint(0, 4),
-                                  new DataPoint(10, 13),
-                                  new DataPoint(20, 15),
-                                  new DataPoint(30, 16),
-                                  new DataPoint(40, 12),
-                                  new DataPoint(50, 12)
-                              };
+            airspeed = 0;
+            heading = 0;
+            altitude_hundreds = 0;
+            altitude_thousands = 0;
+            altitude_dozens = 0;
+
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -53,7 +50,6 @@ namespace Flight_Inspection_App
         }
 
         private double aileron;
-
         public double Aileron
         {
             get
@@ -68,7 +64,6 @@ namespace Flight_Inspection_App
         }
 
         private double rudder;
-
         public double Rudder
         {
             get
@@ -95,6 +90,77 @@ namespace Flight_Inspection_App
                 NotifyPropertyChanged("Throttle");
             }
         }
+
+        private double airspeed;
+        public double Airspeed
+        {
+            get
+            {
+                return this.airspeed;
+            }
+            set
+            {
+                this.airspeed = value;
+                NotifyPropertyChanged("Airspeed");
+            }
+        }
+
+        private double heading;
+        public double Heading
+        {
+            get
+            {
+                return this.heading;
+            }
+            set
+            {
+                this.heading = value;
+                NotifyPropertyChanged("Heading");
+            }
+        }
+
+        private double altitude_hundreds;
+        public double Altitude_hundreds
+        {
+            get
+            {
+                return this.altitude_hundreds;
+            }
+            set
+            {
+                this.altitude_hundreds = value;
+                NotifyPropertyChanged("Altitude_hundreds");
+            }
+        }
+
+        private double altitude_thousands;
+        public double Altitude_thousands
+        {
+            get
+            {
+                return this.altitude_thousands;
+            }
+            set
+            {
+                this.altitude_thousands = value;
+                NotifyPropertyChanged("Altitude_thousands");
+            }
+        }
+
+        private double altitude_dozens;
+        public double Altitude_dozens
+        {
+            get
+            {
+                return this.altitude_dozens;
+            }
+            set
+            {
+                this.altitude_dozens = value;
+                NotifyPropertyChanged("Altitude_dozens");
+            }
+        }
+
 
         ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
@@ -184,9 +250,30 @@ namespace Flight_Inspection_App
         }
 
         private int numOfLines;
-        public int NumOfLines { get { return numOfLines; } set { numOfLines = value; } }
+        public int NumOfLines
+        {
+            get
+            {
+                return numOfLines;
+            }
+            set
+            {
+                numOfLines = value;
+            }
+        }
 
-        private List<DataPoint> data_points;
+        // graphs contoroller
+
+        private string displayedFeature;
+        public string DisplayedFeature { 
+            get { return displayedFeature; }
+            set
+            {
+                this.displayedFeature = value;
+            }
+        }
+
+        private volatile List<DataPoint> data_points;
         public List<DataPoint> DataPoints
         {
             get
@@ -200,6 +287,15 @@ namespace Flight_Inspection_App
             }
         }
 
+        private List<string> featuresList;
+        public List<string> FeaturesList {
+            get { return featuresList; }
+            set {
+                this.featuresList = value;
+                NotifyPropertyChanged("featuresList");
+            }
+        }
+
         public void NotifyPropertyChanged(string propName)
         {
             if (this.PropertyChanged != null)
@@ -210,6 +306,7 @@ namespace Flight_Inspection_App
         {
             csv_handler = new CsvHandler(path);
             numOfLines = csv_handler.getRowCount();
+            FeaturesList = csv_handler.getFeaturesNamesList();
 
             // cmd process
             Process cmd = new Process();
@@ -248,19 +345,30 @@ namespace Flight_Inspection_App
             {
                 // wait for pause/play signal if needed
                 manualResetEvent.WaitOne();
-                // send line to FG
+                
                 line = csv_handler.getLine(running_line);
+
                 //update the joystick according to Aileron and Elevator values
-                calculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
-                calculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
+                CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
+                CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
                 // update throttle and rudder sliders
                 Throttle = csv_handler.getFeatureByLine("throttle", running_line);
                 Rudder = csv_handler.getFeatureByLine("rudder", running_line);
+                // update airspeed: radial gauge
+                Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
+                // update heading: compass
+                Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
+                // update altitude: altimeter
+                CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
 
-                /*List<DataPoint> newList = new List<DataPoint>(data_points);
-                newList.Add(new DataPoint(running_line, running_line * 0.5));
-                DataPoints = newList;*/
+                var newList = new List<DataPoint>();
+                for(int i =0; i <= running_line; i++)
+                {
+                    newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
+                }
+                DataPoints = newList;
 
+                // send the line to FG
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
                 ns.Flush();
@@ -276,14 +384,21 @@ namespace Flight_Inspection_App
          * real Aileron and Elevator values are in range [-1,1]
          */
 
-        private void calculateAileron(double current)
+        private void CalculateAileron(double current)
         {
             Aileron = current * 60 + 125;
         }
 
-        private void calculateElevator(double current)
+        private void CalculateElevator(double current)
         {
             Elevator = current * 60 + 125;
+        }
+
+        private void CalculateAltitude(double current)
+        {
+            Altitude_hundreds = (current % 1000) / 100.0;
+            Altitude_thousands = (current % 10000) / 1000.0;
+            Altitude_dozens = current / 10000.0;
         }
 
         //closing all the connections

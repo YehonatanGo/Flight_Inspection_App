@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using Microsoft.Win32;
 
 namespace Flight_Inspection_App
@@ -69,6 +71,11 @@ namespace Flight_Inspection_App
         private void Button_Backward_Click(object sender, RoutedEventArgs e)
         {
             vm.VM_Running_Line -= 150;//
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
     }
 }
