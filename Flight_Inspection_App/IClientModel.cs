@@ -26,6 +26,9 @@ namespace Flight_Inspection_App
         double Altitude_hundreds { get; set; }
         double Altitude_thousands { get; set; }
         double Altitude_dozens { get; set; }
+        double Yaw { get; set; }
+        double Roll { get; set; }
+        double Pitch { get; set; }
 
         // graphs controller
         List<DataPoint> DataPoints { get; set; }

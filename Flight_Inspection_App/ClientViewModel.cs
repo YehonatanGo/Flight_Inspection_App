@@ -159,6 +159,29 @@ namespace Flight_Inspection_App
             }
         }
 
+        public double VM_Yaw
+        {
+            get
+            {
+                return model.Yaw;
+            }
+        }
+
+        public double VM_Roll
+        {
+            get
+            {
+                return model.Roll;
+            }
+        }
+
+        public double VM_Pitch
+        {
+            get
+            {
+                return model.Pitch;
+            }
+        }
 
 
         // graphs controller
