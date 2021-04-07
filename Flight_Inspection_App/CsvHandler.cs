@@ -23,9 +23,10 @@ namespace Flight_Inspection_App
 
         private void parseCsv()
         {
+            Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear 2020.3.6\data\Protocol\playback_small.xml");
+
             using (var reader = new StreamReader(path))
             {
-                Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear 2020.3.6\data\Protocol\playback_small.xml");
                 // add a pair of (feature, values-list) to the features dictionary, for each feature given by the xml
                 foreach(var feature in features_names_to_idx)
                 {
@@ -47,6 +48,23 @@ namespace Flight_Inspection_App
                     row_count++;
                 }
             }
+            string flightContent = System.IO.File.ReadAllText(path);
+            List<string> featuresList = getFeaturesNamesList();
+            string featuresString = concatFeaturesNames(featuresList);
+            string[] lines = { featuresString, flightContent };
+            File.WriteAllLines(Path.Combine(Directory.GetCurrentDirectory(), "flight.csv"), lines);
+        }
+
+        private string concatFeaturesNames(List<string> featuresList)
+        {
+            string result = "";
+            foreach (var featureName in featuresList)
+            {
+                result += featureName;
+                result += ",";
+            }
+            result = result.Remove(result.Length - 1);
+            return result;
         }
 
         // returns number of rows
