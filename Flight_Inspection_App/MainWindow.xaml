@@ -16,10 +16,11 @@
 
     </Window.Resources>
 
-    <Grid>
-        <StackPanel Orientation="Horizontal" Margin="252,379,252,10">
-            <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" IsEnabled="False"/>
-            <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Width="auto" Height="auto"/>
+    <Grid Margin="-2,2,2,-2">
+        <StackPanel Orientation="Horizontal" Margin="252,379,184,10">
+            <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" IsEnabled="False" Width="123"/>
+            <Button x:Name="Button_OpenDataFile" Click="Button_OpenFlightDataFile" Content="Open Flight Data File" Width="141" Height="auto"/>
+            <Button x:Name="Button_load_test" Width="99" Height="auto" Content="load test file"/>
         </StackPanel>
 
         <StackPanel Orientation="Vertical" Margin="0,278,0,64" Background="Aquamarine" Grid.ColumnSpan="6">
@@ -44,7 +45,7 @@
             </StackPanel>
         </StackPanel>
 
-        <Grid Background="NavajoWhite" Margin="0,0,640,270">
+        <Grid Background="NavajoWhite" Margin="0,0,640,291">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="100"/>
@@ -174,7 +175,7 @@
             </Slider>
         </Grid>
 
-        <Viewbox Margin="400,165,290,167">
+        <Viewbox Margin="345,176,350,158">
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
@@ -229,7 +230,7 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
-        <Viewbox Height="100" Margin="635,167,30,167">
+        <Viewbox Margin="584,189,109,163">
             <gauge:SfCircularGauge
                 Height="250"
                 Width="250"
@@ -272,7 +273,7 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
-        <Viewbox Height="100" Margin="507,167,176,167">
+        <Viewbox Margin="481,189,223,162">
             <gauge:SfCircularGauge
                 Height="250"
                 Width="250"
@@ -332,7 +333,7 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
-        <Viewbox Margin="272,165,387,167">
+        <Viewbox Margin="200,194,482,168">
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
@@ -376,7 +377,7 @@
 
         </Viewbox>
 
-        <Viewbox Margin="90,169,514,167" >
+        <Viewbox Margin="89,195,562,168" >
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
@@ -419,7 +420,7 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
-        <Viewbox Margin="0,169,666,180">
+        <Viewbox Margin="20,197,669,171">
             <gauge:SfCircularGauge Height="250"
                        Width="250"
                        HeaderAlignment="Custom"
@@ -467,8 +468,8 @@
                 <oxy:LineSeries ItemsSource="{Binding VM_Data_Points}"/>
             </oxy:Plot.Series>
         </oxy:Plot>
-        <ListBox x:Name="ListBox_Features_List" SelectedIndex="0" ItemsSource="{Binding VM_FeaturesList}" HorizontalAlignment="Left" Height="122" Margin="182,10,0,0" VerticalAlignment="Top" Width="160" SelectionChanged="ListBox_SelectionChanged"/>
-        
+        <ListBox x:Name="ListBox_Features_List" SelectedIndex="0" ItemsSource="{Binding VM_FeaturesList}" HorizontalAlignment="Left" Height="122" Margin="174,10,0,0" VerticalAlignment="Top" Width="201" SelectionChanged="ListBox_SelectionChanged"/>
+
         <oxy:Plot x:Name="correlated_feature_plot" Margin="478,10,163,274" Visibility="Visible">
             <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedDataPoints}"/>
         </oxy:Plot>
