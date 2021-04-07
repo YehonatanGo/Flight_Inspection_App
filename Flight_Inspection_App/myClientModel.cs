@@ -4,11 +4,30 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Net.Sockets;
 using System.Threading;
+using System.Runtime.InteropServices;
+using System;
+using System.IO;
+
 
 namespace Flight_Inspection_App
 {
     class myClientModel : IClientModel
     {
+        [DllImport("anomalies_Detector.dll")]
+        public static extern int vectorSize(IntPtr vec);
+
+        [DllImport("anomalies_Detector.dll")]
+        public static extern int len(IntPtr str);
+
+        [DllImport("anomalies_Detector.dll")]
+        public static extern char getCharByIndex(IntPtr str, int x);
+
+        [DllImport("anomalies_Detector.dll")]
+        public static extern IntPtr newVector(char[] path);
+
+        [DllImport("anomalies_Detector.dll")]
+        public static extern IntPtr getFeaturesOfVW(IntPtr vec, int index);
+
         public myClientModel()
         {
             Path = "";
@@ -376,7 +395,7 @@ namespace Flight_Inspection_App
         {
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
-
+            test();
         }
 
         //sending the csv data from the csvHandler to the FG.
@@ -472,6 +491,26 @@ namespace Flight_Inspection_App
             ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
             ns.Flush();
             Thread.Sleep(sleepTime);
+        }
+
+        public void test()
+        {
+            string s ="flight.csv";
+            char[] path = s.ToCharArray();
+            IntPtr vec = newVector(path);
+            int vec_size = vectorSize(vec);
+            for (int i = 0; i < vec_size; i++)
+            {
+                string str = "";
+                IntPtr features = getFeaturesOfVW(vec, i);
+                int feat_name_size = len(features);
+                for (int j = 0; j < feat_name_size; j++)
+                {
+                    char c = getCharByIndex(features, j);
+                    str += c.ToString();
+                }
+                Trace.WriteLine(str);
+            }
         }
     }
 }
