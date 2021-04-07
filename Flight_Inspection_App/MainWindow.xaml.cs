@@ -77,5 +77,7 @@ namespace Flight_Inspection_App
         {
             vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
+
+
     }
 }

@@ -31,11 +31,12 @@ namespace Flight_Inspection_App
         double Pitch { get; set; }
 
         // graphs controller
-        List<DataPoint> DataPoints { get; set; }
-
         List<string> FeaturesList { get; set; }
-
+        List<DataPoint> DataPoints { get; set; }
         string DisplayedFeature { get; set; }   
+
+        string CorrelatedFeature { get; set; }
+        List<DataPoint> CorrelatedDataPoints { get; set; }
 
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 

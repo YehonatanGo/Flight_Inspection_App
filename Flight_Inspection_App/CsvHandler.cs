@@ -118,7 +118,12 @@ namespace Flight_Inspection_App
 
         public double getFeatureByLine(string feature, int line)
         {
+            if(feature == null)
+            {
+                return 0;
+            }
             return featuresDict[feature][line];
         }
+        
     }
 }

@@ -185,11 +185,16 @@ namespace Flight_Inspection_App
 
 
         // graphs controller
+        public List<string> VM_FeaturesList { get { return model.FeaturesList; } }
+
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 
-        public  List<string> VM_FeaturesList { get{ return model.FeaturesList; } }
-
         public string VM_DisplayedFeature { set { model.DisplayedFeature = value; } }
+
+        public string VM_CorrelatedFeature { set { model.CorrelatedFeature = value; } get { return model.CorrelatedFeature; } }
+
+        public List<DataPoint> VM_CorrelatedDataPoints { get { return model.CorrelatedDataPoints; } }
+
 
 
         public void connectFlightGear()
