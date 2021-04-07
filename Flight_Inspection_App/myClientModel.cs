@@ -7,7 +7,7 @@ using System.Threading;
 using System.Runtime.InteropServices;
 using System;
 using System.IO;
-
+using System.Linq;
 
 namespace Flight_Inspection_App
 {
@@ -27,21 +27,6 @@ namespace Flight_Inspection_App
 
         [DllImport("anomalies_Detector.dll")]
         public static extern IntPtr getFeaturesOfVW(IntPtr vec, int index);
-
-        public myClientModel()
-        {
-            Path = "";
-            running_line = 0;
-            PlaySpeed = 1;
-            elevator = 125;
-            aileron = 125;
-            airspeed = 0;
-            heading = 0;
-            altitude_hundreds = 0;
-            altitude_thousands = 0;
-            altitude_dozens = 0;
-
-        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -324,13 +309,13 @@ namespace Flight_Inspection_App
         }
 
         // graphs contoroller
-
         private string displayedFeature;
         public string DisplayedFeature { 
             get { return displayedFeature; }
             set
             {
                 this.displayedFeature = value;
+                this.correlatedFeature = getCorrealtedFeature(displayedFeature);
             }
         }
 
@@ -348,13 +333,59 @@ namespace Flight_Inspection_App
             }
         }
 
+
+        private string correlatedFeature;
+        public string CorrelatedFeature {
+            get { return correlatedFeature; }
+            set 
+            {
+                correlatedFeature = value;
+                NotifyPropertyChanged("correlatedFeature");
+            }
+        }
+        private volatile List<DataPoint> correlatedDataPoints;
+        public List<DataPoint> CorrelatedDataPoints
+        {
+            get { return correlatedDataPoints; }
+            set 
+            {
+                this.correlatedDataPoints = value;
+                NotifyPropertyChanged("correlatedDataPoints");
+            }
+        }
+
+
+
         private List<string> featuresList;
-        public List<string> FeaturesList {
+        public List<string> FeaturesList
+        {
             get { return featuresList; }
-            set {
+            set
+            {
                 this.featuresList = value;
                 NotifyPropertyChanged("featuresList");
             }
+        }
+
+        private Dictionary<string, string> correlatedFeatures;
+
+
+
+        public myClientModel()
+        {
+            Path = "";
+            running_line = 0;
+            PlaySpeed = 1;
+            elevator = 125;
+            aileron = 125;
+            airspeed = 0;
+            heading = 0;
+            altitude_hundreds = 0;
+            altitude_thousands = 0;
+            altitude_dozens = 0;
+            correlatedFeatures = new Dictionary<string, string>();
+            correlatedFeature = "";
+
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -366,6 +397,7 @@ namespace Flight_Inspection_App
         public void connectFlightGear()
         {
             csv_handler = new CsvHandler(path);
+            /*findCorrelatedFeatures();*/
             numOfLines = csv_handler.getRowCount();
             FeaturesList = csv_handler.getFeaturesNamesList();
 
@@ -393,9 +425,10 @@ namespace Flight_Inspection_App
         // creating thread and runs sendLines method.
         public void start()
         {
+            findCorrelatedFeatures();
+            correlatedFeature = getCorrealtedFeature(DisplayedFeature);
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
-            test();
         }
 
         //sending the csv data from the csvHandler to the FG.
@@ -428,11 +461,14 @@ namespace Flight_Inspection_App
                 Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
 
                 var newList = new List<DataPoint>();
-                for(int i =0; i <= running_line; i++)
+                var correlatedNewList = new List<DataPoint>();
+                for (int i =0; i <= running_line; i++)
                 {
                     newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
+                    correlatedNewList.Add(new DataPoint(i, csv_handler.getFeatureByLine(correlatedFeature, i)));
                 }
                 DataPoints = newList;
+                CorrelatedDataPoints = correlatedNewList;
 
                 // send the line to FG
                 line += "\r\n";
@@ -441,6 +477,17 @@ namespace Flight_Inspection_App
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }
+        }
+
+
+        private string getCorrealtedFeature(string feature)
+        {
+            if (correlatedFeatures.ContainsKey(feature))
+            {
+                return correlatedFeatures[feature];
+            }
+            // if it's not a key, then it's a (unique) value, return it's key
+            return correlatedFeatures.FirstOrDefault(x => x.Value == feature).Key;
         }
 
         /**
@@ -493,23 +540,26 @@ namespace Flight_Inspection_App
             Thread.Sleep(sleepTime);
         }
 
-        public void test()
+        private void findCorrelatedFeatures()
         {
             string s ="flight.csv";
             char[] path = s.ToCharArray();
-            IntPtr vec = newVector(path);
-            int vec_size = vectorSize(vec);
+            IntPtr correlated_feautres_vec = newVector(path);
+            int vec_size = vectorSize(correlated_feautres_vec);
+            // get correalted pair of features, pair after pair
             for (int i = 0; i < vec_size; i++)
             {
-                string str = "";
-                IntPtr features = getFeaturesOfVW(vec, i);
+                string cf_string = "";
+                IntPtr features = getFeaturesOfVW(correlated_feautres_vec, i); // string describing the correlated features
+                // form a string from the IntPtr object
                 int feat_name_size = len(features);
                 for (int j = 0; j < feat_name_size; j++)
                 {
                     char c = getCharByIndex(features, j);
-                    str += c.ToString();
+                    cf_string += c.ToString();
                 }
-                Trace.WriteLine(str);
+                string[] key_value = cf_string.Split(",");
+                correlatedFeatures.Add(key_value[0], key_value[1]);
             }
         }
     }
