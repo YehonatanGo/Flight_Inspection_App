@@ -411,6 +411,17 @@ namespace Flight_Inspection_App
             }
         }
 
+        private List<DataPoint> lastPoints;
+        public List<DataPoint> LastPoints
+        {
+            get => lastPoints;
+            set
+            {
+                lastPoints = value;
+                NotifyPropertyChanged("lastPoints");
+            }
+        }
+
         public myClientModel()
         {
             Path = "";
@@ -428,7 +439,7 @@ namespace Flight_Inspection_App
             linearRegressions = new Dictionary<string, Line>();
             linearRegression = new Line();
             cfPoints = new List<DataPoint>();
-
+            lastPoints = new List<DataPoint>();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -482,6 +493,7 @@ namespace Flight_Inspection_App
         public void sendLines()
         {
             string line;
+            // TODO: change bound. currently, when reaching the last line flight isn't displayed anymore. Maybe put thread asleep until something happens. 
             while (running_line < numOfLines)
             {
                 // wait for pause/play signal if needed
@@ -502,36 +514,62 @@ namespace Flight_Inspection_App
 
         private void updateGraphs()
         {
-            var newList = new List<DataPoint>();
+
+            // TODO: try to make things a little less messy
+            /*if (!hasCorrelated)
+            {
+                CorrelatedDataPoints = new List<DataPoint>();
+                LinearRegression = new Line();
+                LastPoints = new List<DataPoint>();
+                
+            }*/
+
+            bool hasCorrelated = !correlatedFeature.Equals("none");
+            var dataNewList = new List<DataPoint>();
             var correlatedNewList = new List<DataPoint>();
             Line line_reg = new Line();
+            // update displayed feature plot, and correlated feature plot (if exists)
             for (int i = 0; i <= running_line; i++)
             {
-                newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
-                if (!correlatedFeature.Equals("none"))
+                float x = csv_handler.getFeatureByLine(displayedFeature, i);
+                dataNewList.Add(new DataPoint(i, x));
+
+                if (hasCorrelated)
                 {
-                    correlatedNewList.Add(new DataPoint(i, csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    x = csv_handler.getFeatureByLine(correlatedFeature, i);
+                    correlatedNewList.Add(new DataPoint(i, x));
                 }
             }
-            if (!correlatedFeature.Equals("none"))
+
+
+            if (hasCorrelated)
             {
                 line_reg = findLinearRegression(displayedFeature, correlatedFeature);
             }
-            DataPoints = newList;
+            DataPoints = dataNewList;
             CorrelatedDataPoints = correlatedNewList;
             LinearRegression = line_reg;
 
+            // show all data points and update last 30 seconds points to be displayed on linear regression plot (if exists)
             var newCFPointsList = new List<DataPoint>();
-            if (!correlatedFeature.Equals("none"))
+            var newLastPoints = new List<DataPoint>();
+            if (hasCorrelated)
             {
-                for(int i=0; i <= running_line; i++)
+                for (int i = 0; i <= running_line; i++)
                 {
-                    newCFPointsList.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    if (running_line - i < 300)
+                    {
+                        newLastPoints.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    }
+                    else
+                    {
+
+                        newCFPointsList.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    }
                 }
             }
             CFPoints = newCFPointsList;
-
-
+            LastPoints = newLastPoints;
         }
 
         private void updateDashboard()

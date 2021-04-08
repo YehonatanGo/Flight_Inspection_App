@@ -22,5 +22,14 @@ namespace Flight_Inspection_App
         public float f(float x) {
             return a * x + b;
         }
+
+        public float computeXGivenY(float y)
+        {
+            if (this.a == 0)
+            {
+                return 0;
+            }
+            return (y - b) / a;
+        }
     }
 }

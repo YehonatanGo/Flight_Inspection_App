@@ -117,7 +117,7 @@ namespace Flight_Inspection_App
             return lines_list[index];
         }
 
-        public double getFeatureByLine(string feature, int line)
+        public float getFeatureByLine(string feature, int line)
         {
             if(feature == null)
             {

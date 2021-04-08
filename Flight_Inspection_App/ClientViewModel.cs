@@ -200,6 +200,9 @@ namespace Flight_Inspection_App
 
         public List<DataPoint> VM_CFPoints { get { return model.CFPoints; } }
 
+        public List<DataPoint> VM_LastPoints { get { return model.LastPoints; } }
+
+
 
         public void connectFlightGear()
         {
