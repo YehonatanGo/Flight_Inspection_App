@@ -38,6 +38,11 @@ namespace Flight_Inspection_App
         string CorrelatedFeature { get; set; }
         List<DataPoint> CorrelatedDataPoints { get; set; }
 
+        float LineRegA { get;}
+        float LineRegB { get;}
+        List<DataPoint> CFPoints { get; set; }
+        List<DataPoint> LastPoints { get; set; }
+
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 
         public void connectFlightGear();

@@ -310,7 +310,8 @@ namespace Flight_Inspection_App
 
         // graphs contoroller
         private string displayedFeature;
-        public string DisplayedFeature { 
+        public string DisplayedFeature
+        {
             get { return displayedFeature; }
             set
             {
@@ -335,9 +336,10 @@ namespace Flight_Inspection_App
 
 
         private string correlatedFeature;
-        public string CorrelatedFeature {
+        public string CorrelatedFeature
+        {
             get { return correlatedFeature; }
-            set 
+            set
             {
                 correlatedFeature = value;
                 NotifyPropertyChanged("correlatedFeature");
@@ -347,7 +349,7 @@ namespace Flight_Inspection_App
         public List<DataPoint> CorrelatedDataPoints
         {
             get { return correlatedDataPoints; }
-            set 
+            set
             {
                 this.correlatedDataPoints = value;
                 NotifyPropertyChanged("correlatedDataPoints");
@@ -367,9 +369,58 @@ namespace Flight_Inspection_App
             }
         }
 
-        private Dictionary<string, string> correlatedFeatures;
+        private volatile Dictionary<string, string> correlatedFeatures;
 
+        private Dictionary<string, Line> linearRegressions;
 
+        private Line linearRegression;
+
+        public Line LinearRegression
+        {
+            set
+            {
+                this.linearRegression = value;
+                NotifyPropertyChanged("LineRegA");
+                NotifyPropertyChanged("LineRegB");
+            }
+        }
+
+        public float LineRegA
+        {
+            get
+            {
+                return linearRegression.A;
+            }
+        }
+        public float LineRegB
+        {
+            get
+            {
+                return linearRegression.B;
+            }
+        }
+
+        private List<DataPoint> cfPoints;
+        public List<DataPoint> CFPoints
+        {
+            get => cfPoints;
+            set
+            {
+                cfPoints = value;
+                NotifyPropertyChanged("CFPoints");
+            }
+        }
+
+        private List<DataPoint> lastPoints;
+        public List<DataPoint> LastPoints
+        {
+            get => lastPoints;
+            set
+            {
+                lastPoints = value;
+                NotifyPropertyChanged("lastPoints");
+            }
+        }
 
         public myClientModel()
         {
@@ -385,7 +436,10 @@ namespace Flight_Inspection_App
             altitude_dozens = 0;
             correlatedFeatures = new Dictionary<string, string>();
             correlatedFeature = "";
-
+            linearRegressions = new Dictionary<string, Line>();
+            linearRegression = new Line();
+            cfPoints = new List<DataPoint>();
+            lastPoints = new List<DataPoint>();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -414,6 +468,11 @@ namespace Flight_Inspection_App
             // run FlightGear
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
+            findCorrelatedFeatures(csv_handler.FeaturesDict);
+            /*Thread thread = new Thread(new ThreadStart(findCorrelatedFeatures));
+            thread.Start();*/
+
+
             // wait till FG starts
             Thread.Sleep(40000);
 
@@ -425,7 +484,6 @@ namespace Flight_Inspection_App
         // creating thread and runs sendLines method.
         public void start()
         {
-            findCorrelatedFeatures();
             correlatedFeature = getCorrealtedFeature(DisplayedFeature);
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
@@ -435,40 +493,15 @@ namespace Flight_Inspection_App
         public void sendLines()
         {
             string line;
+            // TODO: change bound. currently, when reaching the last line flight isn't displayed anymore. Maybe put thread asleep until something happens. 
             while (running_line < numOfLines)
             {
                 // wait for pause/play signal if needed
                 manualResetEvent.WaitOne();
-                
+
                 line = csv_handler.getLine(running_line);
-
-                //update the joystick according to Aileron and Elevator values
-                CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
-                CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
-                // update throttle and rudder sliders
-                Throttle = csv_handler.getFeatureByLine("throttle", running_line);
-                Rudder = csv_handler.getFeatureByLine("rudder", running_line);
-                // update airspeed: radial gauge
-                Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
-                // update heading: compass
-                Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
-                // update altitude: altimeter
-                CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
-
-                // update Yaw, Roll, Pitch
-                Yaw = csv_handler.getFeatureByLine("side-slip-deg", running_line);
-                Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
-                Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
-
-                var newList = new List<DataPoint>();
-                var correlatedNewList = new List<DataPoint>();
-                for (int i =0; i <= running_line; i++)
-                {
-                    newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
-                    correlatedNewList.Add(new DataPoint(i, csv_handler.getFeatureByLine(correlatedFeature, i)));
-                }
-                DataPoints = newList;
-                CorrelatedDataPoints = correlatedNewList;
+                updateDashboard();
+                updateGraphs();
 
                 // send the line to FG
                 line += "\r\n";
@@ -479,6 +512,91 @@ namespace Flight_Inspection_App
             }
         }
 
+        private void updateGraphs()
+        {
+
+            // TODO: try to make things a little less messy
+            /*if (!hasCorrelated)
+            {
+                CorrelatedDataPoints = new List<DataPoint>();
+                LinearRegression = new Line();
+                LastPoints = new List<DataPoint>();
+                
+            }*/
+
+            bool hasCorrelated = !correlatedFeature.Equals("none");
+            var dataNewList = new List<DataPoint>();
+            var correlatedNewList = new List<DataPoint>();
+            Line line_reg = new Line();
+            // update displayed feature plot, and correlated feature plot (if exists)
+            for (int i = 0; i <= running_line; i++)
+            {
+                float x = csv_handler.getFeatureByLine(displayedFeature, i);
+                dataNewList.Add(new DataPoint(i, x));
+
+                if (hasCorrelated)
+                {
+                    x = csv_handler.getFeatureByLine(correlatedFeature, i);
+                    correlatedNewList.Add(new DataPoint(i, x));
+                }
+            }
+
+
+            if (hasCorrelated)
+            {
+                line_reg = findLinearRegression(displayedFeature, correlatedFeature);
+            }
+            DataPoints = dataNewList;
+            CorrelatedDataPoints = correlatedNewList;
+            LinearRegression = line_reg;
+
+            // show all data points and update last 30 seconds points to be displayed on linear regression plot (if exists)
+            var newCFPointsList = new List<DataPoint>();
+            var newLastPoints = new List<DataPoint>();
+            if (hasCorrelated)
+            {
+                for (int i = 0; i <= running_line; i++)
+                {
+                    if (running_line - i < 300)
+                    {
+                        newLastPoints.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    }
+                    else
+                    {
+
+                        newCFPointsList.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                    }
+                }
+            }
+            CFPoints = newCFPointsList;
+            LastPoints = newLastPoints;
+        }
+
+        private void updateDashboard()
+        {
+            //update the joystick according to Aileron and Elevator values
+            CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
+            CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
+            // update throttle and rudder sliders
+            Throttle = csv_handler.getFeatureByLine("throttle", running_line);
+            Rudder = csv_handler.getFeatureByLine("rudder", running_line);
+            // update airspeed: radial gauge
+            Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
+            // update heading: compass
+            Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
+            // update altitude: altimeter
+            CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
+
+            // update Yaw, Roll, Pitch
+            Yaw = csv_handler.getFeatureByLine("side-slip-deg", running_line);
+            Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
+            Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
+        }
+
+        private Line findLinearRegression(string f1, string f2)
+        {
+            return linearRegressions[f1 + "-" + f2];
+        }
 
         private string getCorrealtedFeature(string feature)
         {
@@ -539,27 +657,30 @@ namespace Flight_Inspection_App
             ns.Flush();
             Thread.Sleep(sleepTime);
         }
-
-        private void findCorrelatedFeatures()
+        public void findCorrelatedFeatures(Dictionary<string, List<float>> features)
         {
-            string s ="flight.csv";
-            char[] path = s.ToCharArray();
-            IntPtr correlated_feautres_vec = newVector(path);
-            int vec_size = vectorSize(correlated_feautres_vec);
-            // get correalted pair of features, pair after pair
-            for (int i = 0; i < vec_size; i++)
+            foreach (var feature1 in features)
             {
-                string cf_string = "";
-                IntPtr features = getFeaturesOfVW(correlated_feautres_vec, i); // string describing the correlated features
-                // form a string from the IntPtr object
-                int feat_name_size = len(features);
-                for (int j = 0; j < feat_name_size; j++)
+                float maxCorrelation = 0;
+                string mostCorrelated = "none";
+                foreach (var feature2 in features)
                 {
-                    char c = getCharByIndex(features, j);
-                    cf_string += c.ToString();
+                    if (feature1.Key.Equals(feature2.Key))
+                        continue;
+
+                    float pears = Math.Abs(anomaly_detection_util.pearson(features[feature1.Key], features[feature2.Key], feature1.Value.Count));
+                    if (pears >= maxCorrelation)
+                    {
+                        maxCorrelation = pears;
+                        mostCorrelated = feature2.Key;
+                    }
                 }
-                string[] key_value = cf_string.Split(',');
-                correlatedFeatures.Add(key_value[0], key_value[1]);
+                correlatedFeatures.Add(feature1.Key, mostCorrelated);
+                if (!mostCorrelated.Equals("none"))
+                {
+                    Line line_reg = anomaly_detection_util.linear_reg(anomaly_detection_util.toPoints(features[feature1.Key], features[mostCorrelated]), feature1.Value.Count);
+                    linearRegressions.Add(feature1.Key + "-" + mostCorrelated, line_reg);
+                }
             }
         }
     }
