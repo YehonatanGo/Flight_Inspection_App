@@ -9,7 +9,8 @@ namespace Flight_Inspection_App
         private string path;
         private int row_count;
         private List<string> lines_list;
-        private Dictionary<string, List<double>> featuresDict;
+        private Dictionary<string, List<float>> featuresDict;
+        public Dictionary<string, List<float>> FeaturesDict { get { return featuresDict; } }
         
 
         public CsvHandler(string path)
@@ -17,7 +18,7 @@ namespace Flight_Inspection_App
             this.path = path;
             row_count = 0;
             lines_list = new List<string>();
-            featuresDict = new Dictionary<string, List<double>>();
+            featuresDict = new Dictionary<string, List<float>>();
             parseCsv();
         }
 
@@ -30,18 +31,18 @@ namespace Flight_Inspection_App
                 // add a pair of (feature, values-list) to the features dictionary, for each feature given by the xml
                 foreach(var feature in features_names_to_idx)
                 {
-                    featuresDict.Add(feature.Key, new List<double>());
+                    featuresDict.Add(feature.Key, new List<float>());
                 }
 
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
                     // split each line by ',' to get specific features values
-                    double[] doubles = System.Array.ConvertAll(line.Split(','), double.Parse);
+                    float[] floats = System.Array.ConvertAll(line.Split(','), float.Parse);
                     // add each value in doubles list to the matching feature's values list in the dictionary
                     foreach(var feature in featuresDict)
                     {
-                        feature.Value.Add(doubles[features_names_to_idx[feature.Key]]);
+                        feature.Value.Add(floats[features_names_to_idx[feature.Key]]);
                     }
                     if (line == null) continue;
                     lines_list.Add(line);
@@ -120,9 +121,10 @@ namespace Flight_Inspection_App
         {
             if(feature == null)
             {
-                return 0;   
+                return 0;
             }
             return featuresDict[feature][line];
         }
+        
     }
 }

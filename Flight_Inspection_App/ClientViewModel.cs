@@ -195,6 +195,8 @@ namespace Flight_Inspection_App
 
         public List<DataPoint> VM_CorrelatedDataPoints { get { return model.CorrelatedDataPoints; } }
 
+        public float VM_LineRegA { get { return model.LineRegA; } }
+        public float VM_LineRegB { get { return model.LineRegB; } }
 
 
         public void connectFlightGear()

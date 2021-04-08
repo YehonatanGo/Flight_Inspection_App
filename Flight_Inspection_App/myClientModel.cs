@@ -310,7 +310,8 @@ namespace Flight_Inspection_App
 
         // graphs contoroller
         private string displayedFeature;
-        public string DisplayedFeature { 
+        public string DisplayedFeature
+        {
             get { return displayedFeature; }
             set
             {
@@ -335,9 +336,10 @@ namespace Flight_Inspection_App
 
 
         private string correlatedFeature;
-        public string CorrelatedFeature {
+        public string CorrelatedFeature
+        {
             get { return correlatedFeature; }
-            set 
+            set
             {
                 correlatedFeature = value;
                 NotifyPropertyChanged("correlatedFeature");
@@ -347,7 +349,7 @@ namespace Flight_Inspection_App
         public List<DataPoint> CorrelatedDataPoints
         {
             get { return correlatedDataPoints; }
-            set 
+            set
             {
                 this.correlatedDataPoints = value;
                 NotifyPropertyChanged("correlatedDataPoints");
@@ -367,9 +369,36 @@ namespace Flight_Inspection_App
             }
         }
 
-        private Dictionary<string, string> correlatedFeatures;
+        private volatile Dictionary<string, string> correlatedFeatures;
 
         private Dictionary<string, Line> linearRegressions;
+
+        private Line linearRegression;
+
+        public Line LinearRegression
+        {
+            set
+            {
+                this.linearRegression = value;
+                NotifyPropertyChanged("LineRegA");
+                NotifyPropertyChanged("LineRegB");
+            }
+        }
+
+        public float LineRegA
+        {
+            get
+            {
+                return linearRegression.A;
+            }
+        }
+        public float LineRegB
+        {
+            get
+            {
+                return linearRegression.B;
+            }
+        }
 
 
 
@@ -388,6 +417,7 @@ namespace Flight_Inspection_App
             correlatedFeatures = new Dictionary<string, string>();
             correlatedFeature = "";
             linearRegressions = new Dictionary<string, Line>();
+            linearRegression = new Line();
 
         }
 
@@ -417,8 +447,11 @@ namespace Flight_Inspection_App
             // run FlightGear
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
-            Thread thread = new Thread(new ThreadStart(findCorrelatedFeatures));
-            thread.Start();
+            findCorrelatedFeatures(csv_handler.FeaturesDict);
+            /*Thread thread = new Thread(new ThreadStart(findCorrelatedFeatures));
+            thread.Start();*/
+
+
             // wait till FG starts
             Thread.Sleep(40000);
 
@@ -443,38 +476,10 @@ namespace Flight_Inspection_App
             {
                 // wait for pause/play signal if needed
                 manualResetEvent.WaitOne();
-                
+
                 line = csv_handler.getLine(running_line);
-
-                //update the joystick according to Aileron and Elevator values
-                CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
-                CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
-                // update throttle and rudder sliders
-                Throttle = csv_handler.getFeatureByLine("throttle", running_line);
-                Rudder = csv_handler.getFeatureByLine("rudder", running_line);
-                // update airspeed: radial gauge
-                Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
-                // update heading: compass
-                Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
-                // update altitude: altimeter
-                CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
-
-                // update Yaw, Roll, Pitch
-                Yaw = csv_handler.getFeatureByLine("side-slip-deg", running_line);
-                Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
-                Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
-
-
-                var newList = new List<DataPoint>();
-                var correlatedNewList = new List<DataPoint>();
-                for (int i =0; i <= running_line; i++)
-                {
-                    newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
-                    correlatedNewList.Add(new DataPoint(i, csv_handler.getFeatureByLine(correlatedFeature, i)));
-                }
-                DataPoints = newList;
-                CorrelatedDataPoints = correlatedNewList;
-
+                updateDashboard();
+                updateGraphs();
 
                 // send the line to FG
                 line += "\r\n";
@@ -483,6 +488,56 @@ namespace Flight_Inspection_App
                 Thread.Sleep(sleepTime);
                 RunningLine++;
             }
+        }
+
+        private void updateGraphs()
+        {
+            var newList = new List<DataPoint>();
+            var correlatedNewList = new List<DataPoint>();
+            Line line_reg = new Line();
+            for (int i = 0; i <= running_line; i++)
+            {
+                newList.Add(new DataPoint(i, csv_handler.getFeatureByLine(displayedFeature, i)));
+                if (!correlatedFeature.Equals("none"))
+                {
+                    correlatedNewList.Add(new DataPoint(i, csv_handler.getFeatureByLine(correlatedFeature, i)));
+                }
+            }
+            if (!correlatedFeature.Equals("none"))
+            {
+                line_reg = findLinearRegression(displayedFeature, correlatedFeature);
+            }
+
+
+            DataPoints = newList;
+            CorrelatedDataPoints = correlatedNewList;
+            LinearRegression = line_reg;
+        }
+
+        private void updateDashboard()
+        {
+            //update the joystick according to Aileron and Elevator values
+            CalculateAileron(csv_handler.getFeatureByLine("aileron", running_line));
+            CalculateElevator(csv_handler.getFeatureByLine("elevator", running_line));
+            // update throttle and rudder sliders
+            Throttle = csv_handler.getFeatureByLine("throttle", running_line);
+            Rudder = csv_handler.getFeatureByLine("rudder", running_line);
+            // update airspeed: radial gauge
+            Airspeed = csv_handler.getFeatureByLine("airspeed-kt", running_line);
+            // update heading: compass
+            Heading = csv_handler.getFeatureByLine("heading-deg", running_line);
+            // update altitude: altimeter
+            CalculateAltitude(csv_handler.getFeatureByLine("altitude-ft", running_line));
+
+            // update Yaw, Roll, Pitch
+            Yaw = csv_handler.getFeatureByLine("side-slip-deg", running_line);
+            Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
+            Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
+        }
+
+        private Line findLinearRegression(string f1, string f2)
+        {
+            return linearRegressions[f1 + "-" + f2];
         }
 
         private string getCorrealtedFeature(string feature)
@@ -544,33 +599,31 @@ namespace Flight_Inspection_App
             ns.Flush();
             Thread.Sleep(sleepTime);
         }
-
-        private void findCorrelatedFeatures()
+        public void findCorrelatedFeatures(Dictionary<string, List<float>> features)
         {
-            string s ="flight.csv";
-            char[] path = s.ToCharArray();
-            IntPtr correlated_feautres_vec = newVector(path);
-            int vec_size = vectorSize(correlated_feautres_vec);
-            // get correalted pair of features, pair after pair
-            for (int i = 0; i < vec_size; i++)
+            foreach (var feature1 in features)
             {
-                string cf_string = "";
-                IntPtr features = getFeaturesOfVW(correlated_feautres_vec, i); // string describing the correlated features
-                // form a string from the IntPtr object
-                int feat_name_size = len(features);
-                for (int j = 0; j < feat_name_size; j++)
+                float maxCorrelation = 0;
+                string mostCorrelated = "none";
+                foreach (var feature2 in features)
                 {
-                    char c = getCharByIndex(features, j);
-                    cf_string += c.ToString();
-                }
-                // add correlated features pair to the dict
-                string[] key_value = cf_string.Split(",");
-                correlatedFeatures.Add(key_value[0], key_value[1]);
+                    if (feature1.Key.Equals(feature2.Key))
+                        continue;
 
-                // add <cf, linear-regression> to the dict
-                linearRegressions.Add(key_value[0] + "-" + key_value[1], new Line(float.Parse(key_value[2]), float.Parse(key_value[3])));
+                    float pears = Math.Abs(anomaly_detection_util.pearson(features[feature1.Key], features[feature2.Key], feature1.Value.Count));
+                    if (pears >= maxCorrelation)
+                    {
+                        maxCorrelation = pears;
+                        mostCorrelated = feature2.Key;
+                    }
+                }
+                correlatedFeatures.Add(feature1.Key, mostCorrelated);
+                if (!mostCorrelated.Equals("none"))
+                {
+                    Line line_reg = anomaly_detection_util.linear_reg(anomaly_detection_util.toPoints(features[feature1.Key], features[mostCorrelated]), feature1.Value.Count);
+                    linearRegressions.Add(feature1.Key + "-" + mostCorrelated, line_reg);
+                }
             }
-            Console.WriteLine();
         }
     }
 }

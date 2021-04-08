@@ -463,6 +463,19 @@
             </gauge:SfCircularGauge>
         </Viewbox>
 
+        
+          <oxy:Plot Margin="576,165,28,137">
+            <oxy:Plot.Axes>
+                <oxy:LinearAxis Position="Bottom" Minimum="-20" Maximum="80" />
+                <oxy:LinearAxis Position="Left" Minimum="-10" Maximum="10" />
+            </oxy:Plot.Axes>
+            <oxy:Plot.Annotations>
+                <oxy:LineAnnotation Slope="{Binding VM_LineRegA}" Intercept="{Binding VM_LineRegB}" Text="First" />
+            </oxy:Plot.Annotations>
+            <oxy:Plot.Series>
+                <oxy:LineSeries ItemsSource="{Binding VM_Yossi}" LineStyle="None" MarkerType="Circle" MarkerSize="3" MarkerFill="Red"/>
+            </oxy:Plot.Series>
+        </oxy:Plot>
         <oxy:Plot x:Name="feature_plot" Margin="637,10,10,274" Visibility="Visible">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_Data_Points}"/>
@@ -474,6 +487,8 @@
             <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedDataPoints}"/>
         </oxy:Plot>
     </Grid>
+
+
 
 
 </Window>

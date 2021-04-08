@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OxyPlot;
+using System;
 
 namespace Flight_Inspection_App
 {
@@ -10,6 +11,12 @@ namespace Flight_Inspection_App
         public Line(float a, float b) {
             this.a = a;
             this.b = b;
+        }
+
+        public Line()
+        {
+            a = 0;
+            b = 0;
         }
 
         public float f(float x) {
