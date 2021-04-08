@@ -558,7 +558,7 @@ namespace Flight_Inspection_App
                     char c = getCharByIndex(features, j);
                     cf_string += c.ToString();
                 }
-                string[] key_value = cf_string.Split(",");
+                string[] key_value = cf_string.Split(',');
                 correlatedFeatures.Add(key_value[0], key_value[1]);
             }
         }
