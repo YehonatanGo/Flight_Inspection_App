@@ -400,7 +400,16 @@ namespace Flight_Inspection_App
             }
         }
 
-
+        private List<DataPoint> cfPoints;
+        public List<DataPoint> CFPoints
+        {
+            get => cfPoints;
+            set
+            {
+                cfPoints = value;
+                NotifyPropertyChanged("CFPoints");
+            }
+        }
 
         public myClientModel()
         {
@@ -418,6 +427,7 @@ namespace Flight_Inspection_App
             correlatedFeature = "";
             linearRegressions = new Dictionary<string, Line>();
             linearRegression = new Line();
+            cfPoints = new List<DataPoint>();
 
         }
 
@@ -507,11 +517,21 @@ namespace Flight_Inspection_App
             {
                 line_reg = findLinearRegression(displayedFeature, correlatedFeature);
             }
-
-
             DataPoints = newList;
             CorrelatedDataPoints = correlatedNewList;
             LinearRegression = line_reg;
+
+            var newCFPointsList = new List<DataPoint>();
+            if (!correlatedFeature.Equals("none"))
+            {
+                for(int i=0; i <= running_line; i++)
+                {
+                    newCFPointsList.Add(new DataPoint(csv_handler.getFeatureByLine(displayedFeature, i), csv_handler.getFeatureByLine(correlatedFeature, i)));
+                }
+            }
+            CFPoints = newCFPointsList;
+
+
         }
 
         private void updateDashboard()

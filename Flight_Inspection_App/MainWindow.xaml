@@ -473,7 +473,7 @@
                 <oxy:LineAnnotation Slope="{Binding VM_LineRegA}" Intercept="{Binding VM_LineRegB}" Text="First" />
             </oxy:Plot.Annotations>
             <oxy:Plot.Series>
-                <oxy:LineSeries ItemsSource="{Binding VM_Yossi}" LineStyle="None" MarkerType="Circle" MarkerSize="3" MarkerFill="Red"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_CFPoints}" LineStyle="None" MarkerType="Circle" MarkerSize="3" MarkerFill="Red"/>
             </oxy:Plot.Series>
         </oxy:Plot>
         <oxy:Plot x:Name="feature_plot" Margin="637,10,10,274" Visibility="Visible">

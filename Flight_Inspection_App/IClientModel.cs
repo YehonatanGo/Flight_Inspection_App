@@ -40,6 +40,7 @@ namespace Flight_Inspection_App
 
         float LineRegA { get;}
         float LineRegB { get;}
+        List<DataPoint> CFPoints { get; set; }
 
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 

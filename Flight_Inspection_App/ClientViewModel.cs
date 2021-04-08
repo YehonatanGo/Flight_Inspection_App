@@ -198,6 +198,8 @@ namespace Flight_Inspection_App
         public float VM_LineRegA { get { return model.LineRegA; } }
         public float VM_LineRegB { get { return model.LineRegB; } }
 
+        public List<DataPoint> VM_CFPoints { get { return model.CFPoints; } }
+
 
         public void connectFlightGear()
         {
