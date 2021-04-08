@@ -369,6 +369,8 @@ namespace Flight_Inspection_App
 
         private Dictionary<string, string> correlatedFeatures;
 
+        private Dictionary<string, Line> linearRegressions;
+
 
 
         public myClientModel()
@@ -385,6 +387,7 @@ namespace Flight_Inspection_App
             altitude_dozens = 0;
             correlatedFeatures = new Dictionary<string, string>();
             correlatedFeature = "";
+            linearRegressions = new Dictionary<string, Line>();
 
         }
 
@@ -414,6 +417,8 @@ namespace Flight_Inspection_App
             // run FlightGear
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
+            Thread thread = new Thread(new ThreadStart(findCorrelatedFeatures));
+            thread.Start();
             // wait till FG starts
             Thread.Sleep(40000);
 
@@ -425,7 +430,6 @@ namespace Flight_Inspection_App
         // creating thread and runs sendLines method.
         public void start()
         {
-            findCorrelatedFeatures();
             correlatedFeature = getCorrealtedFeature(DisplayedFeature);
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
             sending_lines_thread.Start();
@@ -559,9 +563,14 @@ namespace Flight_Inspection_App
                     char c = getCharByIndex(features, j);
                     cf_string += c.ToString();
                 }
+                // add correlated features pair to the dict
                 string[] key_value = cf_string.Split(",");
                 correlatedFeatures.Add(key_value[0], key_value[1]);
+
+                // add <cf, linear-regression> to the dict
+                linearRegressions.Add(key_value[0] + "-" + key_value[1], new Line(float.Parse(key_value[2]), float.Parse(key_value[3])));
             }
+            Console.WriteLine();
         }
     }
 }

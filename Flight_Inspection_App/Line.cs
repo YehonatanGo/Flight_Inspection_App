@@ -7,7 +7,7 @@ namespace Flight_Inspection_App
         private float a, b;
         public float A { get { return a; } set { a = value; } }
         public float B { get { return b; } set { b = value; } }
-        Line(float a, float b) {
+        public Line(float a, float b) {
             this.a = a;
             this.b = b;
         }
