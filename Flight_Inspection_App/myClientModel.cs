@@ -460,6 +460,7 @@ namespace Flight_Inspection_App
                 Roll = csv_handler.getFeatureByLine("roll-deg", running_line);
                 Pitch = csv_handler.getFeatureByLine("pitch-deg", running_line);
 
+
                 var newList = new List<DataPoint>();
                 var correlatedNewList = new List<DataPoint>();
                 for (int i =0; i <= running_line; i++)
@@ -470,6 +471,7 @@ namespace Flight_Inspection_App
                 DataPoints = newList;
                 CorrelatedDataPoints = correlatedNewList;
 
+
                 // send the line to FG
                 line += "\r\n";
                 ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
@@ -478,7 +480,6 @@ namespace Flight_Inspection_App
                 RunningLine++;
             }
         }
-
 
         private string getCorrealtedFeature(string feature)
         {

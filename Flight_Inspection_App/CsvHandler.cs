@@ -120,10 +120,9 @@ namespace Flight_Inspection_App
         {
             if(feature == null)
             {
-                return 0;
+                return 0;   
             }
             return featuresDict[feature][line];
         }
-        
     }
 }
