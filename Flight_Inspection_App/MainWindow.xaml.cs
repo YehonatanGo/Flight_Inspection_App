@@ -12,7 +12,7 @@ namespace Flight_Inspection_App
     public partial class MainWindow : Window
     {
 
-        private String path;
+        private String test_path = "";
         private bool isAlreadyPlayed;
         ClientViewModel vm;
         public MainWindow()
@@ -20,7 +20,7 @@ namespace Flight_Inspection_App
             vm = new ClientViewModel(new myClientModel());
             InitializeComponent();
             DataContext = vm;
-            path = "";
+            //path = "";
             isAlreadyPlayed = false;
         }
 
