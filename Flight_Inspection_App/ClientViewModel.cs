@@ -37,13 +37,13 @@ namespace Flight_Inspection_App
             }
         }
 
+
         // playeing controller
-        private bool play;
         public bool VM_play
         {
             get
             {
-                return play;
+                return model.Play;
             }
             set
             {
@@ -88,6 +88,7 @@ namespace Flight_Inspection_App
         }
 
 
+        
         // dashboard controller
         public double VM_Elevator
         {
@@ -186,12 +187,13 @@ namespace Flight_Inspection_App
         }
 
 
+
         // graphs controller
         public List<string> VM_FeaturesList { get { return model.FeaturesList; } }
 
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 
-        public string VM_DisplayedFeature { set { model.DisplayedFeature = value; } }
+        public string VM_DisplayedFeature { set { model.DisplayedFeature = value; } get { return model.DisplayedFeature; } }
 
         public string VM_CorrelatedFeature { set { model.CorrelatedFeature = value; } get { return model.CorrelatedFeature; } }
 
