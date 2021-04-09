@@ -443,7 +443,8 @@ namespace Flight_Inspection_App
             altitude_thousands = 0;
             altitude_dozens = 0;
             correlatedFeatures = new Dictionary<string, string>();
-            correlatedFeature = "";
+            CorrelatedFeature = "";
+            DisplayedFeature = "";
             linearRegressions = new Dictionary<string, Line>();
             linearRegression = new Line();
             cfPoints = new List<DataPoint>();
@@ -462,9 +463,7 @@ namespace Flight_Inspection_App
             csv_handler = new CsvHandler(path);
             numOfLines = csv_handler.getRowCount();
             FeaturesList = csv_handler.getFeaturesNamesList();
-            DisplayedFeature = featuresList[0];
-            CorrelatedFeature = getCorrealtedFeature(DisplayedFeature);
-
+            
             // cmd process
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -479,6 +478,7 @@ namespace Flight_Inspection_App
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
             findCorrelatedFeatures(csv_handler.FeaturesDict);
+            DisplayedFeature = featuresList[0];
 
             // wait till FG starts
             Thread.Sleep(40000);
