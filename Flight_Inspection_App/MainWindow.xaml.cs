@@ -69,10 +69,12 @@ namespace Flight_Inspection_App
             vm.VM_Running_Line -= 150;//
         }
 
+        /*
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
+         */
 
 
     }

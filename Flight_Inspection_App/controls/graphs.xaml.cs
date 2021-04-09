@@ -18,6 +18,8 @@ namespace Flight_Inspection_App.controls
     /// </summary>
     public partial class graphs : UserControl
     {
+        ClientViewModel vm;
+
         public graphs()
         {
             InitializeComponent();
