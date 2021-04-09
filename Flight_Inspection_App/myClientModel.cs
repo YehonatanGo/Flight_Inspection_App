@@ -15,29 +15,27 @@ namespace Flight_Inspection_App
     {
         [DllImport("anomalies_Detector.dll")]
         public static extern int vectorSize(IntPtr vec);
-
         [DllImport("anomalies_Detector.dll")]
         public static extern int len(IntPtr str);
-
         [DllImport("anomalies_Detector.dll")]
         public static extern char getCharByIndex(IntPtr str, int x);
-
         [DllImport("anomalies_Detector.dll")]
         public static extern IntPtr newVector(char[] path);
-
         [DllImport("anomalies_Detector.dll")]
         public static extern IntPtr getFeaturesOfVW(IntPtr vec, int index);
 
+       
         public event PropertyChangedEventHandler PropertyChanged;
-
+        ManualResetEvent manualResetEvent;
         volatile private CsvHandler csv_handler;
         volatile private NetworkStream ns;
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
-        volatile private int sleepTime;
+        
 
 
+        // *********************dashboard controller*********************
         private double elevator;
         public double Elevator
         {
@@ -207,8 +205,8 @@ namespace Flight_Inspection_App
             }
         }
 
+        // **************************************************************
 
-        ManualResetEvent manualResetEvent = new ManualResetEvent(true);
 
         private string path;
         public string Path
@@ -223,6 +221,7 @@ namespace Flight_Inspection_App
                 return path;
             }
         }
+        // *********************playing controller*********************
 
         private int running_line;
         public int RunningLine
@@ -239,6 +238,10 @@ namespace Flight_Inspection_App
                     value = numOfLines;
                 }
                 running_line = value;
+                if(Math.Abs(value) > 1 && !play)
+                {
+                    sendOneLine();
+                }
                 NotifyPropertyChanged("Running_line");
             }
             get
@@ -280,7 +283,7 @@ namespace Flight_Inspection_App
                 }
             }
         }
-
+        volatile private int sleepTime;
         private double playSpeed;
         public double PlaySpeed
         {
@@ -307,8 +310,10 @@ namespace Flight_Inspection_App
                 numOfLines = value;
             }
         }
+        // **************************************************************
 
-        // graphs contoroller
+
+        // ************************graphs controller*********************
         private string displayedFeature;
         public string DisplayedFeature
         {
@@ -334,7 +339,6 @@ namespace Flight_Inspection_App
             }
         }
 
-
         private string correlatedFeature;
         public string CorrelatedFeature
         {
@@ -355,8 +359,6 @@ namespace Flight_Inspection_App
                 NotifyPropertyChanged("correlatedDataPoints");
             }
         }
-
-
 
         private List<string> featuresList;
         public List<string> FeaturesList
@@ -422,6 +424,9 @@ namespace Flight_Inspection_App
             }
         }
 
+        // **************************************************************
+
+
         public myClientModel()
         {
             Path = "";
@@ -440,6 +445,7 @@ namespace Flight_Inspection_App
             linearRegression = new Line();
             cfPoints = new List<DataPoint>();
             lastPoints = new List<DataPoint>();
+            manualResetEvent = new ManualResetEvent(true);
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -514,41 +520,20 @@ namespace Flight_Inspection_App
 
         private void updateGraphs()
         {
-
-            // TODO: try to make things a little less messy
-            /*if (!hasCorrelated)
-            {
-                CorrelatedDataPoints = new List<DataPoint>();
-                LinearRegression = new Line();
-                LastPoints = new List<DataPoint>();
-                
-            }*/
-
             bool hasCorrelated = !correlatedFeature.Equals("none");
-            var dataNewList = new List<DataPoint>();
-            var correlatedNewList = new List<DataPoint>();
+            updateFeaturesPlots(hasCorrelated);
+            updateLinearRegression(hasCorrelated);
+        }
+
+        private void updateLinearRegression(bool hasCorrelated)
+        {
             Line line_reg = new Line();
-            // update displayed feature plot, and correlated feature plot (if exists)
-            for (int i = 0; i <= running_line; i++)
-            {
-                float x = csv_handler.getFeatureByLine(displayedFeature, i);
-                dataNewList.Add(new DataPoint(i, x));
-
-                if (hasCorrelated)
-                {
-                    x = csv_handler.getFeatureByLine(correlatedFeature, i);
-                    correlatedNewList.Add(new DataPoint(i, x));
-                }
-            }
-
-
             if (hasCorrelated)
             {
                 line_reg = findLinearRegression(displayedFeature, correlatedFeature);
             }
-            DataPoints = dataNewList;
-            CorrelatedDataPoints = correlatedNewList;
             LinearRegression = line_reg;
+
 
             // show all data points and update last 30 seconds points to be displayed on linear regression plot (if exists)
             var newCFPointsList = new List<DataPoint>();
@@ -570,6 +555,26 @@ namespace Flight_Inspection_App
             }
             CFPoints = newCFPointsList;
             LastPoints = newLastPoints;
+        }
+
+        private void updateFeaturesPlots(bool hasCorrelated)
+        {
+            var dataNewList = new List<DataPoint>();
+            var correlatedNewList = new List<DataPoint>();
+            // update displayed feature plot, and correlated feature plot (if exists)
+            for (int i = 0; i <= running_line; i++)
+            {
+                float x = csv_handler.getFeatureByLine(displayedFeature, i);
+                dataNewList.Add(new DataPoint(i, x));
+
+                if (hasCorrelated)
+                {
+                    x = csv_handler.getFeatureByLine(correlatedFeature, i);
+                    correlatedNewList.Add(new DataPoint(i, x));
+                }
+            }
+            DataPoints = dataNewList;
+            CorrelatedDataPoints = correlatedNewList;
         }
 
         private void updateDashboard()
@@ -614,7 +619,6 @@ namespace Flight_Inspection_App
          * Both in range [65, 185] - up to 60 from the center.
          * real Aileron and Elevator values are in range [-1,1]
          */
-
         private void CalculateAileron(double current)
         {
             Aileron = current * 60 + 125;
@@ -648,7 +652,7 @@ namespace Flight_Inspection_App
             Play = false;
         }
 
-        // sending one line, needed when we only want to display current line without further playing
+        // sending one line without incremeting RunningLine, needed when we only want to display current line without further playing
         public void sendOneLine()
         {
             string line = csv_handler.getLine(running_line);
@@ -656,6 +660,9 @@ namespace Flight_Inspection_App
             ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
             ns.Flush();
             Thread.Sleep(sleepTime);
+            
+            updateDashboard();
+            updateGraphs();
         }
         public void findCorrelatedFeatures(Dictionary<string, List<float>> features)
         {
