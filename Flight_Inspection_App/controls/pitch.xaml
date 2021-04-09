@@ -59,6 +59,7 @@
                 HorizontalAlignment="Center"
                 Background="AntiqueWhite"
                 Foreground="Crimson"
+                FontSize="40"
                 >
             Pitch
             </TextBlock>

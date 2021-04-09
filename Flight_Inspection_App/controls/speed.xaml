@@ -66,11 +66,12 @@
         </gauge:SfCircularGauge>
 
       </Grid>
-      <TextBlock
+            <TextBlock
           HorizontalAlignment="Center"
           Background="AntiqueWhite"
           Foreground="Crimson"
-                >
+          FontSize="40"
+          >
         Speedometer
       </TextBlock>
     </StackPanel>
