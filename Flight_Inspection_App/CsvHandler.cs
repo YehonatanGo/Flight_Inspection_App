@@ -123,7 +123,7 @@ namespace Flight_Inspection_App
 
         public float getFeatureByLine(string feature, int line)
         {
-            if(feature == null)
+            if(feature == null || feature.Equals("none"))
             {
                 return 0;
             }
