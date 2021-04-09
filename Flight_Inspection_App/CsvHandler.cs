@@ -114,7 +114,11 @@ namespace Flight_Inspection_App
         //returns specific line by its index
         public string getLine(int index)
         {
+            if(index < lines_list.Count)
+            {
             return lines_list[index];
+            }
+            return lines_list[0];
         }
 
         public float getFeatureByLine(string feature, int line)

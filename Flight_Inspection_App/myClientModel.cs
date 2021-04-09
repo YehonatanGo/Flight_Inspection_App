@@ -24,7 +24,7 @@ namespace Flight_Inspection_App
         [DllImport("anomalies_Detector.dll")]
         public static extern IntPtr getFeaturesOfVW(IntPtr vec, int index);
 
-       
+
         public event PropertyChangedEventHandler PropertyChanged;
         ManualResetEvent manualResetEvent;
         volatile private CsvHandler csv_handler;
@@ -32,7 +32,7 @@ namespace Flight_Inspection_App
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
-        
+
 
 
         // *********************dashboard controller*********************
@@ -238,7 +238,7 @@ namespace Flight_Inspection_App
                     value = numOfLines;
                 }
                 running_line = value;
-                if(Math.Abs(value) > 1 && !play)
+                if (Math.Abs(value) > 1 && !play)
                 {
                     sendOneLine();
                 }
@@ -321,7 +321,8 @@ namespace Flight_Inspection_App
             set
             {
                 this.displayedFeature = value;
-                this.correlatedFeature = getCorrealtedFeature(displayedFeature);
+                CorrelatedFeature = getCorrealtedFeature(displayedFeature);
+                NotifyPropertyChanged("displayedFeature");
             }
         }
 
@@ -346,9 +347,11 @@ namespace Flight_Inspection_App
             set
             {
                 correlatedFeature = value;
-                NotifyPropertyChanged("correlatedFeature");
+                NotifyPropertyChanged("CorrelatedFeature");
             }
         }
+
+
         private volatile List<DataPoint> correlatedDataPoints;
         public List<DataPoint> CorrelatedDataPoints
         {
@@ -457,9 +460,10 @@ namespace Flight_Inspection_App
         public void connectFlightGear()
         {
             csv_handler = new CsvHandler(path);
-            /*findCorrelatedFeatures();*/
             numOfLines = csv_handler.getRowCount();
             FeaturesList = csv_handler.getFeaturesNamesList();
+            DisplayedFeature = featuresList[0];
+            CorrelatedFeature = getCorrealtedFeature(DisplayedFeature);
 
             // cmd process
             Process cmd = new Process();
@@ -475,9 +479,6 @@ namespace Flight_Inspection_App
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
             findCorrelatedFeatures(csv_handler.FeaturesDict);
-            /*Thread thread = new Thread(new ThreadStart(findCorrelatedFeatures));
-            thread.Start();*/
-
 
             // wait till FG starts
             Thread.Sleep(40000);
@@ -511,7 +512,15 @@ namespace Flight_Inspection_App
 
                 // send the line to FG
                 line += "\r\n";
-                ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
+                try
+                {
+
+                    ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
+                }
+                catch
+                {
+                    Console.WriteLine("sending error");
+                }
                 ns.Flush();
                 Thread.Sleep(sleepTime);
                 RunningLine++;
@@ -660,7 +669,7 @@ namespace Flight_Inspection_App
             ns.Write(System.Text.Encoding.ASCII.GetBytes(line));
             ns.Flush();
             Thread.Sleep(sleepTime);
-            
+
             updateDashboard();
             updateGraphs();
         }
