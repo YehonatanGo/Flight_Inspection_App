@@ -11,17 +11,13 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class MainWindow : Window
     {
-
-        private String test_path = "";
-        private bool isAlreadyPlayed;
         ClientViewModel vm;
+
         public MainWindow()
         {
             vm = new ClientViewModel(new myClientModel());
             InitializeComponent();
             DataContext = vm;
-            //path = "";
-            isAlreadyPlayed = false;
         }
 
         private void Button_OpenFlightDataFile(object sender, RoutedEventArgs e)

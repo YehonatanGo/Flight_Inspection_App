@@ -4,9 +4,64 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Flight_Inspection_App.controls"
-             mc:Ignorable="d" 
+             xmlns:gauge ="clr-namespace:Syncfusion.UI.Xaml.Gauges;assembly=Syncfusion.SfGauge.Wpf"
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
+
     <Grid>
-            
+        <StackPanel Orientation="Vertical">
+            <Grid
+                Height="250"
+                Width="250">
+                <gauge:SfCircularGauge
+                       HeaderAlignment="Custom"
+                       Name="Roll">
+
+                    <gauge:SfCircularGauge.Scales>
+
+                        <gauge:CircularScale ShowRim="True"
+                             StartValue="-180"
+                             EndValue="180"
+                             RimStroke="MidnightBlue"
+                             RimStrokeThickness="10"
+                             Interval="30"
+                             MinorTicksPerInterval="2"
+                             LabelOffset="0.1">
+
+                            <gauge:CircularScale.MajorTickSettings>
+                                <gauge:MajorTickSetting Length="25"
+                                        StrokeThickness="3" />
+                            </gauge:CircularScale.MajorTickSettings>
+
+                            <gauge:CircularScale.MinorTickSettings>
+                                <gauge:MinorTickSetting Length="10"
+                                        StrokeThickness="2" />
+                            </gauge:CircularScale.MinorTickSettings>
+
+                            <gauge:CircularScale.Pointers>
+                                <gauge:CircularPointer PointerType="NeedlePointer"
+                                       Value="{Binding VM_Roll}"
+                                       NeedleLengthFactor="0.6"
+                                       NeedlePointerType="Tapered"
+                                       PointerCapDiameter="20"
+                                       NeedlePointerStroke="#757575"
+                                       KnobFill="#757575"
+                                       KnobStroke="#757575"
+                                       NeedlePointerStrokeThickness="20" />
+                            </gauge:CircularScale.Pointers>
+                        </gauge:CircularScale>
+                    </gauge:SfCircularGauge.Scales>
+                </gauge:SfCircularGauge>
+            </Grid>
+
+            <TextBlock
+                HorizontalAlignment="Center"
+                Background="AntiqueWhite"
+                Foreground="Crimson"
+                >
+            Roll
+            </TextBlock>
+        </StackPanel>
     </Grid>
+
 </UserControl>
