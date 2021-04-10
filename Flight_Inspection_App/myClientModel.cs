@@ -208,17 +208,31 @@ namespace Flight_Inspection_App
         // **************************************************************
 
 
-        private string path;
-        public string Path
+        private string testPath;
+        public string TestPath
         {
             set
             {
-                path = value;
-                NotifyPropertyChanged("Path");
+                testPath = value;
+                NotifyPropertyChanged("TestPath");
             }
             get
             {
-                return path;
+                return testPath;
+            }
+        }
+
+        private string trainPath;
+        public string TrainPath
+        {
+            get
+            {
+                return trainPath;
+            }
+            set
+            {
+                trainPath = value;
+                NotifyPropertyChanged("trainPath");
             }
         }
         // *********************playing controller*********************
@@ -432,7 +446,7 @@ namespace Flight_Inspection_App
 
         public myClientModel()
         {
-            Path = "";
+            TestPath = "";
             running_line = 0;
             PlaySpeed = 1;
             elevator = 125;
@@ -460,7 +474,7 @@ namespace Flight_Inspection_App
 
         public void connectFlightGear()
         {
-            csv_handler = new CsvHandler(path);
+            csv_handler = new CsvHandler(testPath);
             numOfLines = csv_handler.getRowCount();
             FeaturesList = csv_handler.getFeaturesNamesList();
             
@@ -609,7 +623,7 @@ namespace Flight_Inspection_App
 
         private Line findLinearRegression(string f1, string f2)
         {
-            return linearRegressions[f1 + "-" + f2];
+            return linearRegressions[f1 + "+" + f2];
         }
 
         private string getCorrealtedFeature(string feature)
@@ -695,7 +709,7 @@ namespace Flight_Inspection_App
                 if (!mostCorrelated.Equals("none"))
                 {
                     Line line_reg = anomaly_detection_util.linear_reg(anomaly_detection_util.toPoints(features[feature1.Key], features[mostCorrelated]), feature1.Value.Count);
-                    linearRegressions.Add(feature1.Key + "-" + mostCorrelated, line_reg);
+                    linearRegressions.Add(feature1.Key + "+" + mostCorrelated, line_reg);
                 }
             }
         }

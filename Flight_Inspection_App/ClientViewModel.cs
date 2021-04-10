@@ -24,17 +24,23 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public string VM_Path
+        public string VM_TestPath
         {
             get
             {
-                return model.Path;
+                return model.TestPath;
             }
 
             set
             {
-                model.Path = value;
+                model.TestPath = value;
             }
+        }
+
+        public string VM_TrainPath
+        {
+            get { return model.TrainPath; }
+            set { model.TrainPath = value; }
         }
 
 

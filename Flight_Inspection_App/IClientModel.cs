@@ -8,7 +8,8 @@ namespace Flight_Inspection_App
 {
     interface IClientModel : INotifyPropertyChanged
     {
-        string Path { get; set; }
+        string TestPath { get; set; }
+        string TrainPath { get; set; }
 
         // playing controller
         bool Play { get; set; }
