@@ -48,7 +48,7 @@ namespace Flight_Inspection_App
             openFileDialog.Filter = "DLL files (*.dll)|*.dll";
             if (openFileDialog.ShowDialog() == true)
             {
-                /*vm.VM_DllPath = openFileDialog.FileName;*/
+                vm.VM_DllPath = openFileDialog.FileName;
                 Button_ShowFlight.IsEnabled = true;
             }
         }
