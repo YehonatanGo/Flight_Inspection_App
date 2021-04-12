@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,8 @@ namespace Flight_Inspection_App
     {
         string TestPath { get; set; }
         string TrainPath { get; set; }
+
+        string DllPath { get; set; }
 
         // playing controller
         bool Play { get; set; }
@@ -43,6 +46,9 @@ namespace Flight_Inspection_App
         float LineRegB { get;}
         List<DataPoint> CFPoints { get; set; }
         List<DataPoint> LastPoints { get; set; }
+
+        public Plot AnomaliesPlot { get; set; }
+        List<DataPoint> AnomaliesPoints { get; set; }
 
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 

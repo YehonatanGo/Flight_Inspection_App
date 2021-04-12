@@ -34,6 +34,7 @@ namespace Flight_Inspection_App
                     featuresDict.Add(feature.Key, new List<float>());
                 }
 
+                reader.ReadLine();
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
@@ -80,7 +81,7 @@ namespace Flight_Inspection_App
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(path);
-
+                
             XmlNodeList features = xmlDoc.GetElementsByTagName("name");
 
             Dictionary<string, int> featuresDict = new Dictionary<string, int>();

@@ -8,22 +8,13 @@ using System.Runtime.InteropServices;
 using System;
 using System.IO;
 using System.Linq;
+using OxyPlot.Wpf;
+using System.Reflection;
 
 namespace Flight_Inspection_App
 {
     class myClientModel : IClientModel
     {
-        [DllImport("anomalies_Detector.dll")]
-        public static extern int vectorSize(IntPtr vec);
-        [DllImport("anomalies_Detector.dll")]
-        public static extern int len(IntPtr str);
-        [DllImport("anomalies_Detector.dll")]
-        public static extern char getCharByIndex(IntPtr str, int x);
-        [DllImport("anomalies_Detector.dll")]
-        public static extern IntPtr newVector(char[] path);
-        [DllImport("anomalies_Detector.dll")]
-        public static extern IntPtr getFeaturesOfVW(IntPtr vec, int index);
-
 
         public event PropertyChangedEventHandler PropertyChanged;
         ManualResetEvent manualResetEvent;
@@ -32,6 +23,9 @@ namespace Flight_Inspection_App
         volatile private TcpClient client;
         volatile private Thread sending_lines_thread;
         volatile private bool isAlreadyStarted;
+
+
+
 
 
 
@@ -235,6 +229,16 @@ namespace Flight_Inspection_App
                 NotifyPropertyChanged("trainPath");
             }
         }
+
+        private string dllPath;
+        public string DllPath
+        {
+            get => dllPath;
+            set
+            {
+                dllPath = value;
+            }
+        }
         // *********************playing controller*********************
 
         private int running_line;
@@ -324,6 +328,7 @@ namespace Flight_Inspection_App
                 numOfLines = value;
             }
         }
+
         // **************************************************************
 
 
@@ -336,7 +341,30 @@ namespace Flight_Inspection_App
             {
                 this.displayedFeature = value;
                 CorrelatedFeature = getCorrealtedFeature(displayedFeature);
+                if (isAlreadyStarted && !Play)
+                {
+                    sendOneLine();
+                }
                 NotifyPropertyChanged("displayedFeature");
+
+                string name = displayedFeature + "+" + correlatedFeature;
+                if (anomaliesPlot != null)
+                {
+                    Annotation annotation = (Annotation)getAnnotation.Invoke(anomalyDetector, new object[] { name });
+                    if (anomaliesPlot.Annotations.Count > 1)
+                    {
+                        anomaliesPlot.Annotations.RemoveAt(anomaliesPlot.Annotations.Count - 1);
+                    }
+                    anomaliesPlot.Annotations.Add(annotation);
+                }
+
+                if (anomalyDetector != null)
+                {
+
+                    List<DataPoint> anmlsPts = (List<DataPoint>)getAnomalies.Invoke(anomalyDetector, new object[] { name });
+                    AnomaliesPoints = anmlsPts;
+                }
+
             }
         }
 
@@ -441,7 +469,27 @@ namespace Flight_Inspection_App
             }
         }
 
+
+        private Plot anomaliesPlot;
+        public Plot AnomaliesPlot { get => anomaliesPlot; set { anomaliesPlot = value; } }
+
+        private List<DataPoint> anomaliesPoints;
+        public List<DataPoint> AnomaliesPoints
+        {
+            get => anomaliesPoints;
+            set
+            {
+                anomaliesPoints = value;
+                NotifyPropertyChanged("AnomaliesPoints");
+            }
+        }
+
         // **************************************************************
+
+        MethodInfo? learnAndDetect;
+        MethodInfo? getAnnotation;
+        MethodInfo? getAnomalies;
+        object? anomalyDetector;
 
 
         public myClientModel()
@@ -470,14 +518,27 @@ namespace Flight_Inspection_App
         {
             if (this.PropertyChanged != null)
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propName));
+
         }
 
         public void connectFlightGear()
         {
-            csv_handler = new CsvHandler(testPath);
-            numOfLines = csv_handler.getRowCount();
-            FeaturesList = csv_handler.getFeaturesNamesList();
-            
+            var assembly = Assembly.LoadFile(@"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\plugin\lineDLL.dll");
+            var type2 = assembly.GetType("Anomaly_Detecton_Algorithm.AnomalyDetector");
+            anomalyDetector = Activator.CreateInstance(type2);
+            learnAndDetect = type2.GetMethod("learnAndDetect");
+            learnAndDetect.Invoke(anomalyDetector, new object[]
+            {
+                @"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\bin\Debug\netcoreapp3.1\reg_flight.csv",
+                @"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\bin\Debug\netcoreapp3.1\anomaly_flight (1).csv"
+            });
+
+            getAnnotation = type2.GetMethod("GetAnnotation");
+            getAnomalies = type2.GetMethod("getAnomalies");
+
+
+
+
             // cmd process
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
@@ -491,11 +552,15 @@ namespace Flight_Inspection_App
             // run FlightGear
             cmd.StandardInput.WriteLine(@"fgfs --generic=socket,in,10,127.0.0.1,5400,tcp,playback_small --fdm=null");
 
+
+            csv_handler = new CsvHandler(testPath);
+            numOfLines = csv_handler.getRowCount();
+            FeaturesList = csv_handler.getFeaturesNamesList();
             findCorrelatedFeatures(csv_handler.FeaturesDict);
             DisplayedFeature = featuresList[0];
 
             // wait till FG starts
-            Thread.Sleep(40000);
+            Thread.Sleep(5000);
 
             //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);
@@ -507,6 +572,7 @@ namespace Flight_Inspection_App
         {
             correlatedFeature = getCorrealtedFeature(DisplayedFeature);
             sending_lines_thread = new Thread(new ThreadStart(sendLines));
+            sending_lines_thread.SetApartmentState(ApartmentState.STA);
             sending_lines_thread.Start();
         }
 

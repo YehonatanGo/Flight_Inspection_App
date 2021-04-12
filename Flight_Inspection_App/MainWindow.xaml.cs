@@ -15,6 +15,7 @@ namespace Flight_Inspection_App
 
         public MainWindow()
         {
+            Linear_Regression = new OxyPlot.Wpf.Plot();
             vm = new ClientViewModel(new myClientModel());
             InitializeComponent();
             DataContext = vm;
@@ -41,9 +42,20 @@ namespace Flight_Inspection_App
                 Button_ShowFlight.IsEnabled = true;
             }
         }
+        private void Button_LoadAlgorithm_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "DLL files (*.dll)|*.dll";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                /*vm.VM_DllPath = openFileDialog.FileName;*/
+                Button_ShowFlight.IsEnabled = true;
+            }
+        }
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
+            vm.VM_AnomaliesPlot = Linear_Regression;
             Button_ShowFlight.IsEnabled = false;
             Button_OpenDataFile.IsEnabled = false;
             vm.connectFlightGear();
@@ -84,5 +96,6 @@ namespace Flight_Inspection_App
         {
             vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
+
     }
 }
