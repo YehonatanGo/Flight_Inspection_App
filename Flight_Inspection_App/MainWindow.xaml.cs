@@ -12,13 +12,21 @@ namespace Flight_Inspection_App
     public partial class MainWindow : Window
     {
         ClientViewModel vm;
+        myClientModel model = new myClientModel();
 
         public MainWindow()
         {
             Linear_Regression = new OxyPlot.Wpf.Plot();
-            vm = new ClientViewModel(new myClientModel());
+            vm = new ClientViewModel(model);
             InitializeComponent();
             DataContext = vm;
+
+            // set model to other VMs
+            ViewModels.DashboardViewModel dashboardVM = new ViewModels.DashboardViewModel(model);
+            DashboardView.DashboardViewModel = dashboardVM;
+            DashboardView.DataContext = dashboardVM;
+
+            //dashboard.DashboardViewModel.setModel(model);
         }
 
         private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
@@ -92,12 +100,12 @@ namespace Flight_Inspection_App
             vm.VM_Running_Line -= 150;//
         }
 
-        /*
+        
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
-         */
+        
 
     }
 }

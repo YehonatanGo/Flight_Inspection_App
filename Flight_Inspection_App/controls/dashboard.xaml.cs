@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Flight_Inspection_App.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -12,15 +13,26 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Flight_Inspection_App.controls
+
 {
     /// <summary>
     /// Interaction logic for dashboard.xaml
     /// </summary>
     public partial class dashboard : UserControl
     {
+        internal ViewModels.DashboardViewModel DashboardViewModel;
+
         public dashboard()
         {
+            DashboardViewModel = new DashboardViewModel();
             InitializeComponent();
         }
+
+        void setModel(myClientModel model)
+        {
+            this.DashboardViewModel.setModel(model);
+        }
+
+        // internal DashboardViewModel DashboardVM { get => dashboardVM; set => dashboardVM = value; }
     }
 }

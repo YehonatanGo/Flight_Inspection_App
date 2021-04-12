@@ -3,7 +3,7 @@ using System;
 
 namespace Flight_Inspection_App
 {
-        class Line
+        public class Line
         {
             private float a, b;
             public float A { get { return a; } set { a = value; } }

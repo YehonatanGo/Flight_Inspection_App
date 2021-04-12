@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace Flight_Inspection_App
 {
-    class myClientModel : IClientModel
+    public class myClientModel : IClientModel
     {
 
         public event PropertyChangedEventHandler PropertyChanged;

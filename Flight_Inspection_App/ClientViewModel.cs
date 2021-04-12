@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 
 namespace Flight_Inspection_App
+
 {
     class ClientViewModel : INotifyPropertyChanged
     {
@@ -12,6 +13,16 @@ namespace Flight_Inspection_App
 
         public event PropertyChangedEventHandler PropertyChanged;
         private IClientModel model;
+
+        //------------------
+        //private Flight_Inspection_App.ViewModels.IViewModel DashboardViewModel;
+        //private Flight_Inspection_App.ViewModels.IViewModel GraphsViewModel;
+        //private Flight_Inspection_App.ViewModels.IViewModel PlaybarViewModel;
+        //private Flight_Inspection_App.ViewModels.IViewModel AlgorithmViewModel;
+        //private Flight_Inspection_App.ViewModels.IViewModel FilesViewModel;
+        //------------------
+
+
         public ClientViewModel(IClientModel model)
         {
             this.model = model;
@@ -20,6 +31,8 @@ namespace Flight_Inspection_App
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
         }
+
+
         public void NotifyPropertyChanged(string propName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
