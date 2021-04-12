@@ -13,21 +13,29 @@ using System.Windows.Shapes;
 
 namespace Flight_Inspection_App.controls
 {
+
+
     /// <summary>
     /// Interaction logic for graphs.xaml
     /// </summary>
     public partial class graphs : UserControl
     {
-        ClientViewModel vm;
+
+        internal ViewModels.GraphsViewModel GraphsViewModel;
 
         public graphs()
         {
             InitializeComponent();
         }
 
+        void setModel(myClientModel model)
+        {
+            this.GraphsViewModel.setModel(model);
+        }
+
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
+            GraphsViewModel.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
     }
 }
