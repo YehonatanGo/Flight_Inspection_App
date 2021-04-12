@@ -1,4 +1,5 @@
 ﻿using OxyPlot;
+using OxyPlot.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,18 +25,26 @@ namespace Flight_Inspection_App
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public string VM_Path
+        public string VM_TestPath
         {
             get
             {
-                return model.Path;
+                return model.TestPath;
             }
 
             set
             {
-                model.Path = value;
+                model.TestPath = value;
             }
         }
+
+        public string VM_TrainPath
+        {
+            get { return model.TrainPath; }
+            set { model.TrainPath = value; }
+        }
+
+        public string VM_DllPath { get => model.DllPath; set { model.DllPath = value; } }
 
 
         // playeing controller
@@ -205,6 +214,10 @@ namespace Flight_Inspection_App
         public List<DataPoint> VM_CFPoints { get { return model.CFPoints; } }
 
         public List<DataPoint> VM_LastPoints { get { return model.LastPoints; } }
+
+        public Plot VM_AnomaliesPlot { get => model.AnomaliesPlot; set { model.AnomaliesPlot = value; } }
+
+        public List<DataPoint> VM_AnomaliesPoints { get => model.AnomaliesPoints; set { model.AnomaliesPoints = value; } }
 
 
 

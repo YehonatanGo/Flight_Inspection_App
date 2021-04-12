@@ -15,24 +15,47 @@ namespace Flight_Inspection_App
 
         public MainWindow()
         {
+            Linear_Regression = new OxyPlot.Wpf.Plot();
             vm = new ClientViewModel(new myClientModel());
             InitializeComponent();
             DataContext = vm;
         }
 
-        private void Button_OpenFlightDataFile(object sender, RoutedEventArgs e)
+        private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "CSV files (*.csv)|*.csv";
             if (openFileDialog.ShowDialog() == true)
             {
-                vm.VM_Path = openFileDialog.FileName;
+                vm.VM_TestPath = openFileDialog.FileName;
+                Button_ShowFlight.IsEnabled = true;
+            }
+        }
+
+        private void Button_load_test_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                vm.VM_TrainPath = openFileDialog.FileName;
+                Button_ShowFlight.IsEnabled = true;
+            }
+        }
+        private void Button_LoadAlgorithm_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "DLL files (*.dll)|*.dll";
+            if (openFileDialog.ShowDialog() == true)
+            {
+                /*vm.VM_DllPath = openFileDialog.FileName;*/
                 Button_ShowFlight.IsEnabled = true;
             }
         }
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
+            vm.VM_AnomaliesPlot = Linear_Regression;
             Button_ShowFlight.IsEnabled = false;
             Button_OpenDataFile.IsEnabled = false;
             vm.connectFlightGear();
@@ -75,7 +98,6 @@ namespace Flight_Inspection_App
             vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
          */
-
 
     }
 }
