@@ -37,5 +37,12 @@ namespace Flight_Inspection_App.controls
         {
             GraphsViewModel.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
         }
+
+        private void AnomaliesTSLIST_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            string indxStr = ListBox_AnomaliesTS_List.SelectedItem.ToString();
+            int idx = Int32.Parse(indxStr);
+            GraphsViewModel.jumpToAnomaly(idx);
+        }
     }
 }

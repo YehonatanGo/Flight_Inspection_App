@@ -22,6 +22,8 @@ namespace Flight_Inspection_App.ViewModels
 
         public List<string> VM_FeaturesList { get { return model.FeaturesList; } }
 
+        public List<int> VM_AnomaliesTSList { get => model.AnomaliesTSList; }
+
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 
         public string VM_DisplayedFeature { set { model.DisplayedFeature = value; } get { return model.DisplayedFeature; } }
@@ -34,6 +36,12 @@ namespace Flight_Inspection_App.ViewModels
         public float VM_LineRegB { get { return model.LineRegB; } }
 
         public List<DataPoint> VM_CFPoints { get { return model.CFPoints; } }
+
+        public void jumpToAnomaly(int idx)
+        {
+
+            model.RunningLine = idx;
+        }
 
         public List<DataPoint> VM_LastPoints { get { return model.LastPoints; } }
 
