@@ -49,6 +49,7 @@ namespace Flight_Inspection_App
 
         public Plot AnomaliesPlot { get; set; }
         List<DataPoint> AnomaliesPoints { get; set; }
+        List<int> AnomaliesTSList { get; set; }
 
 
         // read the csv file into CsvHanlder, open FG and open TCP connection 

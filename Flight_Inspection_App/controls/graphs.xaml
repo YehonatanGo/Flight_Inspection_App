@@ -10,7 +10,7 @@
              d:DataContext="{d:DesignInstance Type=ViewModels:GraphsViewModel}"
 
              d:DesignHeight="450" d:DesignWidth="800">
-        <Grid
+    <Grid
         Background="MediumPurple"
         >
         <Grid.ColumnDefinitions>
@@ -86,6 +86,15 @@
             BorderBrush="Black">
             <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedDataPoints}"/>
         </oxy:Plot>
+        <ListBox
+            x:Name="ListBox_AnomaliesTS_List"
+            ItemsSource="{Binding VM_AnomaliesTSList}"
+            SelectionChanged="AnomaliesTSLIST_SelectionChanged"
+            Width="auto"
+            Grid.Column="2"
+            Grid.Row="1"
+            BorderThickness="5"
+            BorderBrush="Black"/>
 
 
 

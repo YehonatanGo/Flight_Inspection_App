@@ -361,6 +361,11 @@ namespace Flight_Inspection_App
                     AnomaliesPoints = anmlsPts;
                 }
 
+                if (getAnomaliesTS != null)
+                {
+                    List<int> anomaliesTS = (List<int>)getAnomaliesTS.Invoke(anomalyDetector, new object[] { name });
+                    AnomaliesTSList = anomaliesTS;
+                }
             }
         }
 
@@ -480,11 +485,23 @@ namespace Flight_Inspection_App
             }
         }
 
+        private List<int> anomaliesTSList;
+        public List<int> AnomaliesTSList
+        {
+            get => anomaliesTSList;
+            set
+            {
+                anomaliesTSList = value;
+                NotifyPropertyChanged("anomaliesTSList");
+            }
+        }
+
         // **************************************************************
 
         MethodInfo? learnAndDetect;
         MethodInfo? getAnnotation;
         MethodInfo? getAnomalies;
+        MethodInfo? getAnomaliesTS;
         object? anomalyDetector;
 
 
@@ -508,6 +525,7 @@ namespace Flight_Inspection_App
             cfPoints = new List<DataPoint>();
             lastPoints = new List<DataPoint>();
             manualResetEvent = new ManualResetEvent(true);
+            anomaliesTSList = new List<int>();
         }
 
         public void NotifyPropertyChanged(string propName)
@@ -531,6 +549,7 @@ namespace Flight_Inspection_App
 
             getAnnotation = type2.GetMethod("GetAnnotation");
             getAnomalies = type2.GetMethod("getAnomalies");
+            getAnomaliesTS = type2.GetMethod("getAnomaliesTimeSteps");
 
 
 
