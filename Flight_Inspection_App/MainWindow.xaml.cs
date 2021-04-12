@@ -28,7 +28,7 @@ namespace Flight_Inspection_App
 
             //dashboard.DashboardViewModel.setModel(model);
         }
-
+            
         private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -56,7 +56,7 @@ namespace Flight_Inspection_App
             openFileDialog.Filter = "DLL files (*.dll)|*.dll";
             if (openFileDialog.ShowDialog() == true)
             {
-                /*vm.VM_DllPath = openFileDialog.FileName;*/
+                vm.VM_DllPath = openFileDialog.FileName;
                 Button_ShowFlight.IsEnabled = true;
             }
         }

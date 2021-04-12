@@ -9,7 +9,7 @@ namespace Flight_Inspection_App
 {
     class ClientViewModel : INotifyPropertyChanged
     {
-        public string path = @"C:\Users\Lenovo\source\repos\testdll\testdll\bin\Release\netcoreapp3.1\testdll.dll";
+        /*public string path = @"C:\Users\Lenovo\source\repos\testdll\testdll\bin\Release\netcoreapp3.1\testdll.dll";*/
 
         public event PropertyChangedEventHandler PropertyChanged;
         private IClientModel model;

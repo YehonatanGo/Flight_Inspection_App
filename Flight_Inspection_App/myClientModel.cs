@@ -25,10 +25,6 @@ namespace Flight_Inspection_App
         volatile private bool isAlreadyStarted;
 
 
-
-
-
-
         // *********************dashboard controller*********************
         private double elevator;
         public double Elevator
@@ -523,14 +519,14 @@ namespace Flight_Inspection_App
 
         public void connectFlightGear()
         {
-            var assembly = Assembly.LoadFile(@"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\plugin\lineDLL.dll");
+            var assembly = Assembly.LoadFile(DllPath);
             var type2 = assembly.GetType("Anomaly_Detecton_Algorithm.AnomalyDetector");
             anomalyDetector = Activator.CreateInstance(type2);
             learnAndDetect = type2.GetMethod("learnAndDetect");
             learnAndDetect.Invoke(anomalyDetector, new object[]
             {
-                @"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\bin\Debug\netcoreapp3.1\reg_flight.csv",
-                @"C:\Users\yehon\source\repos\Flight_Inspection_App\Flight_Inspection_App\bin\Debug\netcoreapp3.1\anomaly_flight (1).csv"
+               trainPath,
+               testPath
             });
 
             getAnnotation = type2.GetMethod("GetAnnotation");
