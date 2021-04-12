@@ -1,3 +1,14 @@
 # Flight_Inspection_App
 ### General
-Desktop app which enable inspecting a flight 
+Desktop app for analyzing flights.
+
+
+
+### Prerequisites
+
+
+### Instructions
+
+### Further Documentation
+
+### Video Demo
