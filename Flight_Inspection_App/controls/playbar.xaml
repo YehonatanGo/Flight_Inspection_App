@@ -12,7 +12,12 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <StackPanel Orientation="Vertical" Background="Aquamarine" Height="49">
-            <Slider x:Name="Slider_Time" Width="570" Background="BlanchedAlmond" Minimum="0" Maximum="2500" Value="{Binding VM_Running_Line, Mode=TwoWay}"/>
+            <Slider x:Name="Slider_Time"
+                    Width="570"
+                    Background="BlanchedAlmond"
+                    Minimum="0"
+                    Maximum="2500"
+                    Value="{Binding VM_Running_Line, Mode=TwoWay}"/>
         <StackPanel Orientation="Horizontal" Margin="10,0,10,355" HorizontalAlignment="Center">
             <Button x:Name="Button_Backward" FontFamily="Segoe MDL2 Assets" Content="&#xEDD9;&#xEDD9;" HorizontalAlignment="Left" Click="Button_Backward_Click"/>
             <Button x:Name="Button_Play" FontFamily="Segoe MDL2 Assets" Content="&#xF5B0;" HorizontalAlignment="Left" Click="Button_Play_Click"/>

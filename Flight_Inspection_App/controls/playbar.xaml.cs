@@ -32,6 +32,7 @@ namespace Flight_Inspection_App.controls
 
         private void Button_Play_Click(object sender, RoutedEventArgs e)
         {
+            Slider_Time.Maximum = PlaybarViewModel.VM_NumOfLines;
             PlaybarViewModel.VM_play = true;
         }
 
@@ -61,7 +62,9 @@ namespace Flight_Inspection_App.controls
 
         private void Button_Backward_Click(object sender, RoutedEventArgs e)
         {
-            PlaybarViewModel.VM_Running_Line -= 150;//
+            PlaybarViewModel.VM_Running_Line -= 150;
         }
+
+        
     }
 }

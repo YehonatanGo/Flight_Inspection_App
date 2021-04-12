@@ -24,6 +24,11 @@ namespace Flight_Inspection_App.ViewModels
         {
             this.model = m;
         }
+        
+        public void stop()
+        {
+            model.stop();
+        }
 
         public bool VM_play
         {
@@ -73,9 +78,5 @@ namespace Flight_Inspection_App.ViewModels
             }
         }
 
-        public void stop()
-        {
-            model.stop();
-        }
     }
 }

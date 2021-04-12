@@ -7,6 +7,11 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <StackPanel Orientation="Horizontal">
+            <Button x:Name="Button_ShowFlight" Click="Button_Play_Flight" Content="Show flight on FlightGear" IsEnabled="False" Width="123"/>
+            <Button x:Name="Button_OpenDataFile" Click="Button_LoadFlightDataFile" Content="Load Flight Data File" Width="116" Height="auto"/>
+            <Button x:Name="Button_load_test" Width="76" Height="auto" Content="Load train file" Click="Button_load_test_Click"/>
+            <Button x:Name="Button_LoadAlgorithm" Content="Load algorithm" Width="100" Click="Button_LoadAlgorithm_Click"></Button>
+        </StackPanel>
     </Grid>
 </UserControl>

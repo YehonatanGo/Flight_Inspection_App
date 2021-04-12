@@ -322,6 +322,7 @@ namespace Flight_Inspection_App
             set
             {
                 numOfLines = value;
+                NotifyPropertyChanged("numOfLines");
             }
         }
 
