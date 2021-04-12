@@ -20,7 +20,7 @@ namespace Flight_Inspection_App
             InitializeComponent();
             DataContext = vm;
         }
-
+            
         private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
