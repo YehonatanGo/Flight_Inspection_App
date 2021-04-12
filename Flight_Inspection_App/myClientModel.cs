@@ -25,10 +25,6 @@ namespace Flight_Inspection_App
         volatile private bool isAlreadyStarted;
 
 
-
-
-
-
         // *********************dashboard controller*********************
         private double elevator;
         public double Elevator
