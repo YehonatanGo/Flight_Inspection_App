@@ -28,7 +28,7 @@ namespace Flight_Inspection_App
             ViewModels.GraphsViewModel graphVM = new ViewModels.GraphsViewModel(model);
             GraphsView.DataContext = graphVM;
             GraphsView.GraphsViewModel = graphVM;
-            GraphsView.Linear_Regression = new OxyPlot.Wpf.Plot();
+            GraphsView.GraphsViewModel.VM_AnomaliesPlot = GraphsView.Linear_Regression;
 
         }
             
@@ -66,7 +66,7 @@ namespace Flight_Inspection_App
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
-            GraphsView.GraphsViewModel.VM_AnomaliesPlot = GraphsView.Linear_Regression;
+            
             Button_ShowFlight.IsEnabled = false;
             Button_OpenDataFile.IsEnabled = false;
             vm.connectFlightGear();
