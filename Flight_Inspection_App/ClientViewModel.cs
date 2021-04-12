@@ -112,7 +112,7 @@ namespace Flight_Inspection_App
 
         
         // dashboard controller
-        public double VM_Elevator
+        /*public double VM_Elevator
         {
             get
             {
@@ -206,12 +206,12 @@ namespace Flight_Inspection_App
             {
                 return model.Pitch;
             }
-        }
+        }*/
 
 
 
         // graphs controller
-        public List<string> VM_FeaturesList { get { return model.FeaturesList; } }
+        /*public List<string> VM_FeaturesList { get { return model.FeaturesList; } }
 
         public List<DataPoint> VM_Data_Points { get { return model.DataPoints; } }
 
@@ -231,7 +231,7 @@ namespace Flight_Inspection_App
         public Plot VM_AnomaliesPlot { get => model.AnomaliesPlot; set { model.AnomaliesPlot = value; } }
 
         public List<DataPoint> VM_AnomaliesPoints { get => model.AnomaliesPoints; set { model.AnomaliesPoints = value; } }
-
+*/
 
 
         public void connectFlightGear()

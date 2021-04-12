@@ -24,7 +24,6 @@ namespace Flight_Inspection_App.controls
 
         public dashboard()
         {
-            DashboardViewModel = new DashboardViewModel();
             InitializeComponent();
         }
 
@@ -32,7 +31,5 @@ namespace Flight_Inspection_App.controls
         {
             this.DashboardViewModel.setModel(model);
         }
-
-        // internal DashboardViewModel DashboardVM { get => dashboardVM; set => dashboardVM = value; }
     }
 }

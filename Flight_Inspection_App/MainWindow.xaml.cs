@@ -16,7 +16,6 @@ namespace Flight_Inspection_App
 
         public MainWindow()
         {
-            Linear_Regression = new OxyPlot.Wpf.Plot();
             vm = new ClientViewModel(model);
             InitializeComponent();
             DataContext = vm;
@@ -26,7 +25,11 @@ namespace Flight_Inspection_App
             DashboardView.DashboardViewModel = dashboardVM;
             DashboardView.DataContext = dashboardVM;
 
-            //dashboard.DashboardViewModel.setModel(model);
+            ViewModels.GraphsViewModel graphVM = new ViewModels.GraphsViewModel(model);
+            GraphsView.DataContext = graphVM;
+            GraphsView.GraphsViewModel = graphVM;
+            GraphsView.Linear_Regression = new OxyPlot.Wpf.Plot();
+
         }
             
         private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
@@ -63,7 +66,7 @@ namespace Flight_Inspection_App
 
         private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
-            vm.VM_AnomaliesPlot = Linear_Regression;
+            GraphsView.GraphsViewModel.VM_AnomaliesPlot = GraphsView.Linear_Regression;
             Button_ShowFlight.IsEnabled = false;
             Button_OpenDataFile.IsEnabled = false;
             vm.connectFlightGear();
@@ -103,7 +106,7 @@ namespace Flight_Inspection_App
         
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            vm.VM_DisplayedFeature = ListBox_Features_List.SelectedItem.ToString();
+            GraphsView.GraphsViewModel.VM_DisplayedFeature = GraphsView.ListBox_Features_List.SelectedItem.ToString();
         }
         
 

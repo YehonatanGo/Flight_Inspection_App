@@ -26,21 +26,22 @@
 
 
         <oxy:Plot
+            x:Name="Linear_Regression"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Grid.Column="3"
             Grid.Row="0"
             BorderThickness="5"
-            BorderBrush="Black"            >
+            BorderBrush="Black">
             <oxy:Plot.Annotations>
                 <oxy:LineAnnotation LineStyle="Solid" Slope="{Binding VM_LineRegA}" StrokeThickness="3" Intercept="{Binding VM_LineRegB}" Color="LightSeaGreen" />
             </oxy:Plot.Annotations>
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_CFPoints}" LineStyle="None" MarkerType="Circle" MarkerSize="2" MarkerFill="Gray"/>
-                <oxy:LineSeries ItemsSource="{Binding VM_LastPoints}" Title="Linear Regression" LineStyle="None" MarkerType="Circle" MarkerSize="2" MarkerFill="Red"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_LastPoints}" Title="Last 30 seconds" LineStyle="None" MarkerType="Circle" MarkerSize="2" MarkerFill="Green"/>
+                <oxy:LineSeries ItemsSource="{Binding VM_AnomaliesPoints}" Title="anomalies" LineStyle="None" MarkerType="Circle" MarkerSize="2" MarkerFill="Red"></oxy:LineSeries>
             </oxy:Plot.Series>
         </oxy:Plot>
-
 
         <ListBox
             x:Name="ListBox_Features_List"
