@@ -61,7 +61,7 @@ namespace Flight_Inspection_App
 
 
         // playeing controller
-        public bool VM_play
+        /*public bool VM_play
         {
             get
             {
@@ -107,7 +107,7 @@ namespace Flight_Inspection_App
             {
                 model.NumOfLines = value;
             }
-        }
+        }*/
 
 
         
@@ -239,10 +239,10 @@ namespace Flight_Inspection_App
             model.connectFlightGear();
         }
 
-        public void stop()
+        /*public void stop()
         {
             model.stop();
-        }
+        }*/
 
     }
 }

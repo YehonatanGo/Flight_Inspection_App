@@ -556,7 +556,7 @@ namespace Flight_Inspection_App
             DisplayedFeature = featuresList[0];
 
             // wait till FG starts
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
 
             //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);

@@ -30,6 +30,9 @@ namespace Flight_Inspection_App
             GraphsView.GraphsViewModel = graphVM;
             GraphsView.GraphsViewModel.VM_AnomaliesPlot = GraphsView.Linear_Regression;
 
+            ViewModels.PlaybarViewModel playbarVM = new ViewModels.PlaybarViewModel(model);
+            PlaybarView.DataContext = playbarVM;
+            PlaybarView.PlaybarViewModel = playbarVM;
         }
             
         private void Button_LoadFlightDataFile(object sender, RoutedEventArgs e)
@@ -64,7 +67,7 @@ namespace Flight_Inspection_App
             }
         }
 
-        private void Button_Play_Flight(object sender, RoutedEventArgs e)
+        /*private void Button_Play_Flight(object sender, RoutedEventArgs e)
         {
             
             Button_ShowFlight.IsEnabled = false;
@@ -101,9 +104,19 @@ namespace Flight_Inspection_App
         private void Button_Backward_Click(object sender, RoutedEventArgs e)
         {
             vm.VM_Running_Line -= 150;//
+        }*/
+
+        private void Button_Play_Flight(object sender, RoutedEventArgs e)
+        {
+            Button_ShowFlight.IsEnabled = false;
+            Button_OpenDataFile.IsEnabled = false;
+            vm.connectFlightGear();
+            
+            // Slider_Time.Maximum = vm.VM_NumOfLines;
+            
         }
 
-        
+
         private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             GraphsView.GraphsViewModel.VM_DisplayedFeature = GraphsView.ListBox_Features_List.SelectedItem.ToString();
