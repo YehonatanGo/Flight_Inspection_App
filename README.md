@@ -29,10 +29,10 @@ If the client wants to use his own anomaly detection algorithm, he must works as
 
 
 ```C#
-public void learnAndDetect(string trainPath, string testPath)
-public Annotation GetAnnotation(string cfKey)
-public List<Point> getAnomalies(string cfKey)
-public List<int> getAnomaliesTimeSteps(string cfKey)
+public void learnAndDetect(string trainPath, string testPath)}{
+public Annotation GetAnnotation(string cfKey)}{}
+public List<Point> getAnomalies(string cfKey){}
+public List<int> getAnomaliesTimeSteps(string cfKey){}
 ```
 * learnAndDetect - gets paths of train and test csv files, learns the normal model, and detects anomalies in the test file.
 * GetAnnotation - gets a string description of correlated features ("a+b"). Returns Annotation (oxyplot interface) describing the normal model (linear regression, minimal circle etc.).
