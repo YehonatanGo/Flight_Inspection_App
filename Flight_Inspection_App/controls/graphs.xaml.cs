@@ -40,9 +40,12 @@ namespace Flight_Inspection_App.controls
 
         private void AnomaliesTSLIST_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (ListBox_AnomaliesTS_List.SelectedItem!= null)
+            {
             string indxStr = ListBox_AnomaliesTS_List.SelectedItem.ToString();
             int idx = Int32.Parse(indxStr);
             GraphsViewModel.jumpToAnomaly(idx);
+            }
         }
     }
 }

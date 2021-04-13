@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Flight_Inspection_App.CsvHandler">
+    <Position X="13.25" Y="4.25" Width="3.75" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAgAAAFABAAAAESgAAAAAAMAAAAAAAAAgABAAA=</HashCode>
+      <FileName>CsvHandler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.Line" Collapsed="true">
+    <Position X="13.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAABAAAAAAAAAwAQAAIAEAAAA=</HashCode>
+      <FileName>Line.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.myClientModel">
+    <Position X="16.75" Y="12" Width="9.5" />
+    <TypeIdentifier>
+      <HashCode>IQiQHSQCgVhlBok4BiFgFgQggCSxBkwF+gVERHgGAZg=</HashCode>
+      <FileName>myClientModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="2.964" />
+  </Class>
+  <Class Name="Flight_Inspection_App.Point">
+    <Position X="13" Y="8.75" Width="4" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Point.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.algorithm" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\algorithm.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.altimeter" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\altimeter.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.compass" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\compass.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.dashboard" BaseTypeListCollapsed="true">
+    <Position X="8.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAA=</HashCode>
+      <FileName>controls\dashboard.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.graphs" BaseTypeListCollapsed="true">
+    <Position X="6" Y="5.5" Width="3.25" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAABACAA=</HashCode>
+      <FileName>controls\graphs.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.joystick" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="4" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\joystick.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.loadFiles" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAAEAAAARAAAAAAAAAAAAAAAAAAAABAAAAA=</HashCode>
+      <FileName>controls\loadFiles.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.pitch" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\pitch.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.playbar" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEIQAAAAAAgAAAAAAAAAAAAAAAEEAAAAAAAAAAECAA=</HashCode>
+      <FileName>controls\playbar.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.roll" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\roll.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.speed" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\speed.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.controls.yaw" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>controls\yaw.xaml.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Flight_Inspection_App.ViewModels.GraphsViewModel">
+    <Position X="0.5" Y="5.5" Width="5.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAgAIAAAgEAAgDIAIAQAAAAAACgAAAIAAA=</HashCode>
+      <FileName>ViewModels\GraphsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="Flight_Inspection_App.IClientModel">
+    <Position X="19.5" Y="3.25" Width="4.25" />
+    <TypeIdentifier>
+      <HashCode>AACAASACgBhEAoEgBCBABgAAAAAxAggEggVEQDgEABg=</HashCode>
+      <FileName>IClientModel.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

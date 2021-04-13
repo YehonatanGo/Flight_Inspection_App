@@ -24,7 +24,7 @@ namespace Flight_Inspection_App
 
         private void parseCsv()
         {
-            Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear 2020.3.6\data\Protocol\playback_small.xml");
+            Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear\data\Protocol\playback_small.xml");
 
             using (var reader = new StreamReader(path))
             {
@@ -85,8 +85,6 @@ namespace Flight_Inspection_App
             XmlNodeList features = xmlDoc.GetElementsByTagName("name");
 
             Dictionary<string, int> featuresDict = new Dictionary<string, int>();
-
-            int featuresCount = 0;
 
             for (int i = 0; i < 42; i++)
             {
