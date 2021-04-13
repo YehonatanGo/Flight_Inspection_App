@@ -140,6 +140,7 @@
             Grid.Column="0"
             Grid.Row="0"
             HorizontalAlignment="Center"
+            Background="DarkGoldenrod"
             >
         </Slider>
         <Slider
@@ -150,6 +151,7 @@
             Grid.Column="1"
             Grid.Row="1"
             VerticalAlignment="Center"
+            Background="DarkGoldenrod"
             >
         </Slider>
     </Grid>
