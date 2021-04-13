@@ -19,11 +19,6 @@ namespace Flight_Inspection_App.ViewModels
                 NotifyPropertyChanged("VM_" + e.PropertyName);
             };
         }
-
-        public void setModel(IClientModel m)
-        {
-            this.model = m;
-        }
         
         public void stop()
         {
