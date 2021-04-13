@@ -24,5 +24,7 @@ If the client wants to use his own anomaly detection algorithm, he must works as
 * The function that in charge of the anomaly points to be drawn will be called "getAnomalies" and it recieves a string of the current correlated features that chosen. return value is a list of points.
 
 ### Further Documentation
+see the UML diagram under the main file of this project.
 
 ### Video Demo
+Link to the video: 
