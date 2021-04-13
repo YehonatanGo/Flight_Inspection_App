@@ -1,17 +1,17 @@
 # Flight_Inspection_App
 ### General Description
-Desktop app for analyzing flights. the app connects to FlightGear simulator(https://www.flightgear.org/), shows graphically all the data of the flight and in accordiance to the chosen detector algorithm it's shows the anomalies of the flight. 
+Desktop app for analyzing flights. The app connects to FlightGear simulator (download at https://www.flightgear.org/), shows graphically all the data of the flight, and in accordance to the chosen anomaly detectoion algorithm shows the anomalies found during the flight. 
 
 ### Collaborators
 This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch, CS students from Bar-Ilan university, Israel.
 
 ### Prerequisites
-* install flightgear 20.3.6, and make sure your dierctories hierarachy is "C:\Program Files\FlightGear"
+* install flightgear, and make sure your dierctories hierarachy is "C:\Program Files\FlightGear"
 * move "playback_small.xml" to "C:\Program Files\FlightGear\data\Protocol"
-* if you are interested in new anomaly detector algorithm, please read under "Instructions" for more information. 
+* if you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
-### Code Design:
-The app has been programmed by the MVVM design and C# data binding mechanism and. as well, the app supports loading dll files at runtime.
+### Code Design and Architechture:
+The app has been programmed by the MVVM architecture and WPF data binding mechanism. As well, the app supports loading dll files dynamically at runtime.
 
 ### Instructions
 When opening the app, the client needs to load a train and current csv flights file (with features at the first line), choose algorithm of anomaly detection from the "plugin" folder and then press on "open FlightGear" button.
@@ -24,7 +24,7 @@ If the client wants to use his own anomaly detection algorithm, he must works as
 * The function that in charge of the anomaly points to be drawn will be called "getAnomalies" and it recieves a string of the current correlated features that chosen. return value is a list of points.
 
 ### Further Documentation
-see the UML diagram under the main file of this project.
+See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video: 
+Link to the video: https://youtu.be/C6J0noC6K6k
