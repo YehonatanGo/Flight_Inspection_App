@@ -12,7 +12,7 @@ This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch,
   * Microsoft.Toolkit.Uwp.UI.Controls version 7.0.1
   * OxyPlot.Wpf version 2.0.0 
   *  Syncfusion.SfGauge.WPF version 19.1.0.54
-  When opening the project on Visual Studio they should be installed automaticall. Download manually if they don't.
+ When opening the project on Visual Studio they should be installed automaticall. Download manually if they don't.
 
 * If you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
