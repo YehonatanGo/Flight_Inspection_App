@@ -11,7 +11,7 @@ namespace Flight_Inspection_App.ViewModels
     {
         private IFGModel model;
 
-        public PlaybarViewModel(ImyFGModel model)
+        public PlaybarViewModel(myFGModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
@@ -72,6 +72,8 @@ namespace Flight_Inspection_App.ViewModels
                 model.NumOfLines = value;
             }
         }
+
+        public string VM_Time { get => model.Time; set { model.Time = value; } } 
 
     }
 }

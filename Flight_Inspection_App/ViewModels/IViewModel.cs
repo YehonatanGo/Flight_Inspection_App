@@ -19,7 +19,7 @@ namespace Flight_Inspection_App.ViewModels
         }
 
         // get model and set it
-        public void setModel(ImyFGModel m)
+        public void setModel(myFGModel m)
         {
             this.model = m;
         }

@@ -11,7 +11,7 @@ namespace Flight_Inspection_App.ViewModels
     {
         private IFGModel model = null;
 
-        public GraphsViewModel(ImyFGModel model)
+        public GraphsViewModel(myFGModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)

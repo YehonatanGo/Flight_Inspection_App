@@ -75,13 +75,13 @@
                 Grid.Row="0"
                 Grid.Column="4">
                 <TextBlock
-                    Text="Current line "
+                    Text="Time  "
                     />
 
 
                 <TextBlock
                     x:Name="Text_CurrnetTime"
-                    Text="{Binding VM_Running_Line, Mode=OneWay}"
+                    Text="{Binding VM_Time, Mode=OneWay}"
                     />
             </StackPanel>
         </Grid>

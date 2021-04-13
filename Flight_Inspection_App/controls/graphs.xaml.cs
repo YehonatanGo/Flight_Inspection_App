@@ -28,7 +28,7 @@ namespace Flight_Inspection_App.controls
             InitializeComponent();
         }
 
-        void setModel(ImyFGModel model)
+        void setModel(myFGModel model)
         {
             this.GraphsViewModel.setModel(model);
         }

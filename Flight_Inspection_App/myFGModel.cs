@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace Flight_Inspection_App
 {
-    public class ImyFGModel : IFGModel
+    public class myFGModel : IFGModel
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -256,11 +256,31 @@ namespace Flight_Inspection_App
                 {
                     sendOneLine();
                 }
-                NotifyPropertyChanged("Running_line");  
+                NotifyPropertyChanged("Running_line");
+
+                int seconds = running_line / 10;
+                TimeSpan t = TimeSpan.FromSeconds(seconds);
+                string timeString = string.Format("{0:D2}:{1:D2}:{2:D2}",
+                t.Hours,
+                t.Minutes,
+                t.Seconds);
+                Time = timeString;
+
             }
             get
             {
                 return running_line;
+            }
+        }
+
+        private string time;
+        public string Time
+        {
+            get => time;
+            set
+            {
+                time = value;
+                NotifyPropertyChanged("Time");
             }
         }
 
@@ -497,6 +517,8 @@ namespace Flight_Inspection_App
             }
         }
 
+
+
         // **************************************************************
 
         MethodInfo? learnAndDetect;
@@ -506,7 +528,7 @@ namespace Flight_Inspection_App
         object? anomalyDetector;
 
 
-        public ImyFGModel()
+        public myFGModel()
         {
             TestPath = "";
             running_line = 0;
@@ -527,6 +549,7 @@ namespace Flight_Inspection_App
             lastPoints = new List<DataPoint>();
             manualResetEvent = new ManualResetEvent(true);
             anomaliesTSList = new List<int>();
+            time = "";
         }
 
         public void NotifyPropertyChanged(string propName)
