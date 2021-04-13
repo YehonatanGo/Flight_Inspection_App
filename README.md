@@ -6,7 +6,7 @@ Desktop app for analyzing flights. The app connects to FlightGear simulator (dow
 This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch, CS students from Bar-Ilan university, Israel.
 
 ### Prerequisites
-* install flightgear, and make sure your dierctories hierarachy is 'C:\Program Files\FlightGear'
+* install flightgear, and make sure your dierctories hierarachy is `C:\Program Files\FlightGear`
 * move "playback_small.xml" to "C:\Program Files\FlightGear\data\Protocol"
 * if you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
