@@ -30,6 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="UMLS\" />
     <Folder Include="plugins\" />
   </ItemGroup>
 
