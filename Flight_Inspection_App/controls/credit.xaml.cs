@@ -1,5 +1,4 @@
-﻿using Flight_Inspection_App.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -13,28 +12,15 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Flight_Inspection_App.controls
-
 {
     /// <summary>
-    /// Interaction logic for dashboard.xaml
+    /// Interaction logic for credit.xaml
     /// </summary>
-    public partial class dashboard : UserControl
+    public partial class credit : UserControl
     {
-        internal ViewModels.DashboardViewModel DashboardViewModel;
-
-        public dashboard()
+        public credit()
         {
             InitializeComponent();
-        }
-
-        void setModel(myClientModel model)
-        {
-            this.DashboardViewModel.setModel(model);
-        }
-
-        private void compass_Loaded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }
