@@ -27,7 +27,7 @@ namespace Flight_Inspection_App.controls
             InitializeComponent();
         }
 
-        void setModel(myClientModel model)
+        void setModel(ImyFGModel model)
         {
             this.DashboardViewModel.setModel(model);
         }

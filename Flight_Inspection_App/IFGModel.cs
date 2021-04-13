@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Flight_Inspection_App
 {
-    interface IClientModel : INotifyPropertyChanged
+    interface IFGModel : INotifyPropertyChanged
     {
         string TestPath { get; set; }
         string TrainPath { get; set; }

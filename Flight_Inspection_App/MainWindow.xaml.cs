@@ -11,7 +11,7 @@ namespace Flight_Inspection_App
     /// </summary>
     public partial class MainWindow : Window
     {
-        myClientModel model = new myClientModel();
+        ImyFGModel model = new ImyFGModel();
 
         public MainWindow()
         {

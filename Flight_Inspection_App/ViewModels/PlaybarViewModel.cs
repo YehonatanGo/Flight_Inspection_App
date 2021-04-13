@@ -9,9 +9,9 @@ namespace Flight_Inspection_App.ViewModels
 {
     class PlaybarViewModel : IViewModel
     {
-        private IClientModel model;
+        private IFGModel model;
 
-        public PlaybarViewModel(myClientModel model)
+        public PlaybarViewModel(ImyFGModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)

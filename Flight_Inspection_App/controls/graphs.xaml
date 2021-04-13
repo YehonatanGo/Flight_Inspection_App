@@ -76,7 +76,7 @@
             Grid.Row="1"
             Grid.ColumnSpan="3"
             BorderThickness="5"
-            BorderBrush="Black">
+            BorderBrush="Black" TitleFontSize="11">
             <oxy:Plot.Series>
                 <oxy:LineSeries ItemsSource="{Binding VM_Data_Points}"/>
             </oxy:Plot.Series>
@@ -93,7 +93,7 @@
             Grid.Row="3"
             Grid.ColumnSpan="3"
             BorderThickness="5"
-            BorderBrush="Black">
+            BorderBrush="Black" TitleFontSize="11">
             <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedDataPoints}"/>
         </oxy:Plot>
         

@@ -65,7 +65,7 @@
                 <TextBlock
                     x:Name="Text_PlaySpeed"
                     HorizontalAlignment="Center"
-                    Text="Play speed:"
+                    Text="Play speed"
                     />
                 
             </StackPanel>
@@ -75,7 +75,7 @@
                 Grid.Row="0"
                 Grid.Column="4">
                 <TextBlock
-                    Text="Current time "
+                    Text="Current line "
                     />
 
 

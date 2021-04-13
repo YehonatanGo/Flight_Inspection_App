@@ -7,9 +7,9 @@ namespace Flight_Inspection_App.ViewModels
 {
     class FilesViewModel : IViewModel
     {
-        private IClientModel model = null;
+        private IFGModel model = null;
 
-        public FilesViewModel(myClientModel model)
+        public FilesViewModel(ImyFGModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)

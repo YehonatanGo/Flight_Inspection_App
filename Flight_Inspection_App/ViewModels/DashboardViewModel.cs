@@ -7,9 +7,9 @@ namespace Flight_Inspection_App.ViewModels
 {
     public class DashboardViewModel : IViewModel
     {
-        private IClientModel model;
+        private IFGModel model;
 
-        public DashboardViewModel(myClientModel model)
+        public DashboardViewModel(ImyFGModel model)
         {
             this.model = model;
             model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)

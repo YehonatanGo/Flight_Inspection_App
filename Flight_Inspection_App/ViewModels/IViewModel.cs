@@ -10,7 +10,7 @@ namespace Flight_Inspection_App.ViewModels
 {
     public abstract class IViewModel : INotifyPropertyChanged
     {
-        private IClientModel model;
+        private IFGModel model;
         public event PropertyChangedEventHandler PropertyChanged;
 
         public void NotifyPropertyChanged(string propName)
@@ -19,7 +19,7 @@ namespace Flight_Inspection_App.ViewModels
         }
 
         // get model and set it
-        public void setModel(myClientModel m)
+        public void setModel(ImyFGModel m)
         {
             this.model = m;
         }

@@ -13,7 +13,7 @@ using System.Reflection;
 
 namespace Flight_Inspection_App
 {
-    public class myClientModel : IClientModel
+    public class ImyFGModel : IFGModel
     {
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -506,7 +506,7 @@ namespace Flight_Inspection_App
         object? anomalyDetector;
 
 
-        public myClientModel()
+        public ImyFGModel()
         {
             TestPath = "";
             running_line = 0;
