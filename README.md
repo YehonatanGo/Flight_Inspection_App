@@ -15,21 +15,22 @@ The app has been programmed by the MVVM architecture and WPF data binding mechan
 
 ### Instructions
 When opening the app, the client needs to load a train and current csv flights file (with features at the first line), choose algorithm of anomaly detection from the "plugin" folder and then press on "open FlightGear" button.
+
 If the client wants to use his own anomaly detection algorithm, he must works as follows:
-* puts the C# dll file under "plugins" file.
+* Put the dll file under "plugins" file.
 * The namespace of the DLL will be called "Anomaly_Detecton_Algorithm".
 * The class of will be called "AnomalyDetector".
+* Must follow the following signatures:
 
 
 ```C#
-public void learnAndDetect(string path){}
+public void learnAndDetect(string trainPath, string testPath){}
 public Annotation GetAnnotation(string cfKey){}
 public List<Point> getAnomalies(string cfKey){}
 ```
-
-* The function that learns and detect all the data will be called "learnAndDetect" and it recieves the path of the train and current csv flights files. return value is void.
-* The function that in charge of the current shape to be drawn will be called "GetAnnotation" and it recieves a string of the current correlated features that chosen. return value is Annotation type.
-* The function that in charge of the anomaly points to be drawn will be called "getAnomalies" and it recieves a string of the current correlated features that chosen. return value is a list of points.
+* learnAndDetect - gets paths of train and test csv files, learns the normal model, and detects anomalies in the test file.
+* GetAnnotation - gets a string description of correlated features returns ("a+b"). Returns Annotation (oxyplot interface) describing the normal model (linear regression, minimal circle etc.).
+* getAnomalies - gets a string description of correlated features returns ("a+b"). Returns List of Points (you can use our Point class or equivalent) that was found anomalous.
 
 ### Further Documentation
 See UML diagrams under "UMLS" directory.
