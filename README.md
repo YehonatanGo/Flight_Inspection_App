@@ -3,16 +3,15 @@
 Desktop app for analyzing flights. The app connects to FlightGear simulator (download at https://www.flightgear.org), shows graphically all the data of the flight, and in accordance to the chosen anomaly detectoion algorithm shows the anomalies found during the flight. 
 
 ### Collaborators
-This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch, CS students from Bar-Ilan university, Israel.
+This program was developed by Itamar Fisch, Neriya Fisch and Yehonatan Goldfarb, CS students from Bar-Ilan university, Israel.
 
 ### Prerequisites
 * Install flightgear, and make sure your dierctories hierarachy is `C:\Program Files\FlightGear`
 * Move `playback_small.xml` to `C:\Program Files\FlightGear\data\Protocol`
-* Wev'e been using the following packages:
+* Wev'e been using the following packages: (When opening the project on Visual Studio they should be installed automaticall. Download manually if they don't)
   * Microsoft.Toolkit.Uwp.UI.Controls version 7.0.1
   * OxyPlot.Wpf version 2.0.0 
-  *  Syncfusion.SfGauge.WPF version 19.1.0.54
- When opening the project on Visual Studio they should be installed automaticall. Download manually if they don't.
+  *  Syncfusion.SfGauge.WPF version 19.1.0.54. .
 
 * If you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
