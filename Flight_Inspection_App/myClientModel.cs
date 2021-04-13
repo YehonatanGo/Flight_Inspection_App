@@ -256,7 +256,7 @@ namespace Flight_Inspection_App
                 {
                     sendOneLine();
                 }
-                NotifyPropertyChanged("Running_line");
+                NotifyPropertyChanged("Running_line");  
             }
             get
             {
@@ -559,7 +559,7 @@ namespace Flight_Inspection_App
             Process cmd = new Process();
             cmd.StartInfo.FileName = "cmd.exe";
             cmd.StartInfo.UseShellExecute = false;
-            cmd.StartInfo.WorkingDirectory = @"C:\Program Files\FlightGear 2020.3.6\bin";
+            cmd.StartInfo.WorkingDirectory = @"C:\Program Files\FlightGear\bin";
             cmd.StartInfo.RedirectStandardOutput = false;
             cmd.StartInfo.RedirectStandardInput = true;
             cmd.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;

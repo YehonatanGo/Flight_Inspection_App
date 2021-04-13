@@ -11,7 +11,7 @@ namespace Flight_Inspection_App
         private List<string> lines_list;
         private Dictionary<string, List<float>> featuresDict;
         public Dictionary<string, List<float>> FeaturesDict { get { return featuresDict; } }
-        
+
 
         public CsvHandler(string path)
         {
@@ -24,24 +24,37 @@ namespace Flight_Inspection_App
 
         private void parseCsv()
         {
-            Dictionary<string, int> features_names_to_idx = getFeaturesNames(@"C:\Program Files\FlightGear 2020.3.6\data\Protocol\playback_small.xml");
+            Dictionary<string, int> features_names_to_idx = new Dictionary<string, int>();
 
             using (var reader = new StreamReader(path))
             {
-                // add a pair of (feature, values-list) to the features dictionary, for each feature given by the xml
-                foreach(var feature in features_names_to_idx)
+                // extract features names from the first line of the csv file 
+                var featuresLine = reader.ReadLine();
+                var featuresNames = featuresLine.Split(",");
+                for (int i = 0; i < featuresNames.Length; i++)
+                {
+                    string aFeatureName = featuresNames[i];
+                    if (features_names_to_idx.ContainsKey(aFeatureName))
+                    {
+                        aFeatureName += "2";
+                    }
+                    features_names_to_idx.Add(aFeatureName, i);
+                }
+
+                // add a pair of (feature, values-list) to the features dictionary
+                foreach (var feature in features_names_to_idx)
                 {
                     featuresDict.Add(feature.Key, new List<float>());
                 }
 
-                reader.ReadLine();
+                // fill features' values lists with data from the csv file
                 while (!reader.EndOfStream)
                 {
                     var line = reader.ReadLine();
                     // split each line by ',' to get specific features values
                     float[] floats = System.Array.ConvertAll(line.Split(','), float.Parse);
                     // add each value in doubles list to the matching feature's values list in the dictionary
-                    foreach(var feature in featuresDict)
+                    foreach (var feature in featuresDict)
                     {
                         feature.Value.Add(floats[features_names_to_idx[feature.Key]]);
                     }
@@ -50,7 +63,7 @@ namespace Flight_Inspection_App
                     row_count++;
                 }
             }
-            string flightContent = System.IO.File.ReadAllText(path);
+            string flightContent = File.ReadAllText(path);
             List<string> featuresList = getFeaturesNamesList();
             string featuresString = concatFeaturesNames(featuresList);
             string[] lines = { featuresString, flightContent };
@@ -75,33 +88,6 @@ namespace Flight_Inspection_App
             return row_count;
         }
 
-        // parse xml file to get features' names 
-        // returns an dictionatry of FEATURE_NAME:INDEX
-        public Dictionary<string, int> getFeaturesNames(string path)
-        {
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(path);
-                
-            XmlNodeList features = xmlDoc.GetElementsByTagName("name");
-
-            Dictionary<string, int> featuresDict = new Dictionary<string, int>();
-
-            int featuresCount = 0;
-
-            for (int i = 0; i < 42; i++)
-            {
-                string key = features[i].InnerText;
-                if (featuresDict.ContainsKey(features[i].InnerText))
-                {
-                    key += "2";
-                }
-                featuresDict.Add(key, i);
-
-            }
-            return featuresDict;
-
-        }
-
         public List<string> getFeaturesNamesList()
         {
             return new List<string>(featuresDict.Keys);
@@ -115,21 +101,21 @@ namespace Flight_Inspection_App
         //returns specific line by its index
         public string getLine(int index)
         {
-            if(index < lines_list.Count)
+            if (index < lines_list.Count)
             {
-            return lines_list[index];
+                return lines_list[index];
             }
             return lines_list[0];
         }
 
         public float getFeatureByLine(string feature, int line)
         {
-            if(feature.Equals("none"))
+            if (feature.Equals("none"))
             {
                 return 0;
             }
             return featuresDict[feature][line];
         }
-        
+
     }
 }

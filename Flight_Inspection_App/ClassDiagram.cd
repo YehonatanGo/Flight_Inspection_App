@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Flight_Inspection_App.ViewModels.DashboardViewModel">
+    <Position X="5.5" Y="3.75" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAAAAAAEIAAAhAAAAAAAEQAAAAABBAAAAAAqACA=</HashCode>
+      <FileName>ViewModels\DashboardViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.ViewModels.FilesViewModel">
+    <Position X="8" Y="3.75" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAEAAAEAAIAAAgAAAAAAAAAAAAACAAAIAAA=</HashCode>
+      <FileName>ViewModels\FilesViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.ViewModels.GraphsViewModel">
+    <Position X="13" Y="3.75" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAACAAAAAgAIAAAgEAAgDIAIAQAAAAAACgAAAIAAA=</HashCode>
+      <FileName>ViewModels\GraphsViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Flight_Inspection_App.ViewModels.IViewModel">
+    <Position X="9.5" Y="1.25" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAAAAAAAAAIAAAAAAAAAAgAAAAAAAAAAAAAAIAAA=</HashCode>
+      <FileName>ViewModels\IViewModel.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Flight_Inspection_App.ViewModels.PlaybarViewModel">
+    <Position X="10.25" Y="3.75" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AEAIAAAAAAAAAAAQAAAAAAAAAAQgAAAAAAACAAAIAAA=</HashCode>
+      <FileName>ViewModels\PlaybarViewModel.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

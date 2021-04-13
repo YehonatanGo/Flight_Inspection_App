@@ -40,7 +40,5 @@ namespace Flight_Inspection_App
         {
             GraphsView.GraphsViewModel.VM_DisplayedFeature = GraphsView.ListBox_Features_List.SelectedItem.ToString();
         }
-        
-
     }
 }
