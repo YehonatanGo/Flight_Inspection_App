@@ -11,17 +11,26 @@
 
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid
-        Background="MediumPurple"
+        Background="LemonChiffon"
         >
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MaxWidth="10"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="10"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="10"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MaxWidth="10"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*" MaxHeight="10"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MaxHeight="10"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*" MaxHeight="10"/>
         </Grid.RowDefinitions>
 
 
@@ -29,8 +38,9 @@
             x:Name="Linear_Regression"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Grid.Column="3"
-            Grid.Row="0"
+            Grid.Column="5"
+            Grid.ColumnSpan="2"
+            Grid.Row="1"
             BorderThickness="5"
             BorderBrush="Black">
             <oxy:Plot.Annotations>
@@ -50,20 +60,20 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Width="auto"
-            Grid.Column="3"
+            Grid.Column="8"
             Grid.Row="1"
+            Grid.RowSpan="3"
             BorderThickness="5"
             BorderBrush="Black"/>
 
         <oxy:Plot
             x:Name="feature_plot"
-            Visibility="Visible"
             Title="{Binding VM_DisplayedFeature}"
+            Visibility="Visible"
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
-            Width="auto"
-            Grid.Column="0"
-            Grid.Row="0"
+            Grid.Column="1"
+            Grid.Row="1"
             Grid.ColumnSpan="3"
             BorderThickness="5"
             BorderBrush="Black">
@@ -79,24 +89,25 @@
             HorizontalAlignment="Stretch"
             VerticalAlignment="Stretch"
             Width="auto"
-            Grid.Column="0"
-            Grid.Row="1"
+            Grid.Column="1"
+            Grid.Row="3"
             Grid.ColumnSpan="3"
             BorderThickness="5"
             BorderBrush="Black">
             <oxy:LineSeries ItemsSource="{Binding VM_CorrelatedDataPoints}"/>
         </oxy:Plot>
+        
         <ListBox
             x:Name="ListBox_AnomaliesTS_List"
             ItemsSource="{Binding VM_AnomaliesTSList}"
             SelectionChanged="AnomaliesTSLIST_SelectionChanged"
-            Width="auto"
-            Grid.Column="2"
-            Grid.Row="1"
+            Visibility="Visible"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            Grid.Column="5"
+            Grid.Row="3"
+            Grid.ColumnSpan="2"
             BorderThickness="5"
             BorderBrush="Black"/>
-
-
-
     </Grid>
 </UserControl>

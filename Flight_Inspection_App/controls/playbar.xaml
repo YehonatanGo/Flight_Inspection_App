@@ -25,7 +25,12 @@
             <Button x:Name="Button_Stop" FontFamily="Segoe MDL2 Assets" Content="&#xE73B;" HorizontalAlignment="Left" Click="Button_Stop_Click"/>
             <Button x:Name="Button_Forward" FontFamily="Segoe MDL2 Assets" Content="&#xEDDA;&#xEDDA;" HorizontalAlignment="Left" Click="Button_Forward_Click"/>
             <Separator Margin="10"/>
-            <TextBlock x:Name="Text_CurrnetTime" Background="Gold" Text="- current time -"/>
+            <TextBlock
+                x:Name="Text_CurrnetTime"
+                Background="Gold" 
+                Text="{Binding VM_Running_Line, Mode=OneWay}"
+                />
+
             <Separator Margin="10"/>
             <TextBlock x:Name="Text_PlaySpeed" Background="Goldenrod" Text="Play speed:    "/>
             <Slider Background="Goldenrod" x:Name="Slider_Speed" Minimum="0.1" Maximum="3.1" Value ="1.6" TickPlacement="BottomRight" TickFrequency="0.2" IsSnapToTickEnabled="True" Width="80" ValueChanged="Slider_ValueChanged"  />
