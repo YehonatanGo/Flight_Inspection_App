@@ -29,7 +29,7 @@ If the client wants to use his own anomaly detection algorithm, he must works as
 
 
 ```C#
-public void learnAndDetect(string trainPath, string testPath)}{
+public void learnAndDetect(string trainPath, string testPath){}
 public Annotation GetAnnotation(string cfKey)}{}
 public List<Point> getAnomalies(string cfKey){}
 public List<int> getAnomaliesTimeSteps(string cfKey){}
