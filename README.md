@@ -8,7 +8,7 @@ This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch,
 ### Prerequisites
 * install flightgear 20.3.6, and make sure your dierctories hierarachy is "C:\Program Files\FlightGear"
 * move "playback_small.xml" to "C:\Program Files\FlightGear\data\Protocol"
-* if you are interested in new anomaly detector algorithm, please read under ### Instructions for more information. 
+* if you are interested in new anomaly detector algorithm, please read under "Instructions" for more information. 
 
 ### Code Design:
 The app has been programmed by the MVVM design and C# data binding mechanism and. as well, the app supports loading dll files at runtime.
