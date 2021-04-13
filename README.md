@@ -1,12 +1,12 @@
 # Flight_Inspection_App
 ### General Description
-Desktop app for analyzing flights. The app connects to FlightGear simulator (download at https://www.flightgear.org/), shows graphically all the data of the flight, and in accordance to the chosen anomaly detectoion algorithm shows the anomalies found during the flight. 
+Desktop app for analyzing flights. The app connects to FlightGear simulator (download at https://www.flightgear.org), shows graphically all the data of the flight, and in accordance to the chosen anomaly detectoion algorithm shows the anomalies found during the flight. 
 
 ### Collaborators
 This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch, CS students from Bar-Ilan university, Israel.
 
 ### Prerequisites
-* install flightgear, and make sure your dierctories hierarachy is "C:\Program Files\FlightGear"
+* install flightgear, and make sure your dierctories hierarachy is 'C:\Program Files\FlightGear'
 * move "playback_small.xml" to "C:\Program Files\FlightGear\data\Protocol"
 * if you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
