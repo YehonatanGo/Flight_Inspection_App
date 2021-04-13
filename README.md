@@ -7,7 +7,7 @@ This program was developed by Yehonatan Goldfarb, Itamar Fisch and Neriya Fisch,
 
 ### Prerequisites
 * install flightgear, and make sure your dierctories hierarachy is `C:\Program Files\FlightGear`
-* move "playback_small.xml" to "C:\Program Files\FlightGear\data\Protocol"
+* move "playback_small.xml" to `C:\Program Files\FlightGear\data\Protocol`
 * if you are interested in adding a new anomaly detection algorithm, please read under "Instructions" for more information. 
 
 ### Code Design and Architechture:
@@ -19,6 +19,14 @@ If the client wants to use his own anomaly detection algorithm, he must works as
 * puts the C# dll file under "plugins" file.
 * The namespace of the DLL will be called "Anomaly_Detecton_Algorithm".
 * The class of will be called "AnomalyDetector".
+
+
+```C#
+public void learnAndDetect(string path){}
+public Annotation GetAnnotation(string cfKey){}
+public List<Point> getAnomalies(string cfKey){}
+```
+
 * The function that learns and detect all the data will be called "learnAndDetect" and it recieves the path of the train and current csv flights files. return value is void.
 * The function that in charge of the current shape to be drawn will be called "GetAnnotation" and it recieves a string of the current correlated features that chosen. return value is Annotation type.
 * The function that in charge of the anomaly points to be drawn will be called "getAnomalies" and it recieves a string of the current correlated features that chosen. return value is a list of points.
