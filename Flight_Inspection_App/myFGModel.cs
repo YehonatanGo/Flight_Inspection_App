@@ -233,6 +233,7 @@ namespace Flight_Inspection_App
             set
             {
                 dllPath = value;
+                initializeDll();
             }
         }
         // *********************playing controller*********************
@@ -561,22 +562,8 @@ namespace Flight_Inspection_App
 
         public void connectFlightGear()
         {
-            var assembly = Assembly.LoadFile(DllPath);
-            var type2 = assembly.GetType("Anomaly_Detecton_Algorithm.AnomalyDetector");
-            anomalyDetector = Activator.CreateInstance(type2);
-            learnAndDetect = type2.GetMethod("learnAndDetect");
-            learnAndDetect.Invoke(anomalyDetector, new object[]
-            {
-               trainPath,
-               testPath
-            });
 
-            getAnnotation = type2.GetMethod("GetAnnotation");
-            getAnomalies = type2.GetMethod("getAnomalies");
-            getAnomaliesTS = type2.GetMethod("getAnomaliesTimeSteps");
-
-
-
+            initializeDll();
 
             // cmd process
             Process cmd = new Process();
@@ -604,6 +591,23 @@ namespace Flight_Inspection_App
             //setting up a Tcp connection
             this.client = new TcpClient("localhost", 5400);
             this.ns = client.GetStream();
+        }
+
+        private void initializeDll()
+        {
+            var assembly = Assembly.LoadFile(DllPath);
+            var type2 = assembly.GetType("Anomaly_Detecton_Algorithm.AnomalyDetector");
+            anomalyDetector = Activator.CreateInstance(type2);
+            learnAndDetect = type2.GetMethod("learnAndDetect");
+            learnAndDetect.Invoke(anomalyDetector, new object[]
+            {
+               trainPath,
+               testPath
+            });
+
+            getAnnotation = type2.GetMethod("GetAnnotation");
+            getAnomalies = type2.GetMethod("getAnomalies");
+            getAnomaliesTS = type2.GetMethod("getAnomaliesTimeSteps");
         }
 
         // creating thread and runs sendLines method.
