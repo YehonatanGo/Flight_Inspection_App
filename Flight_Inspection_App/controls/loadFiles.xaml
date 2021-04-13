@@ -26,10 +26,9 @@
                     Grid.Row="1"
                     Grid.Column="1"
                     >
-            <Button x:Name="Button_ShowFlight"
-                    Content="Open FlightGear"
-                    Click="Button_Play_Flight"
-                    IsEnabled="False"
+            <Button x:Name="Button_load_test"
+                    Content="Load Train file"
+                    Click="Button_load_test_Click"
                     Width="auto"
                     Height="auto"/>
             <Border Width="10"/>
@@ -39,15 +38,16 @@
                     Width="auto"
                     Height="auto"/>
             <Border Width="10"/>
-            <Button x:Name="Button_load_test"
-                    Content="Load Train file"
-                    Click="Button_load_test_Click"
-                    Width="auto"
-                    Height="auto"/>
-            <Border Width="10"/>
             <Button x:Name="Button_LoadAlgorithm"
                     Content="Load Algorithm"
                     Click="Button_LoadAlgorithm_Click"
+                    Width="auto"
+                    Height="auto"/>
+            <Border Width="10"/>
+            <Button x:Name="Button_ShowFlight"
+                    Content="Open FlightGear"
+                    Click="Button_Play_Flight"
+                    IsEnabled="False"
                     Width="auto"
                     Height="auto"/>
         </StackPanel>

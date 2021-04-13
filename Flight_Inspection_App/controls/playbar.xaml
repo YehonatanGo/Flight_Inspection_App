@@ -75,7 +75,7 @@
                 Grid.Row="0"
                 Grid.Column="4">
                 <TextBlock
-                    Text="Current time"
+                    Text="Current time "
                     />
 
 
