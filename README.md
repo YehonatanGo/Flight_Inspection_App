@@ -45,7 +45,7 @@ public List<int> getAnomaliesTimeSteps(string cfKey){}
 See UML diagrams under "UMLS" directory.
 
 ### Video Demo
-Link to the video: https://youtu.be/C6J0noC6K6k
-Not in the video: 
-Different anomaly detection algorithms can be chosen even after a flight inspection was started with another one.
-Just click "Load Algorithm" button, and load the requested dll.
+Link to the video: https://youtu.be/C6J0noC6K6k  
+Not in the video:  
+Different anomaly detection algorithms can be chosen even after a flight inspection was started with another one.  
+Just click "Load Algorithm" button, and load the requested dll.  
