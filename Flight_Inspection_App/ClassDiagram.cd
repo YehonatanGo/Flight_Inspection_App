@@ -1,15 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="Flight_Inspection_App.controls.algorithm" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="12.75" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>controls\algorithm.xaml.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" Collapsed="true" />
-  </Class>
   <Class Name="Flight_Inspection_App.controls.altimeter" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="8.75" Width="1.5" />
+    <Position X="3.75" Y="7.5" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\altimeter.xaml.cs</FileName>
@@ -17,7 +9,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.compass" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="5.75" Width="1.5" />
+    <Position X="1.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\compass.xaml.cs</FileName>
@@ -33,7 +25,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.dashboard" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="2.5" Y="4.75" Width="1.5" />
+    <Position X="2.75" Y="4.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAQAAAAAAAA=</HashCode>
       <FileName>controls\dashboard.xaml.cs</FileName>
@@ -49,7 +41,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.joystick" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="7.75" Width="1.5" />
+    <Position X="3.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\joystick.xaml.cs</FileName>
@@ -65,7 +57,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.pitch" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="5.75" Width="1.5" />
+    <Position X="3.75" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\pitch.xaml.cs</FileName>
@@ -81,7 +73,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.roll" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="6.75" Width="1.5" />
+    <Position X="1.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\roll.xaml.cs</FileName>
@@ -89,7 +81,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.speed" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="3.75" Y="6.75" Width="1.5" />
+    <Position X="3.75" Y="6" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\speed.xaml.cs</FileName>
@@ -97,7 +89,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Flight_Inspection_App.controls.yaw" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="1.75" Y="7.75" Width="1.5" />
+    <Position X="1.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>controls\yaw.xaml.cs</FileName>
@@ -130,13 +122,6 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
       <FileName>Helper Classes\Point.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Flight_Inspection_App.App" Collapsed="true">
-    <Position X="10" Y="8.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>App.xaml.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Flight_Inspection_App.MainWindow" Collapsed="true" BaseTypeListCollapsed="true">
